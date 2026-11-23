@@ -13,6 +13,7 @@ import os
 import ssl
 import sys
 import time
+import urllib.error
 import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -42,7 +43,8 @@ def _ctx():
 
 
 def chat(messages, model=None, stream=False, **params):
-    """调一次模型。返回 {text, usage, finish_reason, latency, ttft}。ttft = 收到第一个字的时间（流式时才有）。"""
+    """调一次模型。返回 {text, usage, finish_reason, latency, ttft}，非流式时还有 tool_calls 和原始 message。
+    ttft = 收到第一个字的时间（流式时才有）。传 tools=[...] 就是工具调用（单元二）。"""
     key = os.environ.get("OPENAI_API_KEY")
     if not key:
         sys.exit("没有 OPENAI_API_KEY：在环境变量或仓库根目录的 .env 里配置；或者加 --replay 看录好的结果")
@@ -51,13 +53,26 @@ def chat(messages, model=None, stream=False, **params):
         body.update(stream=True, stream_options={"include_usage": True})
     req = urllib.request.Request(BASE + "/chat/completions", data=json.dumps(body).encode(),
                                  headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}"})
+    for attempt in range(4):                       # 网络抖动、限流、5xx：等一会儿重试，最多 4 次
+        try:
+            return _send(req, stream)
+        except (urllib.error.URLError, ConnectionError, TimeoutError) as e:
+            code = getattr(e, "code", None)
+            if attempt == 3 or (code is not None and code != 429 and code < 500):
+                raise
+            time.sleep(2 ** attempt)
+
+
+def _send(req, stream):
     t0 = time.time()
     with urllib.request.urlopen(req, timeout=120, context=_ctx()) as r:
         if not stream:
             d = json.loads(r.read())
             c = d["choices"][0]
-            return {"text": c["message"]["content"], "usage": d.get("usage", {}), "finish_reason": c.get("finish_reason"),
-                    "latency": round(time.time() - t0, 3), "ttft": None}
+            msg = c["message"]
+            return {"text": msg.get("content") or "", "usage": d.get("usage", {}), "finish_reason": c.get("finish_reason"),
+                    "latency": round(time.time() - t0, 3), "ttft": None,
+                    "tool_calls": msg.get("tool_calls") or [], "message": msg}
         text, usage, finish, ttft = [], {}, None, None
         for raw in r:
             line = raw.decode().strip()
@@ -77,6 +92,11 @@ def chat(messages, model=None, stream=False, **params):
                 "ttft": ttft}
 
 
+def host():
+    """只记服务商的域名，不记账号专属的子域名。"""
+    return ".".join(BASE.split("/")[2].split(".")[-3:])
+
+
 def replay_or_run(name, run):
     """--replay：读 examples/output/<name>.json；否则调用 run() 拿到结果、写进去。返回结果。"""
     path = os.path.join(OUT, f"{name}.json")
@@ -84,7 +104,7 @@ def replay_or_run(name, run):
         with open(path, encoding="utf-8") as f:
             return json.load(f)
     result = run()
-    result["_meta"] = {"model": MODEL, "date": time.strftime("%Y-%m-%d"), "base_url": BASE.split("/")[2]}
+    result["_meta"] = {"model": MODEL, "date": time.strftime("%Y-%m-%d"), "base_url": host()}
     os.makedirs(OUT, exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=1)
