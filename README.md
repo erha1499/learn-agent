@@ -2,7 +2,7 @@
 
 从零学 Agent 工程和 Agent 评测，目标是下一个 Agent 项目能做出**有评测、能上线、能持续观察**的系统，而不只是一个本地 Demo。
 
-姊妹篇：[learn-juc](../../java/learn-juc)（Java 并发）、[learn-jvm](../../java/learn-jvm)（JVM）。写法一样：先看现象（能跑的代码和真实结果），再讲原理，最后是面试和自测。
+姊妹篇：[learn-juc](https://github.com/erha1499/learn-juc)（Java 并发）、[learn-jvm](https://github.com/erha1499/learn-jvm)（JVM）。写法一样：先看现象（能跑的代码和真实结果），再讲原理，最后是面试和自测。
 
 ## 怎么读
 
