@@ -78,7 +78,22 @@ TOOLS = [
                        "required": ["instance"]}}},
 ]
 
-BY_INSTANCE = {s["instance"]: s for s in SCENARIOS.values()}
+# 单元四的“日志刷屏”场景：错误日志 400 行，390 行是无关的断连告警，只有 10 行是真正的线索。不放进 SCENARIOS，单元三的实验不受影响。
+FLOOD = {
+    "question": "inventory-mysql-05 错误日志一直在刷屏，扣库存时不时失败，帮忙看下",
+    "instance": "inventory-mysql-05", "gold": "LOCK_WAIT",
+    "metrics": {"connections": 520, "max_connections": 1000, "cpu_pct": 31, "qps": 2400,
+                "slow_queries_per_min": 14, "row_lock_waits_per_min": 95},
+    "slow_log": ["# Query_time: 3.10 Lock_time: 0.02 Rows_examined: 880000\n"
+                 "SELECT sku_id, SUM(stock) FROM inventory GROUP BY sku_id;"],
+    "error_log": [("2026-11-24 15:%02d:%02d [ERROR] Lock wait timeout exceeded; try restarting transaction" % (i // 60 % 60, i % 60))
+                  if i % 40 == 17 else
+                  ("2026-11-24 15:%02d:%02d [Warning] Aborted connection %d to db: 'inventory' user: 'app' host: '10.8.%d.%d' "
+                   "(Got an error reading communication packets)" % (i // 60 % 60, i % 60, 70000 + i, i % 7, i % 250))
+                  for i in range(400)],
+}
+
+BY_INSTANCE = {s["instance"]: s for s in list(SCENARIOS.values()) + [FLOOD]}
 
 
 def execute(name, args):
