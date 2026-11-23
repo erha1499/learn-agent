@@ -1,0 +1,73 @@
+{
+ "source": "oncall-agent-mvp 的评测平台（results/evalplat.sqlite），2026-11-23 导出",
+ "experiments": {
+  "13": {
+   "name": "v1 · 复刻集",
+   "runs": 30,
+   "in_tokens": 111569,
+   "out_tokens": 5716,
+   "cost_cny": 0.0707,
+   "wall_p50": 131.6,
+   "llm_calls_main": 10.0333,
+   "llm_calls_sub": 10.4667,
+   "peak_main_tokens": 7312.9667,
+   "cache_hit_rate": 0.4194,
+   "runs_with_invented_ids_in_subagent_report": 3,
+   "final_answers_citing_missing_ids": 0
+  },
+  "28": {
+   "name": "v2.1 · 复刻集（3 遍）",
+   "runs": 90,
+   "in_tokens": 111120,
+   "out_tokens": 5726,
+   "cost_cny": 0.0706,
+   "wall_p50": 126.8,
+   "llm_calls_main": 9.7556,
+   "llm_calls_sub": 11.7667,
+   "peak_main_tokens": 7188.5,
+   "cache_hit_rate": 0.4199,
+   "runs_with_invented_ids_in_subagent_report": 10,
+   "final_answers_citing_missing_ids": 0
+  },
+  "31": {
+   "name": "v2.1 · 专项集（3 遍）",
+   "runs": 60,
+   "in_tokens": 91237,
+   "out_tokens": 5083,
+   "cost_cny": 0.0608,
+   "wall_p50": 114.2,
+   "llm_calls_main": 10.2667,
+   "llm_calls_sub": 6.4,
+   "peak_main_tokens": 7068.8333,
+   "cache_hit_rate": 0.397,
+   "runs_with_invented_ids_in_subagent_report": 18,
+   "final_answers_citing_missing_ids": 0
+  },
+  "32": {
+   "name": "v2.1 · 注入集（3 遍）",
+   "runs": 90,
+   "in_tokens": 70046,
+   "out_tokens": 4698,
+   "cost_cny": 0.0471,
+   "wall_p50": 112.1,
+   "llm_calls_main": 7.7111,
+   "llm_calls_sub": 6.9667,
+   "peak_main_tokens": 6373.9222,
+   "cache_hit_rate": 0.4042,
+   "runs_with_invented_ids_in_subagent_report": 8,
+   "final_answers_citing_missing_ids": 0
+  },
+  "12": {
+   "name": "v0（改造前基线）· 复刻集",
+   "runs": 30,
+   "cost_cny": 0.0256,
+   "cache_hit_rate": 0.6482
+  }
+ },
+ "invented_id_example": {
+  "run": 524,
+  "experiment": 28,
+  "case": "R000",
+  "subagent_report": "[子Agent取证报告] 任务：查 refund-mysql-01 实例 12:00~15:00 是否存在 refund_v2 表；检查应用账号对该表的 SELECT 权限\n摘要：refund-mysql-01 实例不存在，无法查询其表结构和权限；错误日志数据源不可用。\n发现：\n- E1(无效)：实例 refund-mysql-01 不存在，调用 get_instance_info 失败\n- E2(无效)：实例 refund-mysql-01 不存在，调用 get_access_config 失败\n- E3(无效)：[query_error_log] 调用失败：下游服务超时（504），该数据源暂时不可用\n- E4(无效)：实例 refund-mysql-01 不存在，调用 query_slow_log 失败\n本次产生的证据：无\n【覆盖范围（系统生成）】\n- get_instance_info refund-mysql-01：无数据/出错\n- get_access_config refund-mysql-01：无数据/出错\n- query_error_log refund-mysql-01 12:00~15:00：不可用\n- query_slow_log refund-mysql-01 12:00~15:00：无数据/出错\n- 同应用的同类实例已全部查过"
+ }
+}

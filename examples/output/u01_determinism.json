@@ -1,0 +1,40 @@
+{
+ "prompt": "用两句话解释 Redis 为什么会偶尔超时，并给出第一步该查什么。",
+ "answers": [
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：主线程被阻塞（如执行耗时命令、内存淘汰、AOF重写、RDB快照）、高并发请求导致队列积压，或客户端与服务端间网络抖动。  \n第一步应检查 Redis 的 `latency` 监控指标，运行 `redis-cli --latency -h <host> -p <port>` 或 `INFO latency`（若启用 latency monitor），确认是否存在周期性延迟尖峰，并结合 `INFO commandstats",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec",
+  "Redis 偶尔超时通常是因为服务端响应延迟突增，常见原因包括：大 key 扫描、BGSAVE/BGAOFREWRITE 引发的 fork 阻塞（尤其在内存大、负载高时）、内存不足触发 swap、网络抖动或客户端连接池耗尽等。  \n第一步应检查 Redis 的慢日志（`SLOWLOG GET`）和 `INFO stats` 中的 `latest_fork_usec`、`used_memory_rss`、`mem_fragmentation_ratio` 及 `instantaneous_ops_per_sec"
+ ],
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-23",
+  "base_url": "ws-tiy939iiusj2254o.cn-beijing.maas.aliyuncs.com"
+ }
+}

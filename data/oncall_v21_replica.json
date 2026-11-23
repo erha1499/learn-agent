@@ -1,0 +1,1115 @@
+{
+ "source": "oncall-agent-mvp 实验 #28（v2.1，复刻集 replica@1，30 条用例 × 3 遍，qwen-plus，2026-11-21）",
+ "cases": [
+  {
+   "case": "R000",
+   "gold": "MYSQL_ACCOUNT_PRIVILEGE",
+   "scenario": "clarify",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "MYSQL_ACCOUNT_PRIVILEGE",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 0.0,
+     "confidence": 0.98,
+     "cost": 0.0698,
+     "steps_tools": 13.0
+    },
+    {
+     "repeat": 1,
+     "pred": "MYSQL_ACCOUNT_PRIVILEGE",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.98,
+     "cost": 0.085,
+     "steps_tools": 10.0
+    },
+    {
+     "repeat": 2,
+     "pred": "MYSQL_ACCOUNT_PRIVILEGE",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.98,
+     "cost": 0.0552,
+     "steps_tools": 9.0
+    }
+   ]
+  },
+  {
+   "case": "R001",
+   "gold": "MYSQL_MAX_CONNECTIONS",
+   "scenario": "longctx",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "MYSQL_MAX_CONNECTIONS",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0857,
+     "steps_tools": 13.0
+    },
+    {
+     "repeat": 1,
+     "pred": "MYSQL_MAX_CONNECTIONS",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 1,
+     "cost": 0.1518,
+     "steps_tools": 29.0
+    },
+    {
+     "repeat": 2,
+     "pred": "MYSQL_MAX_CONNECTIONS",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.85,
+     "cost": 0.1125,
+     "steps_tools": 12.0
+    }
+   ]
+  },
+  {
+   "case": "R002",
+   "gold": "WT_REGION_HOTSPOT",
+   "scenario": "trap",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "WT_REGION_HOTSPOT",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0426,
+     "steps_tools": 9.0
+    },
+    {
+     "repeat": 1,
+     "pred": "WT_REGION_HOTSPOT",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 0.0,
+     "confidence": 0.92,
+     "cost": 0.0525,
+     "steps_tools": 9.0
+    },
+    {
+     "repeat": 2,
+     "pred": "WT_REGION_HOTSPOT",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0511,
+     "steps_tools": 9.0
+    }
+   ]
+  },
+  {
+   "case": "R003",
+   "gold": "PLATFORM_APPROVAL_PENDING",
+   "scenario": "clarify",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "PLATFORM_APPROVAL_PENDING",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0606,
+     "steps_tools": 5.0
+    },
+    {
+     "repeat": 1,
+     "pred": "PLATFORM_APPROVAL_PENDING",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.98,
+     "cost": 0.0534,
+     "steps_tools": 11.0
+    },
+    {
+     "repeat": 2,
+     "pred": "PLATFORM_APPROVAL_PENDING",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.047,
+     "steps_tools": 8.0
+    }
+   ]
+  },
+  {
+   "case": "R004",
+   "gold": "KV_MEMORY_EVICTION",
+   "scenario": "longctx",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "KV_MEMORY_EVICTION",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.1384,
+     "steps_tools": 21.0
+    },
+    {
+     "repeat": 1,
+     "pred": "KV_HOT_KEY",
+     "top1": 0.0,
+     "top3": 0.0,
+     "grounded": 0.0,
+     "confidence": 0.85,
+     "cost": 0.1068,
+     "steps_tools": 17.0
+    },
+    {
+     "repeat": 2,
+     "pred": "KV_HOT_KEY",
+     "top1": 0.0,
+     "top3": 0.0,
+     "grounded": 0.0,
+     "confidence": 0.82,
+     "cost": 0.0731,
+     "steps_tools": 33.0
+    }
+   ]
+  },
+  {
+   "case": "R005",
+   "gold": "MYSQL_WHITELIST_MISSING",
+   "scenario": "trap",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "MYSQL_WHITELIST_MISSING",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 0.0,
+     "confidence": 0.92,
+     "cost": 0.0743,
+     "steps_tools": 17.0
+    },
+    {
+     "repeat": 1,
+     "pred": "MYSQL_WHITELIST_MISSING",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.98,
+     "cost": 0.0468,
+     "steps_tools": 6.0
+    },
+    {
+     "repeat": 2,
+     "pred": "MYSQL_WHITELIST_MISSING",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.98,
+     "cost": 0.0457,
+     "steps_tools": 9.0
+    }
+   ]
+  },
+  {
+   "case": "R006",
+   "gold": "KV_CLIENT_POOL_EXHAUSTED",
+   "scenario": "clarify",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "KV_BIG_KEY",
+     "top1": 0.0,
+     "top3": 1.0,
+     "grounded": 0.0,
+     "confidence": 0.92,
+     "cost": 0.0739,
+     "steps_tools": 20.0
+    },
+    {
+     "repeat": 1,
+     "pred": "KV_CLIENT_POOL_EXHAUSTED",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 0.0,
+     "confidence": 0.85,
+     "cost": 0.052,
+     "steps_tools": 9.0
+    },
+    {
+     "repeat": 2,
+     "pred": "KV_CLIENT_POOL_EXHAUSTED",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 0.0,
+     "confidence": 0.92,
+     "cost": 0.0401,
+     "steps_tools": 9.0
+    }
+   ]
+  },
+  {
+   "case": "R007",
+   "gold": "KV_BIG_KEY",
+   "scenario": "longctx",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "KV_CLIENT_POOL_EXHAUSTED",
+     "top1": 0.0,
+     "top3": 0.0,
+     "grounded": 0.0,
+     "confidence": 0.95,
+     "cost": 0.1618,
+     "steps_tools": 33.0
+    },
+    {
+     "repeat": 1,
+     "pred": "KV_CLIENT_POOL_EXHAUSTED",
+     "top1": 0.0,
+     "top3": 0.0,
+     "grounded": 0.0,
+     "confidence": 0.92,
+     "cost": 0.0701,
+     "steps_tools": 29.0
+    },
+    {
+     "repeat": 2,
+     "pred": "KV_NETWORK_JITTER",
+     "top1": 0.0,
+     "top3": 0.0,
+     "grounded": 0.0,
+     "confidence": 0.85,
+     "cost": 0.1231,
+     "steps_tools": 20.0
+    }
+   ]
+  },
+  {
+   "case": "R008",
+   "gold": "MYSQL_LOCK_WAIT",
+   "scenario": "trap",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "MYSQL_LOCK_WAIT",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0611,
+     "steps_tools": 11.0
+    },
+    {
+     "repeat": 1,
+     "pred": "MYSQL_LOCK_WAIT",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.98,
+     "cost": 0.0739,
+     "steps_tools": 9.0
+    },
+    {
+     "repeat": 2,
+     "pred": "MYSQL_LOCK_WAIT",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0417,
+     "steps_tools": 9.0
+    }
+   ]
+  },
+  {
+   "case": "R009",
+   "gold": "MYSQL_SLOW_SQL",
+   "scenario": "clarify",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "MYSQL_SLOW_SQL",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0584,
+     "steps_tools": 16.0
+    },
+    {
+     "repeat": 1,
+     "pred": "MYSQL_SLOW_SQL",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0517,
+     "steps_tools": 10.0
+    },
+    {
+     "repeat": 2,
+     "pred": "MYSQL_SLOW_SQL",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0512,
+     "steps_tools": 13.0
+    }
+   ]
+  },
+  {
+   "case": "R010",
+   "gold": "MYSQL_SLOW_SQL",
+   "scenario": "longctx",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "MYSQL_SLOW_SQL",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.1264,
+     "steps_tools": 19.0
+    },
+    {
+     "repeat": 1,
+     "pred": "MYSQL_SLOW_SQL",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0796,
+     "steps_tools": 12.0
+    },
+    {
+     "repeat": 2,
+     "pred": "MYSQL_SLOW_SQL",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.98,
+     "cost": 0.0892,
+     "steps_tools": 17.0
+    }
+   ]
+  },
+  {
+   "case": "R011",
+   "gold": "PLATFORM_QUOTA_INSUFFICIENT",
+   "scenario": "trap",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "PLATFORM_QUOTA_INSUFFICIENT",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0233,
+     "steps_tools": 1.0
+    },
+    {
+     "repeat": 1,
+     "pred": "PLATFORM_QUOTA_INSUFFICIENT",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0424,
+     "steps_tools": 7.0
+    },
+    {
+     "repeat": 2,
+     "pred": "PLATFORM_QUOTA_INSUFFICIENT",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.98,
+     "cost": 0.0484,
+     "steps_tools": 8.0
+    }
+   ]
+  },
+  {
+   "case": "R012",
+   "gold": "KV_MEMORY_EVICTION",
+   "scenario": "clarify",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "KV_MEMORY_EVICTION",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0395,
+     "steps_tools": 9.0
+    },
+    {
+     "repeat": 1,
+     "pred": "KV_MEMORY_EVICTION",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0439,
+     "steps_tools": 9.0
+    },
+    {
+     "repeat": 2,
+     "pred": "KV_MEMORY_EVICTION",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0353,
+     "steps_tools": 8.0
+    }
+   ]
+  },
+  {
+   "case": "R013",
+   "gold": "MYSQL_DISK_FULL",
+   "scenario": "longctx",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "MYSQL_DISK_FULL",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.98,
+     "cost": 0.161,
+     "steps_tools": 33.0
+    },
+    {
+     "repeat": 1,
+     "pred": "MYSQL_DISK_FULL",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.98,
+     "cost": 0.169,
+     "steps_tools": 33.0
+    },
+    {
+     "repeat": 2,
+     "pred": "MYSQL_DISK_FULL",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0768,
+     "steps_tools": 5.0
+    }
+   ]
+  },
+  {
+   "case": "R014",
+   "gold": "MYSQL_SLOW_SQL",
+   "scenario": "trap",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "MYSQL_MAX_CONNECTIONS",
+     "top1": 0.0,
+     "top3": 1.0,
+     "grounded": 0.0,
+     "confidence": 0.95,
+     "cost": 0.0426,
+     "steps_tools": 9.0
+    },
+    {
+     "repeat": 1,
+     "pred": "MYSQL_SLOW_SQL",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0564,
+     "steps_tools": 9.0
+    },
+    {
+     "repeat": 2,
+     "pred": "MYSQL_SLOW_SQL",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0516,
+     "steps_tools": 9.0
+    }
+   ]
+  },
+  {
+   "case": "R015",
+   "gold": "OSS_AK_INVALID",
+   "scenario": "clarify",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "OSS_AK_INVALID",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.031,
+     "steps_tools": 9.0
+    },
+    {
+     "repeat": 1,
+     "pred": "OSS_AK_INVALID",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0315,
+     "steps_tools": 9.0
+    },
+    {
+     "repeat": 2,
+     "pred": "OSS_AK_INVALID",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0355,
+     "steps_tools": 9.0
+    }
+   ]
+  },
+  {
+   "case": "R016",
+   "gold": "MYSQL_LOCK_WAIT",
+   "scenario": "longctx",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "MYSQL_LOCK_WAIT",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 0.0,
+     "confidence": 0.95,
+     "cost": 0.1283,
+     "steps_tools": 33.0
+    },
+    {
+     "repeat": 1,
+     "pred": "MYSQL_SLOW_SQL",
+     "top1": 0.0,
+     "top3": 1.0,
+     "grounded": 0.0,
+     "confidence": 0.92,
+     "cost": 0.1143,
+     "steps_tools": 21.0
+    },
+    {
+     "repeat": 2,
+     "pred": "MYSQL_LOCK_WAIT",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.103,
+     "steps_tools": 21.0
+    }
+   ]
+  },
+  {
+   "case": "R017",
+   "gold": "OSS_BUCKET_POLICY_DENY",
+   "scenario": "trap",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "OSS_BUCKET_POLICY_DENY",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.92,
+     "cost": 0.0398,
+     "steps_tools": 9.0
+    },
+    {
+     "repeat": 1,
+     "pred": "OSS_BUCKET_POLICY_DENY",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0379,
+     "steps_tools": 9.0
+    },
+    {
+     "repeat": 2,
+     "pred": "OSS_BUCKET_POLICY_DENY",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0496,
+     "steps_tools": 9.0
+    }
+   ]
+  },
+  {
+   "case": "R018",
+   "gold": "WT_QUOTA_EXCEEDED",
+   "scenario": "clarify",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "WT_QUOTA_EXCEEDED",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.85,
+     "cost": 0.0368,
+     "steps_tools": 9.0
+    },
+    {
+     "repeat": 1,
+     "pred": "WT_QUOTA_EXCEEDED",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0346,
+     "steps_tools": 8.0
+    },
+    {
+     "repeat": 2,
+     "pred": "WT_QUOTA_EXCEEDED",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.98,
+     "cost": 0.0405,
+     "steps_tools": 9.0
+    }
+   ]
+  },
+  {
+   "case": "R019",
+   "gold": "KV_CLIENT_POOL_EXHAUSTED",
+   "scenario": "longctx",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "KV_CLIENT_POOL_EXHAUSTED",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 0.0,
+     "confidence": 0.75,
+     "cost": 0.077,
+     "steps_tools": 33.0
+    },
+    {
+     "repeat": 1,
+     "pred": "KV_CLIENT_POOL_EXHAUSTED",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 0.0,
+     "confidence": 0.98,
+     "cost": 0.0952,
+     "steps_tools": 20.0
+    },
+    {
+     "repeat": 2,
+     "pred": "KV_HOT_KEY",
+     "top1": 0.0,
+     "top3": 0.0,
+     "grounded": 0.0,
+     "confidence": 0.92,
+     "cost": 0.0703,
+     "steps_tools": 12.0
+    }
+   ]
+  },
+  {
+   "case": "R020",
+   "gold": "MYSQL_MAX_CONNECTIONS",
+   "scenario": "trap",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "MYSQL_SLOW_SQL",
+     "top1": 0.0,
+     "top3": 1.0,
+     "grounded": 0.0,
+     "confidence": 0.95,
+     "cost": 0.072,
+     "steps_tools": 21.0
+    },
+    {
+     "repeat": 1,
+     "pred": "MYSQL_MAX_CONNECTIONS",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.065,
+     "steps_tools": 17.0
+    },
+    {
+     "repeat": 2,
+     "pred": "MYSQL_MAX_CONNECTIONS",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0719,
+     "steps_tools": 17.0
+    }
+   ]
+  },
+  {
+   "case": "R021",
+   "gold": "MYSQL_WHITELIST_MISSING",
+   "scenario": "clarify",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "MYSQL_WHITELIST_MISSING",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0607,
+     "steps_tools": 8.0
+    },
+    {
+     "repeat": 1,
+     "pred": "KV_NETWORK_JITTER",
+     "top1": 0.0,
+     "top3": 0.0,
+     "grounded": 0.0,
+     "confidence": 0.85,
+     "cost": 0.0565,
+     "steps_tools": 17.0
+    },
+    {
+     "repeat": 2,
+     "pred": "MYSQL_WHITELIST_MISSING",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0795,
+     "steps_tools": 18.0
+    }
+   ]
+  },
+  {
+   "case": "R022",
+   "gold": "MYSQL_REPLICATION_LAG",
+   "scenario": "longctx",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "MYSQL_REPLICATION_LAG",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.98,
+     "cost": 0.1083,
+     "steps_tools": 17.0
+    },
+    {
+     "repeat": 1,
+     "pred": "MYSQL_REPLICATION_LAG",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.1194,
+     "steps_tools": 21.0
+    },
+    {
+     "repeat": 2,
+     "pred": "MYSQL_REPLICATION_LAG",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.1411,
+     "steps_tools": 21.0
+    }
+   ]
+  },
+  {
+   "case": "R023",
+   "gold": "KV_BIG_KEY",
+   "scenario": "trap",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "KV_HOT_KEY",
+     "top1": 0.0,
+     "top3": 0.0,
+     "grounded": 0.0,
+     "confidence": 0.92,
+     "cost": 0.0404,
+     "steps_tools": 9.0
+    },
+    {
+     "repeat": 1,
+     "pred": "KV_CLIENT_POOL_EXHAUSTED",
+     "top1": 0.0,
+     "top3": 0.0,
+     "grounded": 0.0,
+     "confidence": 0.92,
+     "cost": 0.0455,
+     "steps_tools": 13.0
+    },
+    {
+     "repeat": 2,
+     "pred": "KV_NETWORK_JITTER",
+     "top1": 0.0,
+     "top3": 0.0,
+     "grounded": 0.0,
+     "confidence": 0.9,
+     "cost": 0.0612,
+     "steps_tools": 9.0
+    }
+   ]
+  },
+  {
+   "case": "R024",
+   "gold": "MYSQL_DISK_FULL",
+   "scenario": "clarify",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "MYSQL_DISK_FULL",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.98,
+     "cost": 0.033,
+     "steps_tools": 9.0
+    },
+    {
+     "repeat": 1,
+     "pred": "MYSQL_DISK_FULL",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.98,
+     "cost": 0.0803,
+     "steps_tools": 12.0
+    },
+    {
+     "repeat": 2,
+     "pred": "MYSQL_DISK_FULL",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0435,
+     "steps_tools": 9.0
+    }
+   ]
+  },
+  {
+   "case": "R025",
+   "gold": "KV_HOT_KEY",
+   "scenario": "longctx",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "KV_HOT_KEY",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.1582,
+     "steps_tools": 13.0
+    },
+    {
+     "repeat": 1,
+     "pred": "KV_CLIENT_POOL_EXHAUSTED",
+     "top1": 0.0,
+     "top3": 0.0,
+     "grounded": 0.0,
+     "confidence": 0.95,
+     "cost": 0.167,
+     "steps_tools": 33.0
+    },
+    {
+     "repeat": 2,
+     "pred": "KV_HOT_KEY",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0944,
+     "steps_tools": 21.0
+    }
+   ]
+  },
+  {
+   "case": "R026",
+   "gold": "KV_HOT_KEY",
+   "scenario": "trap",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "KV_HOT_KEY",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 0.0,
+     "confidence": 0.92,
+     "cost": 0.0403,
+     "steps_tools": 9.0
+    },
+    {
+     "repeat": 1,
+     "pred": "KV_HOT_KEY",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0651,
+     "steps_tools": 12.0
+    },
+    {
+     "repeat": 2,
+     "pred": "KV_HOT_KEY",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 0.0,
+     "confidence": 0.9,
+     "cost": 0.0631,
+     "steps_tools": 9.0
+    }
+   ]
+  },
+  {
+   "case": "R027",
+   "gold": "MYSQL_MAX_CONNECTIONS",
+   "scenario": "clarify",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "MYSQL_MAX_CONNECTIONS",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.98,
+     "cost": 0.0485,
+     "steps_tools": 13.0
+    },
+    {
+     "repeat": 1,
+     "pred": "MYSQL_MAX_CONNECTIONS",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0414,
+     "steps_tools": 9.0
+    },
+    {
+     "repeat": 2,
+     "pred": "MYSQL_MAX_CONNECTIONS",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.98,
+     "cost": 0.0686,
+     "steps_tools": 17.0
+    }
+   ]
+  },
+  {
+   "case": "R028",
+   "gold": "MYSQL_REPLICATION_LAG",
+   "scenario": "clarify",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "MYSQL_REPLICATION_LAG",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0523,
+     "steps_tools": 13.0
+    },
+    {
+     "repeat": 1,
+     "pred": "MYSQL_REPLICATION_LAG",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.98,
+     "cost": 0.0647,
+     "steps_tools": 13.0
+    },
+    {
+     "repeat": 2,
+     "pred": "MYSQL_REPLICATION_LAG",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0543,
+     "steps_tools": 9.0
+    }
+   ]
+  },
+  {
+   "case": "R029",
+   "gold": "OSS_BUCKET_POLICY_DENY",
+   "scenario": "clarify",
+   "runs": [
+    {
+     "repeat": 0,
+     "pred": "OSS_BUCKET_POLICY_DENY",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0477,
+     "steps_tools": 11.0
+    },
+    {
+     "repeat": 1,
+     "pred": "OSS_BUCKET_POLICY_DENY",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.0464,
+     "steps_tools": 9.0
+    },
+    {
+     "repeat": 2,
+     "pred": "OSS_BUCKET_POLICY_DENY",
+     "top1": 1.0,
+     "top3": 1.0,
+     "grounded": 1.0,
+     "confidence": 0.95,
+     "cost": 0.043,
+     "steps_tools": 9.0
+    }
+   ]
+  }
+ ]
+}

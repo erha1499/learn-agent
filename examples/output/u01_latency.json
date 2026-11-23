@@ -1,0 +1,47 @@
+{
+ "短回答": [
+  {
+   "ttft": 0.581,
+   "total": 1.692,
+   "out_tokens": 46,
+   "in_tokens": 16
+  },
+  {
+   "ttft": 0.532,
+   "total": 1.74,
+   "out_tokens": 51,
+   "in_tokens": 16
+  },
+  {
+   "ttft": 0.647,
+   "total": 1.772,
+   "out_tokens": 51,
+   "in_tokens": 16
+  }
+ ],
+ "长回答": [
+  {
+   "ttft": 0.44,
+   "total": 12.635,
+   "out_tokens": 553,
+   "in_tokens": 37
+  },
+  {
+   "ttft": 0.713,
+   "total": 13.014,
+   "out_tokens": 557,
+   "in_tokens": 37
+  },
+  {
+   "ttft": 0.627,
+   "total": 12.964,
+   "out_tokens": 560,
+   "in_tokens": 37
+  }
+ ],
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-23",
+  "base_url": "ws-tiy939iiusj2254o.cn-beijing.maas.aliyuncs.com"
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "template_overhead": 8,
+ "rows": [
+  {
+   "name": "中文",
+   "chars": 46,
+   "tokens": 18
+  },
+  {
+   "name": "英文",
+   "chars": 105,
+   "tokens": 20
+  },
+  {
+   "name": "JSON",
+   "chars": 87,
+   "tokens": 32
+  },
+  {
+   "name": "日志",
+   "chars": 104,
+   "tokens": 46
+  },
+  {
+   "name": "数字",
+   "chars": 20,
+   "tokens": 20
+  }
+ ],
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-23",
+  "base_url": "ws-tiy939iiusj2254o.cn-beijing.maas.aliyuncs.com"
+ }
+}

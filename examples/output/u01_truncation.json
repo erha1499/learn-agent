@@ -1,0 +1,17 @@
+{
+ "40": {
+  "text": "[\n  {\"cause\": \"应用程序未正确关闭数据库连接\", \"check\": \"检查应用代码中数据库连接的获取和关闭逻辑，使用连接池监控工具查看连接是否被及时释放",
+  "finish_reason": "length",
+  "out_tokens": 40
+ },
+ "800": {
+  "text": "[\n  {\"cause\": \"应用程序未正确关闭数据库连接\", \"check\": \"检查应用代码中数据库连接的获取和关闭逻辑，使用连接池监控工具查看连接是否被及时释放\"},\n  {\"cause\": \"连接池配置过大或泄漏\", \"check\": \"检查应用连接池（如HikariCP、Druid）的最大连接数配置，并通过JVM堆栈或连接池监控指标确认是否存在连接未归还\"},\n  {\"cause\": \"慢查询或长事务阻塞连接\", \"check\": \"执行 SHOW PROCESSLIST 查看长时间运行的 Sleep 或 Query 状态连接，结合 information_schema.INNODB_TRX 和 performance_schema.events_statements_current 分析\"),\n  {\"cause\": \"MySQL max_connections 设置过低\", \"check\": \"执行 SELECT @@max_connections; 并对比当前活跃连接数 SHOW STATUS LIKE 'Threads_connected';\"),\n  {\"cause\": \"客户端异常断连导致连接未及时回收\", \"check\": \"检查 MySQL 错误日志中 Aborted_connects 相关记录，确认 wait_timeout 和 interactive_timeout 设置是否合理，并观察连接状态突增现象\"}\n]",
+  "finish_reason": "stop",
+  "out_tokens": 236
+ },
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-23",
+  "base_url": "ws-tiy939iiusj2254o.cn-beijing.maas.aliyuncs.com"
+ }
+}
