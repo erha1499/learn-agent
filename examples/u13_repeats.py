@@ -1,7 +1,7 @@
-"""单元十 · 同一个版本跑 3 遍：结果稳不稳？pass@k 和 pass^k 是什么？
+"""单元十三 · 同一个版本跑 3 遍：结果稳不稳？pass@k 和 pass^k 是什么？
 
 数据是 oncall-agent-mvp 的真实运行（v2.1，复刻集 30 条用例 × 3 遍），从评测平台导出在 data/oncall_v21_replica.json。
-不调模型，直接跑：python examples/u10_repeats.py
+不调模型，直接跑：python examples/u13_repeats.py
 """
 import json
 import os

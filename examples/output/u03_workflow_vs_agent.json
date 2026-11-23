@@ -1,0 +1,400 @@
+{
+ "workflow": {
+  "S1": [
+   {
+    "pred": "MAX_CONNECTIONS",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 513,
+    "seconds": 7.0
+   },
+   {
+    "pred": "MAX_CONNECTIONS",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 510,
+    "seconds": 6.9
+   },
+   {
+    "pred": "MAX_CONNECTIONS",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 508,
+    "seconds": 6.9
+   },
+   {
+    "pred": "MAX_CONNECTIONS",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 502,
+    "seconds": 6.7
+   },
+   {
+    "pred": "MAX_CONNECTIONS",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 500,
+    "seconds": 6.7
+   }
+  ],
+  "S2": [
+   {
+    "pred": "SLOW_SQL",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 741,
+    "seconds": 9.5
+   },
+   {
+    "pred": "SLOW_SQL",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 667,
+    "seconds": 8.0
+   },
+   {
+    "pred": "SLOW_SQL",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 658,
+    "seconds": 7.8
+   },
+   {
+    "pred": "SLOW_SQL",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 718,
+    "seconds": 9.1
+   },
+   {
+    "pred": "SLOW_SQL",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 668,
+    "seconds": 8.0
+   }
+  ],
+  "S3": [
+   {
+    "pred": "LOCK_WAIT",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 711,
+    "seconds": 9.5
+   },
+   {
+    "pred": "LOCK_WAIT",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 697,
+    "seconds": 9.2
+   },
+   {
+    "pred": "LOCK_WAIT",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 691,
+    "seconds": 9.0
+   },
+   {
+    "pred": "LOCK_WAIT",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 591,
+    "seconds": 6.9
+   },
+   {
+    "pred": "LOCK_WAIT",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 644,
+    "seconds": 8.0
+   }
+  ],
+  "S4": [
+   {
+    "pred": "LOCK_WAIT",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 581,
+    "seconds": 7.2
+   },
+   {
+    "pred": "DISK_FULL",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 915,
+    "seconds": 14.6
+   },
+   {
+    "pred": "LOCK_WAIT",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 1100,
+    "seconds": 18.7
+   },
+   {
+    "pred": "LOCK_WAIT",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 673,
+    "seconds": 9.3
+   },
+   {
+    "pred": "LOCK_WAIT",
+    "llm_calls": 1,
+    "tool_calls": 2,
+    "tokens": 723,
+    "seconds": 10.4
+   }
+  ]
+ },
+ "agent": {
+  "S1": [
+   {
+    "pred": "MAX_CONNECTIONS",
+    "llm_calls": 2,
+    "tool_calls": 3,
+    "tokens": 1869,
+    "seconds": 5.6,
+    "tools_used": [
+     "get_metrics",
+     "query_error_log",
+     "query_slow_log"
+    ]
+   },
+   {
+    "pred": "MAX_CONNECTIONS",
+    "llm_calls": 3,
+    "tool_calls": 2,
+    "tokens": 2624,
+    "seconds": 8.1,
+    "tools_used": [
+     "get_metrics",
+     "query_error_log"
+    ]
+   },
+   {
+    "pred": "MAX_CONNECTIONS",
+    "llm_calls": 2,
+    "tool_calls": 3,
+    "tokens": 1873,
+    "seconds": 5.6,
+    "tools_used": [
+     "get_metrics",
+     "query_error_log",
+     "query_slow_log"
+    ]
+   },
+   {
+    "pred": "MAX_CONNECTIONS",
+    "llm_calls": 2,
+    "tool_calls": 3,
+    "tokens": 1873,
+    "seconds": 5.9,
+    "tools_used": [
+     "get_metrics",
+     "query_error_log",
+     "query_slow_log"
+    ]
+   },
+   {
+    "pred": "MAX_CONNECTIONS",
+    "llm_calls": 2,
+    "tool_calls": 3,
+    "tokens": 1864,
+    "seconds": 5.4,
+    "tools_used": [
+     "get_metrics",
+     "query_error_log",
+     "query_slow_log"
+    ]
+   }
+  ],
+  "S2": [
+   {
+    "pred": "SLOW_SQL",
+    "llm_calls": 3,
+    "tool_calls": 2,
+    "tokens": 2238,
+    "seconds": 8.4,
+    "tools_used": [
+     "get_metrics",
+     "query_slow_log"
+    ]
+   },
+   {
+    "pred": "SLOW_SQL",
+    "llm_calls": 2,
+    "tool_calls": 3,
+    "tokens": 1491,
+    "seconds": 6.6,
+    "tools_used": [
+     "get_metrics",
+     "query_error_log",
+     "query_slow_log"
+    ]
+   },
+   {
+    "pred": "SLOW_SQL",
+    "llm_calls": 2,
+    "tool_calls": 3,
+    "tokens": 1486,
+    "seconds": 6.1,
+    "tools_used": [
+     "get_metrics",
+     "query_error_log",
+     "query_slow_log"
+    ]
+   },
+   {
+    "pred": "SLOW_SQL",
+    "llm_calls": 3,
+    "tool_calls": 2,
+    "tokens": 2303,
+    "seconds": 9.5,
+    "tools_used": [
+     "get_metrics",
+     "query_slow_log"
+    ]
+   },
+   {
+    "pred": "SLOW_SQL",
+    "llm_calls": 3,
+    "tool_calls": 2,
+    "tokens": 2217,
+    "seconds": 8.2,
+    "tools_used": [
+     "get_metrics",
+     "query_slow_log"
+    ]
+   }
+  ],
+  "S3": [
+   {
+    "pred": "LOCK_WAIT",
+    "llm_calls": 2,
+    "tool_calls": 3,
+    "tokens": 1591,
+    "seconds": 6.2,
+    "tools_used": [
+     "get_metrics",
+     "query_error_log",
+     "query_slow_log"
+    ]
+   },
+   {
+    "pred": "LOCK_WAIT",
+    "llm_calls": 2,
+    "tool_calls": 3,
+    "tokens": 1560,
+    "seconds": 5.7,
+    "tools_used": [
+     "get_metrics",
+     "query_error_log",
+     "query_slow_log"
+    ]
+   },
+   {
+    "pred": "LOCK_WAIT",
+    "llm_calls": 2,
+    "tool_calls": 3,
+    "tokens": 1567,
+    "seconds": 5.6,
+    "tools_used": [
+     "get_metrics",
+     "query_error_log",
+     "query_slow_log"
+    ]
+   },
+   {
+    "pred": "LOCK_WAIT",
+    "llm_calls": 3,
+    "tool_calls": 2,
+    "tokens": 1845,
+    "seconds": 4.4,
+    "tools_used": [
+     "get_metrics",
+     "query_slow_log"
+    ]
+   },
+   {
+    "pred": "LOCK_WAIT",
+    "llm_calls": 4,
+    "tool_calls": 3,
+    "tokens": 2881,
+    "seconds": 7.7,
+    "tools_used": [
+     "get_metrics",
+     "query_error_log",
+     "query_slow_log"
+    ]
+   }
+  ],
+  "S4": [
+   {
+    "pred": "DISK_FULL",
+    "llm_calls": 4,
+    "tool_calls": 3,
+    "tokens": 3712,
+    "seconds": 12.4,
+    "tools_used": [
+     "get_metrics",
+     "query_error_log",
+     "query_slow_log"
+    ]
+   },
+   {
+    "pred": "DISK_FULL",
+    "llm_calls": 3,
+    "tool_calls": 2,
+    "tokens": 2330,
+    "seconds": 7.7,
+    "tools_used": [
+     "get_metrics",
+     "query_error_log"
+    ]
+   },
+   {
+    "pred": "DISK_FULL",
+    "llm_calls": 3,
+    "tool_calls": 2,
+    "tokens": 2454,
+    "seconds": 9.0,
+    "tools_used": [
+     "get_metrics",
+     "query_error_log"
+    ]
+   },
+   {
+    "pred": "DISK_FULL",
+    "llm_calls": 4,
+    "tool_calls": 3,
+    "tokens": 3287,
+    "seconds": 8.9,
+    "tools_used": [
+     "get_metrics",
+     "query_error_log",
+     "query_slow_log"
+    ]
+   },
+   {
+    "pred": "DISK_FULL",
+    "llm_calls": 4,
+    "tool_calls": 3,
+    "tokens": 3341,
+    "seconds": 9.2,
+    "tools_used": [
+     "get_metrics",
+     "query_error_log",
+     "query_slow_log"
+    ]
+   }
+  ]
+ },
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-24",
+  "base_url": "maas.aliyuncs.com"
+ }
+}

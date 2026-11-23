@@ -1,0 +1,228 @@
+{
+ "question": "数据库连接数现在多少？会不会快满了",
+ "variants": {
+  "带例子": [
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"order-mysql-01\"}"
+    ]
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"order-mysql-01\"}"
+    ]
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"order-mysql-01\"}"
+    ]
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"order-mysql-01\"}"
+    ]
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"order-mysql-01\"}"
+    ]
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"order-mysql-01\"}"
+    ]
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"order-mysql-01\"}"
+    ]
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"order-mysql-01\"}"
+    ]
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"order-mysql-01\"}"
+    ]
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"order-mysql-01\"}"
+    ]
+   }
+  ],
+  "带例子 + 不知道就问": [
+   {
+    "kind": "asked",
+    "text": "请提供具体的 MySQL 实例名，例如 `order-mysql-01`，我才能查询该实例的当前连接数和最大连接数，判断是否快满了。"
+   },
+   {
+    "kind": "asked",
+    "text": "请提供具体的 MySQL 实例名（例如 order-mysql-01），我才能查询该实例的当前连接数和最大连接数，判断是否接近上限。"
+   },
+   {
+    "kind": "asked",
+    "text": "请提供具体的 MySQL 实例名（例如：order-mysql-01），我才能查询该实例的当前连接数和最大连接数，判断是否接近上限。\n\n你有实例名吗？"
+   },
+   {
+    "kind": "asked",
+    "text": "请提供具体的 MySQL 实例名，例如 `order-mysql-01`，我才能查询该实例当前的连接数和最大连接数，判断是否快满了。"
+   },
+   {
+    "kind": "asked",
+    "text": "请提供具体的 MySQL 实例名，例如 `order-mysql-01`，我才能查询其当前连接数和最大连接数，判断是否接近上限。"
+   },
+   {
+    "kind": "asked",
+    "text": "请提供具体的 MySQL 实例名，例如 `order-mysql-01`，我才能查询其当前连接数和最大连接数，判断是否接近上限。"
+   },
+   {
+    "kind": "asked",
+    "text": "请提供具体的 MySQL 实例名，例如 `order-mysql-01`，我才能查询其当前连接数和最大连接数，判断是否快满了。"
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"order-mysql-01\"}"
+    ]
+   },
+   {
+    "kind": "asked",
+    "text": "我需要查询数据库实例的当前连接数和最大连接数，才能判断是否快满了。请问您具体指的是哪个数据库实例？例如：order-mysql-01、user-mysql-02 等。\n\n请提供具体的实例名，我将为您查询相关指标。"
+   },
+   {
+    "kind": "asked",
+    "text": "请提供具体的 MySQL 实例名，例如 `order-mysql-01`，我才能查询该实例的当前连接数和最大连接数，判断是否快满了。"
+   }
+  ],
+  "不带例子": [
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"mysql-01\"}"
+    ]
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"mysql-01\"}"
+    ]
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"mysql-01\"}"
+    ]
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"mysql-prod-01\"}"
+    ]
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"mysql-01\"}"
+    ]
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"mysql-01\"}"
+    ]
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"mysql-01\"}"
+    ]
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"mysql-01\"}"
+    ]
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"mysql-prod-01\"}"
+    ]
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"mysql-01\"}"
+    ]
+   }
+  ],
+  "不带例子 + 不知道就问": [
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"mysql-prod-01\"}"
+    ]
+   },
+   {
+    "kind": "asked",
+    "text": "请提供具体的 MySQL 实例名，我才能查询该实例的当前连接数和最大连接数，判断是否快满了。"
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"rm-2ze7z456789012345\"}"
+    ]
+   },
+   {
+    "kind": "asked",
+    "text": "请提供具体的 MySQL 实例名，我才能查询其当前连接数和最大连接数。"
+   },
+   {
+    "kind": "asked",
+    "text": "请提供具体的 MySQL 实例名，我才能查询其当前连接数和最大连接数。"
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"unknown\"}"
+    ]
+   },
+   {
+    "kind": "asked",
+    "text": "请提供具体的 MySQL 实例名，我才能查询该实例的当前连接数和最大连接数，判断是否接近上限。"
+   },
+   {
+    "kind": "asked",
+    "text": "我需要查询数据库实例的当前连接数和最大连接数，才能判断是否快满了。请问您能提供具体的数据库实例名吗？"
+   },
+   {
+    "kind": "invented",
+    "args": [
+     "{\"instance\": \"rm-2ze8j197n34h7d56m\"}"
+    ]
+   },
+   {
+    "kind": "asked",
+    "text": "我需要查询数据库实例的当前连接数和最大连接数，才能判断是否快满了。请问数据库实例名是什么？\n\n<tool_code>\n{\"name\": \"get_metrics\", \"arguments\": {\"instance\": \"mysql-prod"
+   }
+  ]
+ },
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-24",
+  "base_url": "maas.aliyuncs.com"
+ }
+}

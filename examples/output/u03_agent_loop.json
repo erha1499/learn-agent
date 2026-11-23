@@ -1,0 +1,215 @@
+{
+ "S1": {
+  "question": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看",
+  "gold": "MAX_CONNECTIONS",
+  "pred": "MAX_CONNECTIONS",
+  "stop": "done",
+  "seconds": 5.9,
+  "trace": [
+   {
+    "turn": 1,
+    "prompt_tokens": 455,
+    "completion_tokens": 89,
+    "calls": [
+     {
+      "name": "get_metrics",
+      "args": {
+       "instance": "order-mysql-01"
+      },
+      "result_chars": 130
+     },
+     {
+      "name": "query_slow_log",
+      "args": {
+       "instance": "order-mysql-01",
+       "limit": 5
+      },
+      "result_chars": 98
+     },
+     {
+      "name": "query_error_log",
+      "args": {
+       "instance": "order-mysql-01",
+       "limit": 20
+      },
+      "result_chars": 1079
+     }
+    ],
+    "text": ""
+   },
+   {
+    "turn": 2,
+    "prompt_tokens": 1202,
+    "completion_tokens": 140,
+    "calls": [],
+    "text": "监控数据显示，order-mysql-01 的当前连接数（1000）已达到最大连接数限制（1000），且错误日志中从 14:00 开始持续出现 \"[Warning] Too many connections\"，说明连接数已打满，新连接无法建立，导致下单接口大量报错。慢查询虽存在，但每分钟仅 3 次，且锁等待为 0，排除 SLOW_SQL 和 LOCK_WAIT；CPU 使用率 38% 属正常范围；无磁盘或网络相关错误日志。因此根因为连接数打满。\n\n根因: MAX_CONNECTIONS"
+   }
+  ],
+  "answer": "监控数据显示，order-mysql-01 的当前连接数（1000）已达到最大连接数限制（1000），且错误日志中从 14:00 开始持续出现 \"[Warning] Too many connections\"，说明连接数已打满，新连接无法建立，导致下单接口大量报错。慢查询虽存在，但每分钟仅 3 次，且锁等待为 0，排除 SLOW_SQL 和 LOCK_WAIT；CPU 使用率 38% 属正常范围；无磁盘或网络相关错误日志。因此根因为连接数打满。\n\n根因: MAX_CONNECTIONS"
+ },
+ "S2": {
+  "question": "报表页面打开要一分钟，report-mysql-02 是不是有问题",
+  "gold": "SLOW_SQL",
+  "pred": "SLOW_SQL",
+  "stop": "done",
+  "seconds": 8.0,
+  "trace": [
+   {
+    "turn": 1,
+    "prompt_tokens": 446,
+    "completion_tokens": 60,
+    "calls": [
+     {
+      "name": "get_metrics",
+      "args": {
+       "instance": "report-mysql-02"
+      },
+      "result_chars": 130
+     }
+    ],
+    "text": "我需要检查 report-mysql-02 实例的监控指标和日志，来诊断报表页面打开慢的问题。\n\n首先，让我查询该实例的监控指标：\n\n"
+   },
+   {
+    "turn": 2,
+    "prompt_tokens": 577,
+    "completion_tokens": 83,
+    "calls": [
+     {
+      "name": "query_slow_log",
+      "args": {
+       "instance": "report-mysql-02",
+       "limit": 5
+      },
+      "result_chars": 359
+     }
+    ],
+    "text": "我看到 report-mysql-02 实例的 CPU 使用率高达 94%，每分钟有 160 个慢查询，这很可能是导致报表页面打开慢的原因。让我进一步查看慢查询日志来确认具体情况：\n\n"
+   },
+   {
+    "turn": 3,
+    "prompt_tokens": 836,
+    "completion_tokens": 162,
+    "calls": [],
+    "text": "我看到了问题所在。慢查询日志显示有多个执行时间长达 38.2 秒的查询，这些查询都在扫描 5200 万行数据，主要是针对 orders 表的 DATE(created_at) 查询。这种查询无法使用索引（因为对列使用了函数），导致全表扫描，消耗大量 CPU 资源。\n\n监控数据显示 CPU 使用率高达 94%，每分钟有 160 个慢查询，而锁等待为 0，连接数 180 远低于最大连接数 1000，这表明问题不是连接数打满、锁等待或磁盘空间问题。\n\n因此，根因是慢 SQL 导致的性能问题。\n\n根因: SLOW_SQL"
+   }
+  ],
+  "answer": "我看到了问题所在。慢查询日志显示有多个执行时间长达 38.2 秒的查询，这些查询都在扫描 5200 万行数据，主要是针对 orders 表的 DATE(created_at) 查询。这种查询无法使用索引（因为对列使用了函数），导致全表扫描，消耗大量 CPU 资源。\n\n监控数据显示 CPU 使用率高达 94%，每分钟有 160 个慢查询，而锁等待为 0，连接数 180 远低于最大连接数 1000，这表明问题不是连接数打满、锁等待或磁盘空间问题。\n\n因此，根因是慢 SQL 导致的性能问题。\n\n根因: SLOW_SQL"
+ },
+ "S3": {
+  "question": "支付回调一直超时，pay-mysql-03 帮忙查一下",
+  "gold": "LOCK_WAIT",
+  "pred": "LOCK_WAIT",
+  "stop": "done",
+  "seconds": 5.0,
+  "trace": [
+   {
+    "turn": 1,
+    "prompt_tokens": 449,
+    "completion_tokens": 24,
+    "calls": [
+     {
+      "name": "get_metrics",
+      "args": {
+       "instance": "pay-mysql-03"
+      },
+      "result_chars": 132
+     }
+    ],
+    "text": ""
+   },
+   {
+    "turn": 2,
+    "prompt_tokens": 545,
+    "completion_tokens": 31,
+    "calls": [
+     {
+      "name": "query_slow_log",
+      "args": {
+       "instance": "pay-mysql-03",
+       "limit": 5
+      },
+      "result_chars": 332
+     }
+    ],
+    "text": ""
+   },
+   {
+    "turn": 3,
+    "prompt_tokens": 718,
+    "completion_tokens": 108,
+    "calls": [],
+    "text": " slow_queries_per_min 是 35，说明每分钟有 35 条慢查询；slow_log 中看到多条 UPDATE account 的语句，Query_time 和 Lock_time 都高达 50 秒，且 Lock_time 占比极高（约 99.6%），说明这些慢查询主要是由锁等待导致的。同时 row_lock_waits_per_min 是 120，进一步佐证存在严重的行锁等待问题。因此根因为 LOCK_WAIT。\n\n根因: LOCK_WAIT"
+   }
+  ],
+  "answer": " slow_queries_per_min 是 35，说明每分钟有 35 条慢查询；slow_log 中看到多条 UPDATE account 的语句，Query_time 和 Lock_time 都高达 50 秒，且 Lock_time 占比极高（约 99.6%），说明这些慢查询主要是由锁等待导致的。同时 row_lock_waits_per_min 是 120，进一步佐证存在严重的行锁等待问题。因此根因为 LOCK_WAIT。\n\n根因: LOCK_WAIT"
+ },
+ "S4": {
+  "question": "user-mysql-04 写入全部失败，读好像还正常",
+  "gold": "DISK_FULL",
+  "pred": "DISK_FULL",
+  "stop": "done",
+  "seconds": 6.7,
+  "trace": [
+   {
+    "turn": 1,
+    "prompt_tokens": 447,
+    "completion_tokens": 64,
+    "calls": [
+     {
+      "name": "get_metrics",
+      "args": {
+       "instance": "user-mysql-04"
+      },
+      "result_chars": 128
+     }
+    ],
+    "text": "我需要排查 user-mysql-04 实例写入失败的问题。首先查询该实例的监控指标，然后检查慢查询日志和错误日志，以确定根本原因。\n\n"
+   },
+   {
+    "turn": 2,
+    "prompt_tokens": 580,
+    "completion_tokens": 31,
+    "calls": [
+     {
+      "name": "query_slow_log",
+      "args": {
+       "instance": "user-mysql-04",
+       "limit": 5
+      },
+      "result_chars": 241
+     }
+    ],
+    "text": ""
+   },
+   {
+    "turn": 3,
+    "prompt_tokens": 730,
+    "completion_tokens": 32,
+    "calls": [
+     {
+      "name": "query_error_log",
+      "args": {
+       "instance": "user-mysql-04",
+       "limit": 20
+      },
+      "result_chars": 774
+     }
+    ],
+    "text": ""
+   },
+   {
+    "turn": 4,
+    "prompt_tokens": 1050,
+    "completion_tokens": 93,
+    "calls": [],
+    "text": "从错误日志中可以看到大量 \"No space left on device\"（设备上没有剩余空间）的错误，这表明磁盘已写满。InnoDB 无法向 user_login_log.ibd 文件写入数据，导致写入操作全部失败。而读操作可能还能正常进行，因为读取操作不依赖于磁盘剩余空间（除非需要读取已损坏或无法访问的数据文件）。\n\n根因: DISK_FULL"
+   }
+  ],
+  "answer": "从错误日志中可以看到大量 \"No space left on device\"（设备上没有剩余空间）的错误，这表明磁盘已写满。InnoDB 无法向 user_login_log.ibd 文件写入数据，导致写入操作全部失败。而读操作可能还能正常进行，因为读取操作不依赖于磁盘剩余空间（除非需要读取已损坏或无法访问的数据文件）。\n\n根因: DISK_FULL"
+ },
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-24",
+  "base_url": "maas.aliyuncs.com"
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "question": "对比一下 order-mysql-01 和 pay-mysql-03 的连接数，哪个更危险？",
+ "default": [
+  [
+   "get_metrics{\"instance\": \"order-mysql-01\"}",
+   "get_metrics{\"instance\": \"pay-mysql-03\"}"
+  ],
+  [
+   "get_metrics{\"instance\": \"order-mysql-01\"}",
+   "get_metrics{\"instance\": \"pay-mysql-03\"}"
+  ],
+  [
+   "get_metrics{\"instance\": \"order-mysql-01\"}",
+   "get_metrics{\"instance\": \"pay-mysql-03\"}"
+  ],
+  [
+   "get_metrics{\"instance\": \"order-mysql-01\"}",
+   "get_metrics{\"instance\": \"pay-mysql-03\"}"
+  ],
+  [
+   "get_metrics{\"instance\": \"order-mysql-01\"}",
+   "get_metrics{\"instance\": \"pay-mysql-03\"}"
+  ]
+ ],
+ "parallel": [
+  [
+   "get_metrics{\"instance\": \"order-mysql-01\"}",
+   "get_metrics{\"instance\": \"pay-mysql-03\"}"
+  ],
+  [
+   "get_metrics{\"instance\": \"order-mysql-01\"}",
+   "get_metrics{\"instance\": \"pay-mysql-03\"}"
+  ],
+  [
+   "get_metrics{\"instance\": \"order-mysql-01\"}",
+   "get_metrics{\"instance\": \"pay-mysql-03\"}"
+  ],
+  [
+   "get_metrics{\"instance\": \"order-mysql-01\"}",
+   "get_metrics{\"instance\": \"pay-mysql-03\"}"
+  ],
+  [
+   "get_metrics{\"instance\": \"order-mysql-01\"}",
+   "get_metrics{\"instance\": \"pay-mysql-03\"}"
+  ]
+ ],
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-24",
+  "base_url": "maas.aliyuncs.com"
+ }
+}

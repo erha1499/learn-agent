@@ -1,9 +1,9 @@
-"""单元十 · 只跑一遍的评测，结果能差多少？
+"""单元十三 · 只跑一遍的评测，结果能差多少？
 
 把 data/oncall_v21_replica.json 里每条用例 3 遍的平均正确率，当成这条用例"真实的答对概率"，
 然后模拟"把这 30 条只跑一遍"重复 10000 次，看 Top1 会落在什么范围。不调模型，随机数种子固定。
 
-    python examples/u10_single_run.py
+    python examples/u13_single_run.py
 """
 import json
 import os
