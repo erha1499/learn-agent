@@ -6,7 +6,8 @@
 - 「深入一层（可跳过）：标题」渲染成默认收起的折叠块，范围到下一个同级或更高级的标题为止；
 - 「自测」里的每道题配上 answers.json 里的答案（键是题目原文），缺答案时一次列出所有缺的题再报错；
 - 指向 NN-*.md 的链接变成页内跳转；
-- 导航按导读里的「### 第X部分」分组：每个部分下面表格里链到的单元归这个部分。
+- 导航按导读里的「### 第X部分」分组：每个部分下面表格里链到的单元归这个部分；
+  部分标题和表格之间的说明（写给谁、先要会什么），在网页里挪到这个部分第一个单元的前面，导读里不再重复。
 """
 import html
 import json
@@ -145,7 +146,10 @@ nav{position:sticky;top:0;height:100vh;overflow:auto;width:260px;flex:none;paddi
 nav .brand{font-weight:700;font-size:16px;margin-bottom:18px}
 nav a{display:block;color:var(--fg);text-decoration:none;padding:5px 8px;border-radius:6px;opacity:.85}
 nav a:hover{background:var(--soft);opacity:1}nav .sub{padding-left:20px;font-size:13px;opacity:.7}
-nav .part{margin:18px 8px 4px;font-size:12px;font-weight:600;color:var(--mut)}
+nav a.part{margin:18px 0 4px;font-size:12px;font-weight:600;color:var(--mut)}
+.part-intro{margin:3.2em 0 0;padding:16px 20px;background:var(--soft);border-radius:10px}
+.part-intro .part-name{font-weight:700;font-size:1.2rem;margin-bottom:.3em}.part-intro p{margin:.4em 0}
+.part-intro+section h1{border-top:none;margin-top:1.4em}
 main{min-width:0;flex:1;padding:36px 56px 120px}
 h1{font-size:1.75rem;line-height:1.35;margin:2.4em 0 .8em;padding-top:.4em;border-top:1px solid var(--line)}
 section:first-of-type h1{border-top:none;margin-top:0}
@@ -167,18 +171,22 @@ details.qz summary{cursor:pointer}details.qz .ans{margin:.6em 0 1em;padding:10px
 
 
 def parts(guide):
-    """导读里「### 第X部分 名字」下面的表格链到哪些单元，就归哪个部分。返回 {文件名: 部分名}。"""
-    out, cur = {}, None
+    """导读里「### 第X部分 名字」下面的表格链到哪些单元，就归哪个部分。
+    返回 ({文件名: 部分名}, {部分名: 标题和表格之间的说明})。"""
+    of, intro, cur = {}, {}, None
     for line in guide.split("\n"):
         h = re.match(r"^### (第.+?部分.*)$", line)
         if h:
             cur = h.group(1).strip()
+            intro[cur] = []
         elif line.startswith("#"):
             cur = None
         elif cur:
             for href in re.findall(r"\]\((\d\d-[\w-]+\.md)\)", line):
-                out[href] = cur
-    return out
+                of[href] = cur
+            if line.strip() and not line.startswith("|"):
+                intro[cur].append(line)
+    return of, {k: "\n".join(v) for k, v in intro.items()}
 
 
 def main():
@@ -186,15 +194,23 @@ def main():
     files = sorted(CONTENT.glob("[0-9][0-9]-*.md"))
     units = {f.name: f"u{f.name[:2]}" for f in files}
     guide = (CONTENT / "README.md").read_text(encoding="utf-8")
-    part_of, last_part = parts(guide), None
-    missing, sections, nav = [], [], []
-    for name, md in [("README.md", guide)] + [(f.name, f.read_text(encoding="utf-8")) for f in files]:
+    part_of, intro = parts(guide)
+    page_guide = guide
+    for part in set(part_of.values()):         # 有单元的部分：说明挪到部分开头，导读里删掉
+        if intro[part]:
+            assert page_guide.count(intro[part]) == 1, part
+            page_guide = page_guide.replace(intro[part] + "\n", "", 1)
+    missing, sections, nav, last_part = [], [], [], None
+    for name, md in [("README.md", page_guide)] + [(f.name, f.read_text(encoding="utf-8")) for f in files]:
         uid = units.get(name, "guide")
+        part = part_of.get(name)
+        if name in units and part != last_part:
+            last_part, pid = part, f"part-{uid}"
+            sections.append(f'<section class="part-intro" id="{pid}"><div class="part-name">{html.escape(part or "")}</div>'
+                            f'{render(intro.get(part, ""), units, answers, missing, pid)}</section>')
+            nav.append(f'<a class="part" href="#{pid}">{html.escape(part or "")}</a>')
         sections.append(f'<section>{render(md, units, answers, missing, uid)}</section>')
         title = re.search(r"^# (.+)$", md, re.M).group(1)
-        if name in units and part_of.get(name) != last_part:
-            last_part = part_of.get(name)
-            nav.append(f'<div class="part">{html.escape(last_part or "")}</div>')
         nav.append(f'<a href="#{uid}">{html.escape(title)}</a>')
         for sub in re.findall(r"^## (.+)$", md, re.M):
             if not sub.startswith(("做项目时", "面试常问", "自测", "延伸阅读", "导读")):
