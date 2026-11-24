@@ -18,7 +18,7 @@
 | 2022 | 思维链（CoT）、InstructGPT（RLHF）、ReAct | | LangChain、ChatGPT |
 | 2023 | Toolformer、Reflexion、Generative Agents、Voyager、Tree of Thoughts、Gorilla、ToolLLM、CAMEL、AutoGen、MetaGPT、MemGPT、Lost in the Middle、WebArena、SWE-bench、GAIA | | ChatGPT 插件、AutoGPT、OpenAI Function Calling 接口 |
 | 2024 | SWE-agent、OSWorld、τ-bench、SWE-bench Verified | MCP（11 月）、《Building effective agents》（12 月） | Devin、LangGraph、Claude computer use |
-| 2025 | DeepSeek-R1、BrowseComp、Terminal-Bench | A2A（4 月）、多 Agent 调研系统与《Don't Build Multi-Agents》（6 月）、Agent Skills（10 月） | Operator、Deep Research、Claude Code、Manus、OpenAI Agents SDK、Codex CLI、Google ADK、Gemini CLI、Claude Agent SDK、pi |
+| 2025 | DeepSeek-R1、BrowseComp、Terminal-Bench | A2A（4 月）、多 Agent 调研系统与《Don't Build Multi-Agents》（6 月）、Agent Skills（10 月发布，12 月作为开放标准发布） | Operator、Deep Research、Claude Code、Manus、OpenAI Agents SDK、Codex CLI、Google ADK、Gemini CLI、Claude Agent SDK、pi |
 | 2026 | | 《Demystifying evals for AI agents》（1 月） | |
 
 读这张表抓住两点：
@@ -60,7 +60,7 @@
 | 论文或文章 | 做法 | 今天怎么看 |
 |---|---|---|
 | CAMEL（Li 等，2023） | 两个 Agent 分别扮演用户和助手，互相对话完成任务 | 角色扮演式协作的早期代表 |
-| AutoGen（Wu 等，2023） | 一个框架，让多个“能对话的 Agent”按规则轮流发言 | 后来发展成微软的 Agent 框架 |
+| AutoGen（Wu 等，2023） | 一个框架，让多个“能对话的 Agent”按规则轮流发言 | 2025 年 10 月，微软宣布把它和 Semantic Kernel 合并为 Microsoft Agent Framework |
 | MetaGPT（Hong 等，2023） | 把软件公司的流程写成角色（产品经理、架构师、工程师），每个角色输出结构化文档 | “把标准流程编进分工”，其实更接近 Workflow |
 | 多 Agent 调研系统（Anthropic，2025） | 主 Agent 拆任务，并行派出子 Agent 搜索，汇总成报告 | 适合能拆成独立方向的任务，token 约为普通对话的 15 倍（单元二十五 25.6） |
 | 《Don't Build Multi-Agents》（Cognition，2025） | 反对把任务拆给互相看不到上下文的多个 Agent | 上下文共享是多 Agent 的根本难题；并行写同一份东西尤其危险 |
