@@ -1,0 +1,312 @@
+{
+ "sequential": [
+  {
+   "ok": true,
+   "seconds": 1.662,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.789,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.738,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.553,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.589,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.632,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.613,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.707,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.638,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.572,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.644,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.603,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.574,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.645,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.591,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.64,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.716,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.591,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.627,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.721,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.737,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.661,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.665,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.624,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.563,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.576,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.631,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.75,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.557,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.718,
+   "out": 54
+  }
+ ],
+ "concurrent": [
+  {
+   "ok": true,
+   "seconds": 1.971,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.945,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 2.017,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 2.043,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.941,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.981,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.97,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.94,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 2.012,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.969,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.641,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.625,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.616,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.626,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.587,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.586,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.605,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.646,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.661,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.552,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 2.052,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.983,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 2.048,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.942,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 2.048,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.96,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.984,
+   "out": 54
+  },
+  {
+   "ok": true,
+   "seconds": 1.939,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 2.016,
+   "out": 51
+  },
+  {
+   "ok": true,
+   "seconds": 1.866,
+   "out": 51
+  }
+ ],
+ "concurrent_wall": 5.68,
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-24",
+  "base_url": "maas.aliyuncs.com"
+ }
+}

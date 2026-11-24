@@ -1,0 +1,4450 @@
+{
+ "R1": [
+  {
+   "tickets": [
+    {
+     "id": "INC-1001",
+     "title": "order-mysql-01 连接数打满导致下单接口大量报错",
+     "severity": "P0"
+    },
+    {
+     "id": "INC-1002",
+     "title": "order-mysql-01 连接数打满问题",
+     "severity": "P0"
+    }
+   ],
+   "llm_before": 4,
+   "llm_after": 4,
+   "tokens_after": 4504,
+   "pred": "MAX_CONNECTIONS",
+   "events": [
+    {
+     "type": "message",
+     "message": {
+      "role": "system",
+      "content": "你是数据库值班助手。先用工具查清楚，再下结论，不要猜。根因只能从下面选一个：MAX_CONNECTIONS（连接数打满）、SLOW_SQL（慢 SQL）、LOCK_WAIT（锁等待）、DISK_FULL（磁盘写满）、NETWORK（网络问题）。回答最后一行写：根因: <ID>。查清根因后，先调用 create_ticket 建一张工单（标题写明实例和根因），再回复用户"
+     }
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "user",
+      "content": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.51,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_85fc6b295227461a87c781",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_85fc6b295227461a87c781",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.16,
+     "prompt_tokens": 691,
+     "completion_tokens": 78
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我看到连接数已经达到最大连接数（1000/1000），这很可能是导致下单接口大量报错的原因。让我再检查一下错误日志和慢查询日志，确认具体情况。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_e09fb82dd6124a7db10980",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_e09fb82dd6124a7db10980",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.69,
+     "prompt_tokens": 1321,
+     "completion_tokens": 102
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "错误日志明确显示从14:00开始大量出现 \"Too many connections\" 警告，这证实了连接数已达到上限。监控指标也显示 connections=1000, max_connections=1000，完全吻合。\n\n让我再检查一下慢查询日志，确认是否有其他潜在问题：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_e00b69702230412da06cfb",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_e00b69702230412da06cfb",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.36,
+     "prompt_tokens": 1479,
+     "completion_tokens": 131
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "慢查询日志显示有一条执行时间1.21秒的查询，但慢查询数量只有每分钟3次，不是主要问题。错误日志中大量 \"Too many connections\" 警告和监控指标显示连接数已达到上限，这明确表明问题是连接数打满。\n\n我已经确认根因是 MAX_CONNECTIONS（连接数打满）。\n\n现在我将创建一张工单：\n\n\n",
+      "tool_calls": [
+       {
+        "id": "call_2732f894d1fc47c7858be3",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满导致下单接口大量报错\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_2732f894d1fc47c7858be3",
+      "content": "已创建工单 INC-1001"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.54,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，以确定问题根因。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_b976c46db5f14373980413",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_b976c46db5f14373980413",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.27,
+     "prompt_tokens": 691,
+     "completion_tokens": 130
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "从监控指标看，order-mysql-01 实例的连接数已达到最大连接数（1000/1000），这表明连接数已打满。其他指标如CPU使用率38%、QPS 5200、慢查询每分钟3个、行锁等待为0，都处于正常范围，没有明显异常。\n\n为了进一步确认，我需要查看错误日志，看看是否有连接相关的错误信息：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_13cd6dbd8a144f0bbae51f",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_13cd6dbd8a144f0bbae51f",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.64,
+     "prompt_tokens": 1373,
+     "completion_tokens": 96
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "错误日志中大量出现 \"[Warning] Too many connections\"，这进一步证实了连接数已达到上限，导致新连接无法建立，从而引发下单接口报错。\n\n根因是 MAX_CONNECTIONS（连接数打满）。\n\n现在我将创建一张工单：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_c48101bb8a4846699a7efc",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满问题\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_c48101bb8a4846699a7efc",
+      "content": "已创建工单 INC-1002"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.62,
+     "prompt_tokens": 1494,
+     "completion_tokens": 100
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "已创建工单 INC-1002，标题为\"order-mysql-01 连接数打满问题\"，严重级别为P0。\n\n问题根因是连接数已达到最大限制（1000/1000），导致新连接无法建立，从而引发下单接口大量报错。建议立即检查应用端连接池配置、是否存在连接泄漏，或临时增加数据库最大连接数以缓解问题。\n\n根因: MAX_CONNECTIONS"
+     }
+    }
+   ]
+  },
+  {
+   "tickets": [
+    {
+     "id": "INC-1001",
+     "title": "order-mysql-01 连接数打满问题",
+     "severity": "P0"
+    },
+    {
+     "id": "INC-1002",
+     "title": "order-mysql-01 连接数打满导致下单接口大量报错",
+     "severity": "P0"
+    }
+   ],
+   "llm_before": 4,
+   "llm_after": 4,
+   "tokens_after": 4630,
+   "pred": "MAX_CONNECTIONS",
+   "events": [
+    {
+     "type": "message",
+     "message": {
+      "role": "system",
+      "content": "你是数据库值班助手。先用工具查清楚，再下结论，不要猜。根因只能从下面选一个：MAX_CONNECTIONS（连接数打满）、SLOW_SQL（慢 SQL）、LOCK_WAIT（锁等待）、DISK_FULL（磁盘写满）、NETWORK（网络问题）。回答最后一行写：根因: <ID>。查清根因后，先调用 create_ticket 建一张工单（标题写明实例和根因），再回复用户"
+     }
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "user",
+      "content": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.51,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_ea694fb532634d2787f24b",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_ea694fb532634d2787f24b",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.4,
+     "prompt_tokens": 691,
+     "completion_tokens": 88
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "从监控指标来看，order-mysql-01 实例的连接数已经达到最大连接数（1000/1000），这很可能是导致下单接口大量报错的原因。让我进一步查询错误日志和慢查询日志来确认。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_fc02f866e0a14e6a8b91c5",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_fc02f866e0a14e6a8b91c5",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.14,
+     "prompt_tokens": 1331,
+     "completion_tokens": 31
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+       {
+        "id": "call_e3ac4268f4174313abdc7e",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_e3ac4268f4174313abdc7e",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.91,
+     "prompt_tokens": 1417,
+     "completion_tokens": 107
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "确认了问题原因：order-mysql-01 实例的连接数已达到最大限制（1000/1000），错误日志中大量出现 \"Too many connections\" 警告，这正是导致下单接口大量报错的根本原因。\n\n我将创建一张工单来处理这个问题。\n\n\n",
+      "tool_calls": [
+       {
+        "id": "call_6129d913b4f84b3cace385",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满问题\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_6129d913b4f84b3cace385",
+      "content": "已创建工单 INC-1001"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.48,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_08e21f73bf82418f8f5ced",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_08e21f73bf82418f8f5ced",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.29,
+     "prompt_tokens": 691,
+     "completion_tokens": 129
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "从监控指标来看，order-mysql-01 实例的连接数已经达到最大连接数（1000/1000），这很可能是导致下单接口大量报错的原因。其他指标如CPU使用率38%、QPS 5200、慢查询每分钟3个、行锁等待为0，都处于正常范围。\n\n为了进一步确认，我需要查看错误日志，看看是否有连接数相关的错误信息：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_f5b3fb117c4940aeae2d22",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_f5b3fb117c4940aeae2d22",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.13,
+     "prompt_tokens": 1372,
+     "completion_tokens": 118
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "错误日志明确显示从14:00开始大量出现 \"Too many connections\" 警告，这证实了连接数打满的问题。当连接数达到最大限制时，新的连接请求会被拒绝，导致下单接口报错。\n\n我已经确认根因为 MAX_CONNECTIONS（连接数打满）。\n\n现在我将创建一张工单：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_a9c6f2ac27a44f569821b7",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满导致下单接口大量报错\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_a9c6f2ac27a44f569821b7",
+      "content": "已创建工单 INC-1002"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 4.52,
+     "prompt_tokens": 1515,
+     "completion_tokens": 185
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "已创建工单 INC-1002，标题为\"order-mysql-01 连接数打满导致下单接口大量报错\"。\n\n问题分析：order-mysql-01 实例当前连接数已达最大限制（1000/1000），错误日志中从14:00开始大量出现 \"Too many connections\" 警告，这导致新的数据库连接请求被拒绝，进而造成下单接口大量报错。\n\n建议措施：\n1. 紧急扩容：临时增加 max_connections 配置\n2. 连接池优化：检查应用端连接池配置，避免连接泄漏\n3. 连接监控：设置连接数告警阈值（如80%）\n4. 根因分析：排查是否有异常的长连接或连接未正确释放\n\n根因: MAX_CONNECTIONS"
+     }
+    }
+   ]
+  },
+  {
+   "tickets": [
+    {
+     "id": "INC-1001",
+     "title": "order-mysql-01 连接数打满问题",
+     "severity": "P0"
+    },
+    {
+     "id": "INC-1002",
+     "title": "order-mysql-01 连接数打满（MAX_CONNECTIONS）",
+     "severity": "P0"
+    }
+   ],
+   "llm_before": 4,
+   "llm_after": 5,
+   "tokens_after": 5397,
+   "pred": "MAX_CONNECTIONS",
+   "events": [
+    {
+     "type": "message",
+     "message": {
+      "role": "system",
+      "content": "你是数据库值班助手。先用工具查清楚，再下结论，不要猜。根因只能从下面选一个：MAX_CONNECTIONS（连接数打满）、SLOW_SQL（慢 SQL）、LOCK_WAIT（锁等待）、DISK_FULL（磁盘写满）、NETWORK（网络问题）。回答最后一行写：根因: <ID>。查清根因后，先调用 create_ticket 建一张工单（标题写明实例和根因），再回复用户"
+     }
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "user",
+      "content": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.46,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_46dacce1cdb446fea43dca",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_46dacce1cdb446fea43dca",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.02,
+     "prompt_tokens": 691,
+     "completion_tokens": 69
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我看到连接数已经达到最大连接数1000，这很可能是问题的根源。让我再检查一下错误日志和慢查询日志，以确认具体情况。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_1e657a0d04f9402d98019f",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_1e657a0d04f9402d98019f",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.09,
+     "prompt_tokens": 1312,
+     "completion_tokens": 31
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+       {
+        "id": "call_bcb92a6df0da4faaa1da22",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_bcb92a6df0da4faaa1da22",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.31,
+     "prompt_tokens": 1398,
+     "completion_tokens": 38
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+       {
+        "id": "call_43fdc0a926194e0e87ea72",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满问题\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_43fdc0a926194e0e87ea72",
+      "content": "已创建工单 INC-1001"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.53,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_56293117fde94eff9bf94d",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_56293117fde94eff9bf94d",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.17,
+     "prompt_tokens": 691,
+     "completion_tokens": 79
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我看到连接数已经达到最大连接数（1000/1000），这很可能是导致下单接口大量报错的原因。让我再检查一下慢查询日志和错误日志，确认是否有其他问题。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_9a7e443b7af74a91846b39",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_9a7e443b7af74a91846b39",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.11,
+     "prompt_tokens": 826,
+     "completion_tokens": 32
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+       {
+        "id": "call_fe3094d0c382416a8da0ef",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_fe3094d0c382416a8da0ef",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.99,
+     "prompt_tokens": 1409,
+     "completion_tokens": 111
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "确认了问题根因：连接数已经打满（1000/1000），错误日志中大量出现 \"Too many connections\" 警告，这与下单接口从14:00开始大量报错的时间点完全吻合。\n\n现在我将创建一张工单来处理这个问题：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_0e58824113554980bdbd07",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满（MAX_CONNECTIONS）\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_0e58824113554980bdbd07",
+      "content": "已创建工单 INC-1002"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.38,
+     "prompt_tokens": 1545,
+     "completion_tokens": 84
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "order-mysql-01 实例的连接数已达到上限（1000/1000），导致下单接口大量报错。错误日志中从14:00开始持续出现 \"Too many connections\" 警告，确认是连接数打满问题。\n\n已创建工单 INC-1002 进行处理。\n\n根因: MAX_CONNECTIONS"
+     }
+    }
+   ]
+  }
+ ],
+ "R2": [
+  {
+   "tickets": [
+    {
+     "id": "INC-1001",
+     "title": "order-mysql-01 连接数打满导致下单接口大量报错",
+     "severity": "P0"
+    },
+    {
+     "id": "INC-1002",
+     "title": "order-mysql-01 连接数打满问题",
+     "severity": "P0"
+    }
+   ],
+   "llm_before": 4,
+   "llm_after": 5,
+   "tokens_after": 6191,
+   "pred": "MAX_CONNECTIONS",
+   "events": [
+    {
+     "type": "message",
+     "message": {
+      "role": "system",
+      "content": "你是数据库值班助手。先用工具查清楚，再下结论，不要猜。根因只能从下面选一个：MAX_CONNECTIONS（连接数打满）、SLOW_SQL（慢 SQL）、LOCK_WAIT（锁等待）、DISK_FULL（磁盘写满）、NETWORK（网络问题）。回答最后一行写：根因: <ID>。查清根因后，先调用 create_ticket 建一张工单（标题写明实例和根因），再回复用户"
+     }
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "user",
+      "content": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.53,
+     "prompt_tokens": 574,
+     "completion_tokens": 47
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，以了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_f1f56e64754a43e29e971a",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_f1f56e64754a43e29e971a",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.14,
+     "prompt_tokens": 692,
+     "completion_tokens": 78
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我看到连接数已经达到最大连接数（1000/1000），这很可能是导致下单接口大量报错的原因。让我再检查一下慢查询日志和错误日志，以确认具体情况。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_11968e98bf3c4969bd32db",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_11968e98bf3c4969bd32db",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.13,
+     "prompt_tokens": 826,
+     "completion_tokens": 32
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+       {
+        "id": "call_c575a27e83b147718bc2fc",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_c575a27e83b147718bc2fc",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 4.08,
+     "prompt_tokens": 1409,
+     "completion_tokens": 164
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "确认了问题原因：order-mysql-01 实例的连接数已经达到了最大连接数限制（1000/1000），错误日志中也明确显示了 \"Too many connections\" 的警告，这与下单接口从14:00开始大量报错的时间点完全吻合。\n\n虽然存在一些慢查询（如查询orders表的语句），但慢查询数量并不高（每分钟3个），且锁等待为0，因此不是主要问题。根本原因是连接数打满。\n\n现在我将创建一张工单：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_043721a171614470a47e4f",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满导致下单接口大量报错\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_043721a171614470a47e4f",
+      "content": "已创建工单 INC-1001"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.45,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_1e7dcc01ad854b7da2d7e4",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_1e7dcc01ad854b7da2d7e4",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.32,
+     "prompt_tokens": 691,
+     "completion_tokens": 87
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "连接数已经达到最大连接数1000，说明连接数已经打满。我需要进一步确认是否有慢SQL或锁等待等问题，但当前指标显示慢查询和锁等待都不高。\n\n让我再查询一下错误日志，看看具体的错误信息：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_eb67379b108e49cbae6a2f",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_eb67379b108e49cbae6a2f",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.93,
+     "prompt_tokens": 1330,
+     "completion_tokens": 113
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "错误日志中明确显示了大量 \"Too many connections\" 警告，这证实了连接数已经打满的问题。当前连接数1000已经达到最大连接数1000的上限，导致新的连接请求被拒绝，这就是下单接口大量报错的根本原因。\n\n让我再查询一下慢查询日志，确认是否慢SQL是导致连接堆积的原因：\n\n\n",
+      "tool_calls": [
+       {
+        "id": "call_3ca4293b78d746af98a217",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_3ca4293b78d746af98a217",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.1,
+     "prompt_tokens": 1498,
+     "completion_tokens": 120
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "慢查询日志显示有一条执行时间1.21秒的查询，但慢查询率并不高（每分钟只有3个），不足以解释连接数打满的问题。结合错误日志中的 \"Too many connections\" 警告和监控指标中连接数达到上限的事实，可以确定根本原因是连接数打满。\n\n现在我将创建一张工单来处理这个问题：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_4d0b7eb1e1dc4b59bcc0fd",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满问题\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_4d0b7eb1e1dc4b59bcc0fd",
+      "content": "已创建工单 INC-1002"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.37,
+     "prompt_tokens": 1643,
+     "completion_tokens": 89
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "已确认 order-mysql-01 实例存在连接数打满问题。当前连接数达到1000，与最大连接数限制相等，导致新的连接请求被拒绝，这正是下单接口大量报错的原因。错误日志中明确显示了大量 \"Too many connections\" 警告。\n\n已创建工单 INC-1002 进行处理。\n\n根因: MAX_CONNECTIONS"
+     }
+    }
+   ]
+  },
+  {
+   "tickets": [
+    {
+     "id": "INC-1001",
+     "title": "order-mysql-01 连接数打满（MAX_CONNECTIONS）",
+     "severity": "P0"
+    },
+    {
+     "id": "INC-1002",
+     "title": "order-mysql-01 连接数打满问题",
+     "severity": "P0"
+    }
+   ],
+   "llm_before": 4,
+   "llm_after": 5,
+   "tokens_after": 5684,
+   "pred": "MAX_CONNECTIONS",
+   "events": [
+    {
+     "type": "message",
+     "message": {
+      "role": "system",
+      "content": "你是数据库值班助手。先用工具查清楚，再下结论，不要猜。根因只能从下面选一个：MAX_CONNECTIONS（连接数打满）、SLOW_SQL（慢 SQL）、LOCK_WAIT（锁等待）、DISK_FULL（磁盘写满）、NETWORK（网络问题）。回答最后一行写：根因: <ID>。查清根因后，先调用 create_ticket 建一张工单（标题写明实例和根因），再回复用户"
+     }
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "user",
+      "content": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.77,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_19c53ece41ba402eb35df5",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_19c53ece41ba402eb35df5",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.4,
+     "prompt_tokens": 691,
+     "completion_tokens": 88
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "从监控指标来看，order-mysql-01 实例的连接数已经达到最大连接数（1000/1000），这很可能是导致下单接口大量报错的原因。让我进一步查询错误日志和慢查询日志来确认。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_aafd8c9c32704cd4a8926b",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_aafd8c9c32704cd4a8926b",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.06,
+     "prompt_tokens": 1331,
+     "completion_tokens": 74
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "错误日志中明确显示了大量 \"Too many connections\" 警告，这证实了连接数打满的问题。让我再检查一下慢查询日志，确保没有其他潜在问题。\n\n\n",
+      "tool_calls": [
+       {
+        "id": "call_1a448429e4e34d05a41dd0",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_1a448429e4e34d05a41dd0",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.35,
+     "prompt_tokens": 1459,
+     "completion_tokens": 134
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "慢查询日志显示有一条执行时间1.21秒的查询，但慢查询数量并不高（每分钟3个），不是主要问题。而错误日志中大量 \"Too many connections\" 警告和监控指标显示连接数已达上限（1000/1000），这明确表明问题是 MAX_CONNECTIONS（连接数打满）。\n\n现在我将创建一张工单来处理这个问题。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_e81e0ded6e554eb3b6c463",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满（MAX_CONNECTIONS）\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_e81e0ded6e554eb3b6c463",
+      "content": "已创建工单 INC-1001"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.53,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_94ed4f3357544a7e9238b6",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_94ed4f3357544a7e9238b6",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.03,
+     "prompt_tokens": 691,
+     "completion_tokens": 68
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我看到连接数已经达到最大连接数1000，说明连接数已经打满。为了进一步确认，我需要查看错误日志和慢查询日志。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_928f673a152741aaaf0065",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_928f673a152741aaaf0065",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.12,
+     "prompt_tokens": 1311,
+     "completion_tokens": 31
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+       {
+        "id": "call_d0898f0009a44279b2ebb5",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_d0898f0009a44279b2ebb5",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.27,
+     "prompt_tokens": 1397,
+     "completion_tokens": 38
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+       {
+        "id": "call_2be84ff179fe42619de2d8",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满问题\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_2be84ff179fe42619de2d8",
+      "content": "已创建工单 INC-1002"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.94,
+     "prompt_tokens": 1459,
+     "completion_tokens": 69
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "根据监控指标和日志分析，order-mysql-01 实例的连接数已经达到最大连接数1000，错误日志中大量出现 \"Too many connections\" 警告，这表明连接数已经打满，导致下单接口无法获取数据库连接而报错。\n\n根因: MAX_CONNECTIONS"
+     }
+    }
+   ]
+  },
+  {
+   "tickets": [
+    {
+     "id": "INC-1001",
+     "title": "order-mysql-01 连接数打满问题",
+     "severity": "P0"
+    },
+    {
+     "id": "INC-1002",
+     "title": "order-mysql-01 实例连接数打满（MAX_CONNECTIONS）",
+     "severity": "P0"
+    }
+   ],
+   "llm_before": 4,
+   "llm_after": 5,
+   "tokens_after": 6165,
+   "pred": "MAX_CONNECTIONS",
+   "events": [
+    {
+     "type": "message",
+     "message": {
+      "role": "system",
+      "content": "你是数据库值班助手。先用工具查清楚，再下结论，不要猜。根因只能从下面选一个：MAX_CONNECTIONS（连接数打满）、SLOW_SQL（慢 SQL）、LOCK_WAIT（锁等待）、DISK_FULL（磁盘写满）、NETWORK（网络问题）。回答最后一行写：根因: <ID>。查清根因后，先调用 create_ticket 建一张工单（标题写明实例和根因），再回复用户"
+     }
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "user",
+      "content": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.52,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_d572dcaa9be342f3b097b1",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_d572dcaa9be342f3b097b1",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.43,
+     "prompt_tokens": 691,
+     "completion_tokens": 88
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "连接数已经达到最大连接数1000，说明连接数已经打满。我需要进一步确认是否有慢SQL或锁等待等问题，但当前指标显示慢查询和锁等待都不高。\n\n让我查询一下错误日志，看看是否有连接相关的错误信息：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_cddd6a3166ef468cb9f806",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_cddd6a3166ef468cb9f806",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.7,
+     "prompt_tokens": 1331,
+     "completion_tokens": 104
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "错误日志明确显示从14:00开始大量出现 \"Too many connections\" 警告，这证实了连接数打满的问题。监控指标也显示 connections=1000, max_connections=1000，达到了上限。\n\n让我再查询一下慢查询日志，确认是否慢SQL导致连接堆积：\n\n\n",
+      "tool_calls": [
+       {
+        "id": "call_8a15ba7b0e874862a23ee8",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_8a15ba7b0e874862a23ee8",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.39,
+     "prompt_tokens": 1490,
+     "completion_tokens": 133
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "慢查询日志显示有一条执行时间1.21秒的查询，但每分钟慢查询数只有3次，不足以导致连接数打满到1000。错误日志中的 \"Too many connections\" 警告是直接证据，表明应用端连接没有正确释放，导致连接池耗尽。\n\n综合所有信息，根因是连接数打满（MAX_CONNECTIONS）。\n\n现在我将创建一张工单：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_7536c45b24d6414d8e7adc",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满问题\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_7536c45b24d6414d8e7adc",
+      "content": "已创建工单 INC-1001"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.42,
+     "prompt_tokens": 574,
+     "completion_tokens": 44
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，看看当前的状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_5a26f86eeee94df1b2dcd8",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_5a26f86eeee94df1b2dcd8",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.31,
+     "prompt_tokens": 689,
+     "completion_tokens": 85
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "连接数已经达到最大连接数1000，说明连接数打满了。我需要进一步确认是否有慢SQL或锁等待问题，但当前指标显示慢查询和锁等待都不高。\n\n让我查询一下错误日志，看看具体的错误信息：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_faccda4d566a4228b5d947",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_faccda4d566a4228b5d947",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.72,
+     "prompt_tokens": 1326,
+     "completion_tokens": 103
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "错误日志中明确显示了大量 \"Too many connections\" 的警告，这证实了连接数已经打满的问题。当前连接数为1000，最大连接数也是1000，完全符合MAX_CONNECTIONS根因。\n\n让我再查询一下慢查询日志，确认是否慢SQL是导致连接堆积的原因：\n\n\n",
+      "tool_calls": [
+       {
+        "id": "call_f9b9830985db4a95916f87",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_f9b9830985db4a95916f87",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.36,
+     "prompt_tokens": 1484,
+     "completion_tokens": 133
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "慢查询日志显示有一条执行时间1.21秒的查询，但这不是主要问题，因为慢查询率只有每分钟3次，不足以导致连接数打满。\n\n综合所有信息：连接数已经达到最大值1000，错误日志中大量出现 \"Too many connections\" 警告，这明确表明问题是连接数打满（MAX_CONNECTIONS）。\n\n现在我将创建一张工单：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_d0945d1a1db045ab9b4b5a",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 实例连接数打满（MAX_CONNECTIONS）\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_d0945d1a1db045ab9b4b5a",
+      "content": "已创建工单 INC-1002"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.31,
+     "prompt_tokens": 1642,
+     "completion_tokens": 85
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "order-mysql-01 实例当前连接数已达到最大值1000，错误日志中大量出现 \"Too many connections\" 警告，导致下单接口从14:00开始大量报错。这属于连接数打满（MAX_CONNECTIONS）问题。\n\n已创建工单 INC-1002，请相关团队尽快处理。\n\n根因: MAX_CONNECTIONS"
+     }
+    }
+   ]
+  }
+ ],
+ "R3": [
+  {
+   "tickets": [
+    {
+     "id": "INC-1001",
+     "title": "order-mysql-01 连接数打满导致下单接口大量报错",
+     "severity": "P0"
+    }
+   ],
+   "llm_before": 3,
+   "llm_after": 5,
+   "tokens_after": 6281,
+   "pred": "MAX_CONNECTIONS",
+   "events": [
+    {
+     "type": "message",
+     "message": {
+      "role": "system",
+      "content": "你是数据库值班助手。先用工具查清楚，再下结论，不要猜。根因只能从下面选一个：MAX_CONNECTIONS（连接数打满）、SLOW_SQL（慢 SQL）、LOCK_WAIT（锁等待）、DISK_FULL（磁盘写满）、NETWORK（网络问题）。回答最后一行写：根因: <ID>。查清根因后，先调用 create_ticket 建一张工单（标题写明实例和根因），再回复用户"
+     }
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "user",
+      "content": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.51,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_f9c191ff26044233a62f07",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_f9c191ff26044233a62f07",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.99,
+     "prompt_tokens": 691,
+     "completion_tokens": 68
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "连接数已经达到最大连接数1000，说明连接数已经打满。我需要进一步确认是否有其他线索，比如错误日志或慢查询日志。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_640c569977404351a1ad00",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_640c569977404351a1ad00",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.99,
+     "prompt_tokens": 1311,
+     "completion_tokens": 117
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "错误日志中明确显示了大量 \"Too many connections\" 的警告，这进一步证实了连接数打满的问题。同时，监控指标也显示 connections = max_connections = 1000，说明连接池已完全耗尽。\n\n我已经确认根因是 MAX_CONNECTIONS（连接数打满）。\n\n现在我将创建一张工单：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_01bb928c224f4eb4926caa",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满导致下单接口大量报错\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_01bb928c224f4eb4926caa",
+      "content": "已创建工单 INC-1001"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.72,
+     "prompt_tokens": 574,
+     "completion_tokens": 47
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，以了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_f24dc55642a045f8a30428",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_f24dc55642a045f8a30428",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.41,
+     "prompt_tokens": 692,
+     "completion_tokens": 82
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我看到连接数已经达到最大连接数1000，这表明 MAX_CONNECTIONS（连接数打满）可能是问题根因。但为了确认，我还需要检查错误日志和慢查询日志，以排除其他可能性。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_93c0dc908ef645d7b94a34",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_93c0dc908ef645d7b94a34",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.63,
+     "prompt_tokens": 1326,
+     "completion_tokens": 99
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "错误日志中明确显示了大量 \"Too many connections\" 警告，这证实了连接数已达到上限。同时，监控指标也显示 connections=1000 和 max_connections=1000，完全匹配。\n\n为了进一步确认没有其他问题，我再检查一下慢查询日志：\n\n\n",
+      "tool_calls": [
+       {
+        "id": "call_7b47ba087e084239bdbe53",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_7b47ba087e084239bdbe53",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 4.66,
+     "prompt_tokens": 1480,
+     "completion_tokens": 187
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "慢查询日志显示有一条执行时间1.21秒的查询，但每分钟慢查询数只有3次，远不足以导致大量报错。同时，行锁等待数为0，排除了锁等待问题。\n\n综合所有信息：\n- 连接数已达到最大连接数（1000/1000）\n- 错误日志中大量出现 \"Too many connections\" 警告\n- CPU使用率38%正常，QPS 5200也属正常范围\n- 慢查询和锁等待指标都很低\n\n因此，根因是 MAX_CONNECTIONS（连接数打满）。\n\n现在我将创建一张工单：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_01e2ed340534499fa40624",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 实例连接数打满故障\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_01e2ed340534499fa40624",
+      "content": "工单已存在：INC-1001（幂等键命中，没有重复创建）"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.5,
+     "prompt_tokens": 1702,
+     "completion_tokens": 92
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "已确认 order-mysql-01 实例存在连接数打满问题，错误日志中大量出现 \"Too many connections\" 警告，监控指标显示当前连接数已达最大连接数上限（1000/1000）。这导致下单接口从14:00开始大量报错。\n\n工单 INC-1001 已存在，无需重复创建。\n\n根因: MAX_CONNECTIONS"
+     }
+    }
+   ]
+  },
+  {
+   "tickets": [
+    {
+     "id": "INC-1001",
+     "title": "order-mysql-01 连接数打满问题",
+     "severity": "P0"
+    }
+   ],
+   "llm_before": 3,
+   "llm_after": 4,
+   "tokens_after": 4525,
+   "pred": "MAX_CONNECTIONS",
+   "events": [
+    {
+     "type": "message",
+     "message": {
+      "role": "system",
+      "content": "你是数据库值班助手。先用工具查清楚，再下结论，不要猜。根因只能从下面选一个：MAX_CONNECTIONS（连接数打满）、SLOW_SQL（慢 SQL）、LOCK_WAIT（锁等待）、DISK_FULL（磁盘写满）、NETWORK（网络问题）。回答最后一行写：根因: <ID>。查清根因后，先调用 create_ticket 建一张工单（标题写明实例和根因），再回复用户"
+     }
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "user",
+      "content": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.54,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_73f86a005b5946deba2f63",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_73f86a005b5946deba2f63",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.34,
+     "prompt_tokens": 691,
+     "completion_tokens": 129
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "从监控指标来看，order-mysql-01 实例的连接数已经达到最大连接数（1000/1000），这很可能是导致下单接口大量报错的原因。其他指标如CPU使用率38%、QPS 5200、慢查询每分钟3个、行锁等待为0，都处于正常范围。\n\n为了进一步确认，我需要查看错误日志，看看是否有连接数相关的错误信息。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_d3593f8710a54ad49dc3ed",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_d3593f8710a54ad49dc3ed",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.22,
+     "prompt_tokens": 1372,
+     "completion_tokens": 120
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "错误日志明确显示从14:00开始大量出现 \"Too many connections\" 警告，这证实了连接数已达到上限（1000/1000），导致新的连接请求被拒绝，从而造成下单接口大量报错。\n\n根因是 MAX_CONNECTIONS（连接数打满）。\n\n现在我将创建一张工单来处理这个问题：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_53d6119a17a64eef89e76d",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满问题\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_53d6119a17a64eef89e76d",
+      "content": "已创建工单 INC-1001"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.62,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_7bad0e94a9f54da7bca8bc",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_7bad0e94a9f54da7bca8bc",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.38,
+     "prompt_tokens": 691,
+     "completion_tokens": 132
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "从监控指标来看，order-mysql-01 实例的连接数已经达到最大连接数（1000/1000），这很可能是导致下单接口大量报错的原因。其他指标如CPU使用率38%、QPS 5200、慢查询每分钟3个、行锁等待为0，都处于正常范围。\n\n为了进一步确认，我需要查看错误日志，看看是否有连接数打满相关的错误信息。\n\n\n",
+      "tool_calls": [
+       {
+        "id": "call_f5c776b0fe9d4547a10b9b",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_f5c776b0fe9d4547a10b9b",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.7,
+     "prompt_tokens": 1373,
+     "completion_tokens": 100
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "错误日志明确显示从14:00开始大量出现 \"Too many connections\" 警告，这证实了连接数打满的问题。当MySQL连接数达到最大限制时，新的连接请求会被拒绝，导致下单接口大量报错。\n\n根因: MAX_CONNECTIONS\n\n",
+      "tool_calls": [
+       {
+        "id": "call_ca67434817ef41f2bccd31",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满问题\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_ca67434817ef41f2bccd31",
+      "content": "工单已存在：INC-1001（幂等键命中，没有重复创建）"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.71,
+     "prompt_tokens": 1507,
+     "completion_tokens": 102
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "已确认 order-mysql-01 实例存在连接数打满问题（MAX_CONNECTIONS），错误日志中大量出现 \"Too many connections\" 警告。工单 INC-1001 已创建。\n\n建议立即采取措施：\n1. 检查应用端是否存在连接泄漏问题\n2. 临时增加 max_connections 配置值作为应急措施\n3. 分析当前活跃连接，识别并终止异常连接\n\n根因: MAX_CONNECTIONS"
+     }
+    }
+   ]
+  },
+  {
+   "tickets": [
+    {
+     "id": "INC-1001",
+     "title": "order-mysql-01 连接数打满（MAX_CONNECTIONS）",
+     "severity": "P0"
+    }
+   ],
+   "llm_before": 4,
+   "llm_after": 5,
+   "tokens_after": 5733,
+   "pred": "MAX_CONNECTIONS",
+   "events": [
+    {
+     "type": "message",
+     "message": {
+      "role": "system",
+      "content": "你是数据库值班助手。先用工具查清楚，再下结论，不要猜。根因只能从下面选一个：MAX_CONNECTIONS（连接数打满）、SLOW_SQL（慢 SQL）、LOCK_WAIT（锁等待）、DISK_FULL（磁盘写满）、NETWORK（网络问题）。回答最后一行写：根因: <ID>。查清根因后，先调用 create_ticket 建一张工单（标题写明实例和根因），再回复用户"
+     }
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "user",
+      "content": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.53,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_83addce0e72e46d5996ccb",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_83addce0e72e46d5996ccb",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.41,
+     "prompt_tokens": 691,
+     "completion_tokens": 79
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我看到连接数已经达到最大连接数（1000/1000），这很可能是导致下单接口大量报错的原因。让我再检查一下慢查询日志和错误日志，确认是否有其他问题。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_c12950778f5d4298940a9a",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_c12950778f5d4298940a9a",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.19,
+     "prompt_tokens": 826,
+     "completion_tokens": 32
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+       {
+        "id": "call_2ff1ba7e7f2c491c9b457c",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_2ff1ba7e7f2c491c9b457c",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.01,
+     "prompt_tokens": 1409,
+     "completion_tokens": 111
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "确认了问题根因：连接数已经打满（1000/1000），错误日志中大量出现 \"Too many connections\" 警告，这与下单接口从14:00开始大量报错的时间点完全吻合。\n\n现在我将创建一张工单来处理这个问题：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_e0c2ca27c2b84546a760f5",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满（MAX_CONNECTIONS）\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_e0c2ca27c2b84546a760f5",
+      "content": "已创建工单 INC-1001"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.59,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_62d3c741cfea49d68249ca",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_62d3c741cfea49d68249ca",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.01,
+     "prompt_tokens": 691,
+     "completion_tokens": 69
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我看到连接数已经达到最大连接数1000，这很可能是问题的根源。让我再检查一下错误日志和慢查询日志，以确认具体情况。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_0f836aac34d649fabbcb18",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_0f836aac34d649fabbcb18",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.42,
+     "prompt_tokens": 1312,
+     "completion_tokens": 31
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+       {
+        "id": "call_dfc9b9629a1f4b6d94271d",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_dfc9b9629a1f4b6d94271d",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.33,
+     "prompt_tokens": 1398,
+     "completion_tokens": 38
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+       {
+        "id": "call_fbb8ec4e0b6742ccba6ff5",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满问题\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_fbb8ec4e0b6742ccba6ff5",
+      "content": "工单已存在：INC-1001（幂等键命中，没有重复创建）"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.75,
+     "prompt_tokens": 1470,
+     "completion_tokens": 104
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "根据监控指标和日志分析，order-mysql-01 实例的连接数已经达到最大连接数1000，错误日志中大量出现 \"Too many connections\" 警告，这表明连接数已经打满，导致下单接口无法获取新的数据库连接而报错。虽然存在少量慢查询，但慢查询数量（3条/分钟）并不高，且锁等待为0，因此主要问题还是连接数耗尽。\n\n根因: MAX_CONNECTIONS"
+     }
+    }
+   ]
+  }
+ ],
+ "R4": [
+  {
+   "tickets": [
+    {
+     "id": "INC-1001",
+     "title": "order-mysql-01 连接数打满问题",
+     "severity": "P0"
+    }
+   ],
+   "llm_before": 4,
+   "llm_after": 1,
+   "tokens_after": 1720,
+   "pred": "MAX_CONNECTIONS",
+   "events": [
+    {
+     "type": "message",
+     "message": {
+      "role": "system",
+      "content": "你是数据库值班助手。先用工具查清楚，再下结论，不要猜。根因只能从下面选一个：MAX_CONNECTIONS（连接数打满）、SLOW_SQL（慢 SQL）、LOCK_WAIT（锁等待）、DISK_FULL（磁盘写满）、NETWORK（网络问题）。回答最后一行写：根因: <ID>。查清根因后，先调用 create_ticket 建一张工单（标题写明实例和根因），再回复用户"
+     }
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "user",
+      "content": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.55,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_1ba6d5dd11234c5d83f0e5",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_1ba6d5dd11234c5d83f0e5",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.25,
+     "prompt_tokens": 691,
+     "completion_tokens": 78
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我看到连接数已经达到最大连接数（1000/1000），这很可能是导致下单接口大量报错的原因。让我再检查一下错误日志和慢查询日志，确认具体情况。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_9f2fcff228e442fbb14624",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_9f2fcff228e442fbb14624",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.13,
+     "prompt_tokens": 1321,
+     "completion_tokens": 31
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+       {
+        "id": "call_05ed1109973e44bab68222",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_05ed1109973e44bab68222",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.21,
+     "prompt_tokens": 1407,
+     "completion_tokens": 124
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "根据监控指标和日志分析，order-mysql-01 实例的连接数已经达到最大连接数限制（1000/1000），错误日志中大量出现 \"Too many connections\" 警告，这明确表明问题是由连接数打满导致的。虽然也存在一些慢查询，但当前主要问题是连接数耗尽。\n\n根因: MAX_CONNECTIONS\n\n",
+      "tool_calls": [
+       {
+        "id": "call_80a9e35db8e94305856a61",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满问题\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_80a9e35db8e94305856a61",
+      "content": "已创建工单 INC-1001"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 4.27,
+     "prompt_tokens": 1555,
+     "completion_tokens": 165
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "已创建工单 INC-1001，标题为\"order-mysql-01 连接数打满问题\"。\n\n问题分析：order-mysql-01 实例当前连接数已达最大限制（1000/1000），错误日志中大量出现 \"Too many connections\" 警告，导致下单接口无法获取数据库连接而大量报错。\n\n建议措施：\n1. 立即检查应用端连接池配置，确认是否存在连接泄漏\n2. 临时增加 max_connections 配置作为应急措施\n3. 分析慢查询，优化相关SQL（如 SELECT * FROM orders WHERE user_id = 88231）\n4. 检查业务流量是否异常增长\n\n根因: MAX_CONNECTIONS"
+     }
+    }
+   ]
+  },
+  {
+   "tickets": [
+    {
+     "id": "INC-1001",
+     "title": "order-mysql-01 连接数打满问题",
+     "severity": "P0"
+    }
+   ],
+   "llm_before": 3,
+   "llm_after": 1,
+   "tokens_after": 1589,
+   "pred": "MAX_CONNECTIONS",
+   "events": [
+    {
+     "type": "message",
+     "message": {
+      "role": "system",
+      "content": "你是数据库值班助手。先用工具查清楚，再下结论，不要猜。根因只能从下面选一个：MAX_CONNECTIONS（连接数打满）、SLOW_SQL（慢 SQL）、LOCK_WAIT（锁等待）、DISK_FULL（磁盘写满）、NETWORK（网络问题）。回答最后一行写：根因: <ID>。查清根因后，先调用 create_ticket 建一张工单（标题写明实例和根因），再回复用户"
+     }
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "user",
+      "content": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.61,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_49a3751bf8b446a9a4cd6b",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_49a3751bf8b446a9a4cd6b",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.52,
+     "prompt_tokens": 691,
+     "completion_tokens": 129
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "从监控指标来看，order-mysql-01 实例的连接数已经达到最大连接数（1000/1000），这很可能是导致下单接口大量报错的原因。其他指标如CPU使用率38%、QPS 5200、慢查询每分钟3个、行锁等待为0，都处于正常范围。\n\n为了进一步确认，我需要查看错误日志，看看是否有连接数相关的错误信息。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_8ad8efe24ef044349372ab",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_8ad8efe24ef044349372ab",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.82,
+     "prompt_tokens": 1372,
+     "completion_tokens": 103
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "错误日志明确显示从14:00开始大量出现 \"Too many connections\" 警告，这证实了连接数打满的问题。当连接数达到最大限制时，新的连接请求会被拒绝，导致下单接口大量报错。\n\n现在我需要创建一张工单来处理这个问题。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_a8a996f4dba24258b736a3",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满问题\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_a8a996f4dba24258b736a3",
+      "content": "已创建工单 INC-1001"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.44,
+     "prompt_tokens": 1500,
+     "completion_tokens": 89
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "order-mysql-01 实例从14:00开始大量报错的原因是连接数已达到最大限制（1000/1000），错误日志中大量出现 \"Too many connections\" 警告。这导致新的连接请求被拒绝，影响下单接口正常工作。\n\n已创建工单 INC-1001 处理此问题。\n\n根因: MAX_CONNECTIONS"
+     }
+    }
+   ]
+  },
+  {
+   "tickets": [
+    {
+     "id": "INC-1001",
+     "title": "order-mysql-01 实例连接数打满（MAX_CONNECTIONS）",
+     "severity": "P0"
+    }
+   ],
+   "llm_before": 4,
+   "llm_after": 1,
+   "tokens_after": 1825,
+   "pred": "MAX_CONNECTIONS",
+   "events": [
+    {
+     "type": "message",
+     "message": {
+      "role": "system",
+      "content": "你是数据库值班助手。先用工具查清楚，再下结论，不要猜。根因只能从下面选一个：MAX_CONNECTIONS（连接数打满）、SLOW_SQL（慢 SQL）、LOCK_WAIT（锁等待）、DISK_FULL（磁盘写满）、NETWORK（网络问题）。回答最后一行写：根因: <ID>。查清根因后，先调用 create_ticket 建一张工单（标题写明实例和根因），再回复用户"
+     }
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "user",
+      "content": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.46,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_b39e621bbfe349ee802bcf",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_b39e621bbfe349ee802bcf",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.48,
+     "prompt_tokens": 691,
+     "completion_tokens": 87
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "连接数已经达到最大连接数1000，说明连接数已经打满。我需要进一步确认是否有慢SQL或锁等待问题，但当前监控显示慢查询和锁等待都不高。\n\n让我查询一下错误日志，看看具体的报错信息：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_4a5cb022413345ffb3072a",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_4a5cb022413345ffb3072a",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.48,
+     "prompt_tokens": 1330,
+     "completion_tokens": 94
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "错误日志明确显示 \"Too many connections\" 错误，这证实了连接数打满的问题。监控指标也显示 connections=1000，max_connections=1000，已经达到上限。\n\n让我再查询一下慢查询日志，确认是否有慢SQL导致连接堆积：\n\n\n",
+      "tool_calls": [
+       {
+        "id": "call_0e63b7ca6c94487dadd214",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_0e63b7ca6c94487dadd214",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.91,
+     "prompt_tokens": 1479,
+     "completion_tokens": 151
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "慢查询日志显示有一条执行时间1.21秒的查询，但每分钟只有3个慢查询，不足以导致连接数打满到1000。错误日志中的 \"Too many connections\" 明确指向连接数问题。\n\n综合所有信息：连接数已达到最大值1000，错误日志显示大量 \"Too many connections\" 警告，这是典型的连接数打满问题。\n\n根因: MAX_CONNECTIONS\n\n现在我将创建一张工单：\n\n\n",
+      "tool_calls": [
+       {
+        "id": "call_3d59e027e74a45d2aa29a2",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 实例连接数打满（MAX_CONNECTIONS）\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_3d59e027e74a45d2aa29a2",
+      "content": "已创建工单 INC-1001"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 4.26,
+     "prompt_tokens": 1654,
+     "completion_tokens": 171
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "已创建工单 INC-1001，标题为 \"order-mysql-01 实例连接数打满（MAX_CONNECTIONS）\"，严重级别为 P0。\n\n问题分析：order-mysql-01 实例当前连接数已达最大限制 1000/1000，导致下单接口无法获取数据库连接而大量报错。错误日志中频繁出现 \"Too many connections\" 警告，证实了连接数打满的问题。\n\n建议立即采取的措施：\n1. 检查应用端连接池配置，确认是否存在连接泄漏\n2. 临时增加 max_connections 参数值（需评估服务器资源）\n3. 检查是否有长连接未正常关闭\n4. 分析业务高峰期的连接使用模式\n\n根因: MAX_CONNECTIONS"
+     }
+    }
+   ]
+  }
+ ],
+ "R5": [
+  {
+   "tickets": [
+    {
+     "id": "INC-1001",
+     "title": "order-mysql-01 连接数打满问题",
+     "severity": "P0"
+    },
+    {
+     "id": "INC-1002",
+     "title": "order-mysql-01 连接数打满问题",
+     "severity": "P0"
+    }
+   ],
+   "llm_before": 3,
+   "llm_after": 1,
+   "tokens_after": 1561,
+   "pred": "MAX_CONNECTIONS",
+   "events": [
+    {
+     "type": "message",
+     "message": {
+      "role": "system",
+      "content": "你是数据库值班助手。先用工具查清楚，再下结论，不要猜。根因只能从下面选一个：MAX_CONNECTIONS（连接数打满）、SLOW_SQL（慢 SQL）、LOCK_WAIT（锁等待）、DISK_FULL（磁盘写满）、NETWORK（网络问题）。回答最后一行写：根因: <ID>。查清根因后，先调用 create_ticket 建一张工单（标题写明实例和根因），再回复用户"
+     }
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "user",
+      "content": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.5,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_d0d0ee5c058c4ce3ab1275",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_d0d0ee5c058c4ce3ab1275",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.07,
+     "prompt_tokens": 691,
+     "completion_tokens": 68
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "连接数已经达到最大连接数1000，说明连接数已经打满。我需要进一步确认是否有其他线索，比如错误日志或慢查询日志。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_2e0d5ba657814092b27b78",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_2e0d5ba657814092b27b78",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.69,
+     "prompt_tokens": 1311,
+     "completion_tokens": 99
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "错误日志中明确显示了大量 \"Too many connections\" 的警告，这证实了连接数已经打满的问题。监控指标也显示 connections=1000，max_connections=1000，达到了100%。\n\n我需要创建一张工单来处理这个问题。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_5229d75606904d56ba476f",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满问题\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_5229d75606904d56ba476f",
+      "content": "已创建工单 INC-1002"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.27,
+     "prompt_tokens": 1435,
+     "completion_tokens": 126
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "order-mysql-01 实例的连接数已经打满（1000/1000），导致下单接口从14:00开始大量报错。错误日志中出现了大量 \"Too many connections\" 的警告，证实了这个问题。\n\n建议立即采取以下措施：\n1. 检查应用端是否存在连接泄漏问题\n2. 临时增加 max_connections 配置以缓解问题\n3. 分析哪些应用或查询占用了大量连接\n\n已创建工单 INC-1002 跟踪此问题。\n\n根因: MAX_CONNECTIONS"
+     }
+    }
+   ]
+  },
+  {
+   "tickets": [
+    {
+     "id": "INC-1001",
+     "title": "order-mysql-01 实例连接数打满问题",
+     "severity": "P0"
+    },
+    {
+     "id": "INC-1002",
+     "title": "order-mysql-01 实例连接数打满问题",
+     "severity": "P0"
+    }
+   ],
+   "llm_before": 4,
+   "llm_after": 1,
+   "tokens_after": 1660,
+   "pred": "MAX_CONNECTIONS",
+   "events": [
+    {
+     "type": "message",
+     "message": {
+      "role": "system",
+      "content": "你是数据库值班助手。先用工具查清楚，再下结论，不要猜。根因只能从下面选一个：MAX_CONNECTIONS（连接数打满）、SLOW_SQL（慢 SQL）、LOCK_WAIT（锁等待）、DISK_FULL（磁盘写满）、NETWORK（网络问题）。回答最后一行写：根因: <ID>。查清根因后，先调用 create_ticket 建一张工单（标题写明实例和根因），再回复用户"
+     }
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "user",
+      "content": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.59,
+     "prompt_tokens": 574,
+     "completion_tokens": 47
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，以了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_99cd86e5c78d46a585882a",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_99cd86e5c78d46a585882a",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.5,
+     "prompt_tokens": 692,
+     "completion_tokens": 91
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "从监控指标来看，order-mysql-01 实例的连接数已经达到最大连接数（1000/1000），这很可能是导致下单接口大量报错的原因。让我再查询一下错误日志和慢查询日志，以进一步确认。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_fd8e5cf12e424f06b1e40a",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_fd8e5cf12e424f06b1e40a",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.2,
+     "prompt_tokens": 1335,
+     "completion_tokens": 31
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+       {
+        "id": "call_a872cf1da4b84395bef929",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_a872cf1da4b84395bef929",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.36,
+     "prompt_tokens": 1421,
+     "completion_tokens": 38
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+       {
+        "id": "call_1129e92b2754481bb99aba",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 实例连接数打满问题\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_1129e92b2754481bb99aba",
+      "content": "已创建工单 INC-1002"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 4.4,
+     "prompt_tokens": 1483,
+     "completion_tokens": 177
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "已确认 order-mysql-01 实例存在连接数打满的问题。监控数据显示当前连接数已达 1000/1000 的上限，错误日志中也频繁出现 \"Too many connections\" 警告，这与下单接口从 14:00 开始大量报错的时间点完全吻合。\n\n建议立即采取以下措施：\n1. 临时增加 max_connections 配置以缓解问题\n2. 检查应用端是否存在连接泄漏问题\n3. 分析慢查询（如 SELECT * FROM orders WHERE user_id = 88231）是否需要优化\n\n工单 INC-1002 已创建，标题为 \"order-mysql-01 实例连接数打满问题\"，优先级为 P0。\n\n根因: MAX_CONNECTIONS"
+     }
+    }
+   ]
+  },
+  {
+   "tickets": [
+    {
+     "id": "INC-1001",
+     "title": "order-mysql-01 连接数打满导致下单接口大量报错",
+     "severity": "P0"
+    },
+    {
+     "id": "INC-1002",
+     "title": "order-mysql-01 连接数打满导致下单接口大量报错",
+     "severity": "P0"
+    }
+   ],
+   "llm_before": 4,
+   "llm_after": 1,
+   "tokens_after": 1742,
+   "pred": "MAX_CONNECTIONS",
+   "events": [
+    {
+     "type": "message",
+     "message": {
+      "role": "system",
+      "content": "你是数据库值班助手。先用工具查清楚，再下结论，不要猜。根因只能从下面选一个：MAX_CONNECTIONS（连接数打满）、SLOW_SQL（慢 SQL）、LOCK_WAIT（锁等待）、DISK_FULL（磁盘写满）、NETWORK（网络问题）。回答最后一行写：根因: <ID>。查清根因后，先调用 create_ticket 建一张工单（标题写明实例和根因），再回复用户"
+     }
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "user",
+      "content": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.46,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_17b9bd1a5f1849f4af34f0",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_17b9bd1a5f1849f4af34f0",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.4,
+     "prompt_tokens": 691,
+     "completion_tokens": 87
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "连接数已经达到最大连接数1000，说明连接数已经打满。我需要进一步确认是否有慢SQL或锁等待问题，但当前监控显示慢查询和锁等待都不高。\n\n让我查询一下错误日志，看看具体的报错信息：\n\n",
+      "tool_calls": [
+       {
+        "id": "call_954d8fd1ea4349a6860c9d",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_954d8fd1ea4349a6860c9d",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.52,
+     "prompt_tokens": 1330,
+     "completion_tokens": 94
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "错误日志明确显示 \"Too many connections\" 错误，这证实了连接数打满的问题。监控指标也显示 connections=1000，max_connections=1000，已经达到上限。\n\n让我再查询一下慢查询日志，确认是否有慢SQL导致连接堆积：\n\n\n",
+      "tool_calls": [
+       {
+        "id": "call_16a5b63e8ea74fdd969130",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_16a5b63e8ea74fdd969130",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.23,
+     "prompt_tokens": 1479,
+     "completion_tokens": 123
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "慢查询日志显示有一条执行时间1.21秒的查询，但慢查询率只有每分钟3次，不是主要问题。错误日志中的 \"Too many connections\" 是最直接的证据，监控指标也证实连接数已达到上限。\n\n因此，根因是 MAX_CONNECTIONS（连接数打满）。\n\n现在我将创建一张工单：\n\n\n",
+      "tool_calls": [
+       {
+        "id": "call_8770cae694e0400bb7bd0a",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满导致下单接口大量报错\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_8770cae694e0400bb7bd0a",
+      "content": "已创建工单 INC-1002"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.07,
+     "prompt_tokens": 1626,
+     "completion_tokens": 116
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "已创建工单 INC-1002，标题为\"order-mysql-01 连接数打满导致下单接口大量报错\"。\n\n问题分析：order-mysql-01 实例当前连接数已达上限（1000/1000），错误日志中大量出现 \"Too many connections\" 报警，导致下单接口无法获取数据库连接而大量报错。建议立即检查应用端连接池配置、是否存在连接泄漏，或临时增加数据库最大连接数限制。\n\n根因: MAX_CONNECTIONS"
+     }
+    }
+   ]
+  }
+ ],
+ "R6": [
+  {
+   "tickets": [
+    {
+     "id": "INC-1001",
+     "title": "order-mysql-01 连接数打满问题",
+     "severity": "P0"
+    }
+   ],
+   "llm_before": 3,
+   "llm_after": 1,
+   "tokens_after": 1511,
+   "pred": "MAX_CONNECTIONS",
+   "events": [
+    {
+     "type": "message",
+     "message": {
+      "role": "system",
+      "content": "你是数据库值班助手。先用工具查清楚，再下结论，不要猜。根因只能从下面选一个：MAX_CONNECTIONS（连接数打满）、SLOW_SQL（慢 SQL）、LOCK_WAIT（锁等待）、DISK_FULL（磁盘写满）、NETWORK（网络问题）。回答最后一行写：根因: <ID>。查清根因后，先调用 create_ticket 建一张工单（标题写明实例和根因），再回复用户"
+     }
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "user",
+      "content": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.55,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_9c469720472b4db0bd7888",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_9c469720472b4db0bd7888",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.04,
+     "prompt_tokens": 691,
+     "completion_tokens": 68
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "连接数已经达到最大连接数1000，说明连接数已经打满。我需要进一步确认是否有其他线索，比如错误日志或慢查询日志。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_5b0682223f48442782e6b0",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_5b0682223f48442782e6b0",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.86,
+     "prompt_tokens": 1311,
+     "completion_tokens": 98
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "错误日志中明确显示了大量 \"Too many connections\" 的警告，这证实了连接数已经打满的问题。同时监控指标也显示 connections=1000，max_connections=1000，达到了上限。\n\n我需要创建一张工单来处理这个问题。\n\n\n",
+      "tool_calls": [
+       {
+        "id": "call_69ecdbd339d84dcaa16c72",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满问题\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_69ecdbd339d84dcaa16c72",
+      "content": "工单已存在：INC-1001（幂等键命中，没有重复创建）"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.06,
+     "prompt_tokens": 1442,
+     "completion_tokens": 69
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "已确认 order-mysql-01 实例存在连接数打满的问题，当前连接数已达最大连接数 1000，错误日志中大量出现 \"Too many connections\" 警告。这导致下单接口从 14:00 开始大量报错。\n\n根因: MAX_CONNECTIONS"
+     }
+    }
+   ]
+  },
+  {
+   "tickets": [
+    {
+     "id": "INC-1001",
+     "title": "order-mysql-01 实例连接数打满（MAX_CONNECTIONS）",
+     "severity": "P0"
+    }
+   ],
+   "llm_before": 4,
+   "llm_after": 1,
+   "tokens_after": 1583,
+   "pred": "MAX_CONNECTIONS",
+   "events": [
+    {
+     "type": "message",
+     "message": {
+      "role": "system",
+      "content": "你是数据库值班助手。先用工具查清楚，再下结论，不要猜。根因只能从下面选一个：MAX_CONNECTIONS（连接数打满）、SLOW_SQL（慢 SQL）、LOCK_WAIT（锁等待）、DISK_FULL（磁盘写满）、NETWORK（网络问题）。回答最后一行写：根因: <ID>。查清根因后，先调用 create_ticket 建一张工单（标题写明实例和根因），再回复用户"
+     }
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "user",
+      "content": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.68,
+     "prompt_tokens": 574,
+     "completion_tokens": 54
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，查看是否存在连接数打满、慢SQL、锁等待等问题。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_72d587a0ccc24f8f852016",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_72d587a0ccc24f8f852016",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.25,
+     "prompt_tokens": 699,
+     "completion_tokens": 78
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我看到连接数已经达到最大连接数1000/1000，这很可能是导致下单接口大量报错的原因。让我再检查一下慢查询日志和错误日志，确认是否有其他问题。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_2d82cc1f64cd4683a354b1",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_2d82cc1f64cd4683a354b1",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.19,
+     "prompt_tokens": 833,
+     "completion_tokens": 32
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+       {
+        "id": "call_9268b15eb3e14d4f98f4b7",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_9268b15eb3e14d4f98f4b7",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.37,
+     "prompt_tokens": 1416,
+     "completion_tokens": 42
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+       {
+        "id": "call_2e38a2c16b4b46cfaea01f",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 实例连接数打满（MAX_CONNECTIONS）\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_2e38a2c16b4b46cfaea01f",
+      "content": "工单已存在：INC-1001（幂等键命中，没有重复创建）"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 2.49,
+     "prompt_tokens": 1492,
+     "completion_tokens": 91
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "已确认 order-mysql-01 实例存在连接数打满问题：当前连接数1000/1000，错误日志中大量出现 \"Too many connections\" 警告，时间点与下单接口报错时间（14:00开始）完全吻合。虽然存在少量慢查询，但主要问题是连接数耗尽导致新连接无法建立。\n\n根因: MAX_CONNECTIONS"
+     }
+    }
+   ]
+  },
+  {
+   "tickets": [
+    {
+     "id": "INC-1001",
+     "title": "order-mysql-01 连接数打满问题",
+     "severity": "P0"
+    }
+   ],
+   "llm_before": 4,
+   "llm_after": 1,
+   "tokens_after": 1598,
+   "pred": "MAX_CONNECTIONS",
+   "events": [
+    {
+     "type": "message",
+     "message": {
+      "role": "system",
+      "content": "你是数据库值班助手。先用工具查清楚，再下结论，不要猜。根因只能从下面选一个：MAX_CONNECTIONS（连接数打满）、SLOW_SQL（慢 SQL）、LOCK_WAIT（锁等待）、DISK_FULL（磁盘写满）、NETWORK（网络问题）。回答最后一行写：根因: <ID>。查清根因后，先调用 create_ticket 建一张工单（标题写明实例和根因），再回复用户"
+     }
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "user",
+      "content": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.47,
+     "prompt_tokens": 574,
+     "completion_tokens": 46
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我需要先查询 order-mysql-01 实例的监控指标，了解当前的运行状态。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_93241fe2b0b5414d989e16",
+        "type": "function",
+        "function": {
+         "name": "get_metrics",
+         "arguments": "{\"instance\": \"order-mysql-01\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "get_metrics",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_93241fe2b0b5414d989e16",
+      "content": "{\"connections\": 1000, \"max_connections\": 1000, \"cpu_pct\": 38, \"qps\": 5200, \"slow_queries_per_min\": 3, \"row_lock_waits_per_min\": 0}"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.93,
+     "prompt_tokens": 691,
+     "completion_tokens": 68
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "我看到连接数已经达到最大连接数1000，这很可能是问题的根源。让我再检查一下慢查询日志和错误日志，以确认具体情况。\n\n",
+      "tool_calls": [
+       {
+        "id": "call_a33ee60a0bfa4dd993e405",
+        "type": "function",
+        "function": {
+         "name": "query_slow_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 5}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_slow_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_a33ee60a0bfa4dd993e405",
+      "content": "# Query_time: 1.21 Lock_time: 0.00 Rows_examined: 3200\nSELECT * FROM orders WHERE user_id = 88231;"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.08,
+     "prompt_tokens": 815,
+     "completion_tokens": 32
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+       {
+        "id": "call_0e7002f06a6d460f8805f6",
+        "type": "function",
+        "function": {
+         "name": "query_error_log",
+         "arguments": "{\"instance\": \"order-mysql-01\", \"limit\": 20}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "query_error_log",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_0e7002f06a6d460f8805f6",
+      "content": "2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:00:00 [Warning] Too many connections\n2026-11-24 14:00:01 [Warning] Too many connections\n2026-11-24 14:00:02 [Warning] Too many connections\n2026-11-24 14:00:03 [Warning] Too many connections\n2026-11-24 14:00:04 [Warning] Too many connections\n2026-11-24 14:00:05 [Warning] Too many connections\n2026-11-24 14:00:06 [Warning] Too many connections\n2026-11-24 14:00:07 [Warning] Too many connections\n2026-11-24 14:00:08 [Warning] Too many connections\n2026-11-24 14:00:09 [Warning] Too many connections\n2026-11-24 14:02:11 [Note] Aborted connection 88123 to db: 'order' (Got timeout reading communication packets)"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 1.28,
+     "prompt_tokens": 1398,
+     "completion_tokens": 38
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "",
+      "tool_calls": [
+       {
+        "id": "call_b4c87852dc1f4503872385",
+        "type": "function",
+        "function": {
+         "name": "create_ticket",
+         "arguments": "{\"title\": \"order-mysql-01 连接数打满问题\", \"severity\": \"P0\"}"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "tool",
+     "name": "create_ticket",
+     "seconds": 0.0
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "tool",
+      "tool_call_id": "call_b4c87852dc1f4503872385",
+      "content": "工单已存在：INC-1001（幂等键命中，没有重复创建）"
+     }
+    },
+    {
+     "type": "llm",
+     "seconds": 3.22,
+     "prompt_tokens": 1470,
+     "completion_tokens": 128
+    },
+    {
+     "type": "message",
+     "message": {
+      "role": "assistant",
+      "content": "根据监控指标和日志分析，order-mysql-01 实例在14:00开始出现大量报错，原因是连接数已达到最大限制（1000/1000），错误日志中反复出现 \"Too many connections\" 警告。这表明应用端可能存在连接泄漏或连接池配置不当，导致连接数耗尽。\n\n虽然也存在慢查询（执行时间1.21秒），但行锁等待数为0，且CPU使用率正常（38%），因此主要问题还是连接数打满。\n\n根因: MAX_CONNECTIONS"
+     }
+    }
+   ]
+  }
+ ],
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-24",
+  "base_url": "maas.aliyuncs.com"
+ }
+}
