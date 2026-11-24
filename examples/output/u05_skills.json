@@ -1,0 +1,236 @@
+{
+ "all": [
+  {
+   "pred": "MAX_CONNECTIONS",
+   "gold": "MAX_CONNECTIONS",
+   "llm_calls": 4,
+   "prompt_tokens": 8636,
+   "loaded": []
+  },
+  {
+   "pred": "MAX_CONNECTIONS",
+   "gold": "MAX_CONNECTIONS",
+   "llm_calls": 4,
+   "prompt_tokens": 8641,
+   "loaded": []
+  },
+  {
+   "pred": "SLOW_SQL",
+   "gold": "SLOW_SQL",
+   "llm_calls": 2,
+   "prompt_tokens": 3838,
+   "loaded": []
+  },
+  {
+   "pred": "SLOW_SQL",
+   "gold": "SLOW_SQL",
+   "llm_calls": 4,
+   "prompt_tokens": 7835,
+   "loaded": []
+  },
+  {
+   "pred": "LOCK_WAIT",
+   "gold": "LOCK_WAIT",
+   "llm_calls": 2,
+   "prompt_tokens": 3893,
+   "loaded": []
+  },
+  {
+   "pred": "LOCK_WAIT",
+   "gold": "LOCK_WAIT",
+   "llm_calls": 2,
+   "prompt_tokens": 3935,
+   "loaded": []
+  },
+  {
+   "pred": "DISK_FULL",
+   "gold": "DISK_FULL",
+   "llm_calls": 3,
+   "prompt_tokens": 6250,
+   "loaded": []
+  },
+  {
+   "pred": "DISK_FULL",
+   "gold": "DISK_FULL",
+   "llm_calls": 2,
+   "prompt_tokens": 4005,
+   "loaded": []
+  }
+ ],
+ "index": [
+  {
+   "pred": "MAX_CONNECTIONS",
+   "gold": "MAX_CONNECTIONS",
+   "llm_calls": 3,
+   "prompt_tokens": 2974,
+   "loaded": []
+  },
+  {
+   "pred": "MAX_CONNECTIONS",
+   "gold": "MAX_CONNECTIONS",
+   "llm_calls": 3,
+   "prompt_tokens": 2971,
+   "loaded": []
+  },
+  {
+   "pred": "SLOW_SQL",
+   "gold": "SLOW_SQL",
+   "llm_calls": 3,
+   "prompt_tokens": 2666,
+   "loaded": []
+  },
+  {
+   "pred": "SLOW_SQL",
+   "gold": "SLOW_SQL",
+   "llm_calls": 3,
+   "prompt_tokens": 2596,
+   "loaded": []
+  },
+  {
+   "pred": "LOCK_WAIT",
+   "gold": "LOCK_WAIT",
+   "llm_calls": 4,
+   "prompt_tokens": 3831,
+   "loaded": []
+  },
+  {
+   "pred": "LOCK_WAIT",
+   "gold": "LOCK_WAIT",
+   "llm_calls": 4,
+   "prompt_tokens": 3904,
+   "loaded": []
+  },
+  {
+   "pred": "DISK_FULL",
+   "gold": "DISK_FULL",
+   "llm_calls": 2,
+   "prompt_tokens": 1805,
+   "loaded": []
+  },
+  {
+   "pred": "DISK_FULL",
+   "gold": "DISK_FULL",
+   "llm_calls": 2,
+   "prompt_tokens": 1799,
+   "loaded": []
+  }
+ ],
+ "fail": {
+  "none": [
+   {
+    "pred": "DISK_FULL",
+    "gold": "DISK_FULL",
+    "llm_calls": 4,
+    "prompt_tokens": 2334,
+    "loaded": []
+   },
+   {
+    "pred": "NETWORK",
+    "gold": "DISK_FULL",
+    "llm_calls": 4,
+    "prompt_tokens": 2302,
+    "loaded": []
+   },
+   {
+    "pred": "NETWORK",
+    "gold": "DISK_FULL",
+    "llm_calls": 5,
+    "prompt_tokens": 3090,
+    "loaded": []
+   },
+   {
+    "pred": "NETWORK",
+    "gold": "DISK_FULL",
+    "llm_calls": 4,
+    "prompt_tokens": 2358,
+    "loaded": []
+   },
+   {
+    "pred": "DISK_FULL",
+    "gold": "DISK_FULL",
+    "llm_calls": 4,
+    "prompt_tokens": 2352,
+    "loaded": []
+   }
+  ],
+  "all": [
+   {
+    "pred": "DISK_FULL",
+    "gold": "DISK_FULL",
+    "llm_calls": 3,
+    "prompt_tokens": 5802,
+    "loaded": []
+   },
+   {
+    "pred": "UNKNOWN",
+    "gold": "DISK_FULL",
+    "llm_calls": 2,
+    "prompt_tokens": 3713,
+    "loaded": []
+   },
+   {
+    "pred": "DISK_FULL",
+    "gold": "DISK_FULL",
+    "llm_calls": 3,
+    "prompt_tokens": 6112,
+    "loaded": []
+   },
+   {
+    "pred": "DISK_FULL",
+    "gold": "DISK_FULL",
+    "llm_calls": 4,
+    "prompt_tokens": 7811,
+    "loaded": []
+   },
+   {
+    "pred": "UNKNOWN",
+    "gold": "DISK_FULL",
+    "llm_calls": 3,
+    "prompt_tokens": 5720,
+    "loaded": []
+   }
+  ],
+  "index": [
+   {
+    "pred": "DISK_FULL",
+    "gold": "DISK_FULL",
+    "llm_calls": 2,
+    "prompt_tokens": 1513,
+    "loaded": []
+   },
+   {
+    "pred": "DISK_FULL",
+    "gold": "DISK_FULL",
+    "llm_calls": 3,
+    "prompt_tokens": 2513,
+    "loaded": []
+   },
+   {
+    "pred": "DISK_FULL",
+    "gold": "DISK_FULL",
+    "llm_calls": 2,
+    "prompt_tokens": 1529,
+    "loaded": []
+   },
+   {
+    "pred": "DISK_FULL",
+    "gold": "DISK_FULL",
+    "llm_calls": 3,
+    "prompt_tokens": 2392,
+    "loaded": []
+   },
+   {
+    "pred": "DISK_FULL",
+    "gold": "DISK_FULL",
+    "llm_calls": 3,
+    "prompt_tokens": 2466,
+    "loaded": []
+   }
+  ]
+ },
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-24",
+  "base_url": "maas.aliyuncs.com"
+ }
+}

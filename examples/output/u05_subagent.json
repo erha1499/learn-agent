@@ -1,0 +1,319 @@
+{
+ "clean": {
+  "single": [
+   {
+    "pred": {
+     "order-mysql-01": "MAX_CONNECTIONS",
+     "report-mysql-02": "SLOW_SQL",
+     "pay-mysql-03": "LOCK_WAIT",
+     "user-mysql-04": "DISK_FULL"
+    },
+    "parent_peak": 1610,
+    "parent_calls": 3,
+    "total_calls": 3,
+    "total_tokens": 3392
+   },
+   {
+    "pred": {
+     "order-mysql-01": "MAX_CONNECTIONS",
+     "report-mysql-02": "SLOW_SQL",
+     "pay-mysql-03": "LOCK_WAIT",
+     "user-mysql-04": "DISK_FULL"
+    },
+    "parent_peak": 1610,
+    "parent_calls": 3,
+    "total_calls": 3,
+    "total_tokens": 3430
+   },
+   {
+    "pred": {
+     "order-mysql-01": "MAX_CONNECTIONS",
+     "report-mysql-02": "SLOW_SQL",
+     "pay-mysql-03": "LOCK_WAIT",
+     "user-mysql-04": "DISK_FULL"
+    },
+    "parent_peak": 2594,
+    "parent_calls": 4,
+    "total_calls": 4,
+    "total_tokens": 5970
+   }
+  ],
+  "subagent": [
+   {
+    "pred": {
+     "order-mysql-01": "MAX_CONNECTIONS",
+     "report-mysql-02": "SLOW_SQL",
+     "pay-mysql-03": "LOCK_WAIT",
+     "user-mysql-04": "DISK_FULL"
+    },
+    "parent_peak": 942,
+    "parent_calls": 2,
+    "children": [
+     {
+      "calls": 4,
+      "tokens": 3054,
+      "peak": 1211,
+      "verdict": "MAX_CONNECTIONS"
+     },
+     {
+      "calls": 4,
+      "tokens": 2799,
+      "peak": 823,
+      "verdict": "SLOW_SQL"
+     },
+     {
+      "calls": 2,
+      "tokens": 1588,
+      "peak": 901,
+      "verdict": "LOCK_WAIT"
+     },
+     {
+      "calls": 4,
+      "tokens": 2851,
+      "peak": 1010,
+      "verdict": "DISK_FULL"
+     }
+    ],
+    "total_calls": 16,
+    "total_tokens": 11674
+   },
+   {
+    "pred": {
+     "order-mysql-01": "MAX_CONNECTIONS",
+     "report-mysql-02": "SLOW_SQL",
+     "pay-mysql-03": "LOCK_WAIT",
+     "user-mysql-04": "DISK_FULL"
+    },
+    "parent_peak": 1143,
+    "parent_calls": 2,
+    "children": [
+     {
+      "calls": 4,
+      "tokens": 3055,
+      "peak": 1211,
+      "verdict": "MAX_CONNECTIONS"
+     },
+     {
+      "calls": 2,
+      "tokens": 1540,
+      "peak": 807,
+      "verdict": "SLOW_SQL"
+     },
+     {
+      "calls": 2,
+      "tokens": 1605,
+      "peak": 901,
+      "verdict": "LOCK_WAIT"
+     },
+     {
+      "calls": 2,
+      "tokens": 1745,
+      "peak": 994,
+      "verdict": "DISK_FULL"
+     }
+    ],
+    "total_calls": 12,
+    "total_tokens": 9528
+   },
+   {
+    "pred": {
+     "order-mysql-01": "MAX_CONNECTIONS",
+     "report-mysql-02": "SLOW_SQL",
+     "pay-mysql-03": "LOCK_WAIT",
+     "user-mysql-04": "DISK_FULL"
+    },
+    "parent_peak": 985,
+    "parent_calls": 2,
+    "children": [
+     {
+      "calls": 2,
+      "tokens": 1876,
+      "peak": 1195,
+      "verdict": "MAX_CONNECTIONS"
+     },
+     {
+      "calls": 4,
+      "tokens": 2793,
+      "peak": 823,
+      "verdict": "SLOW_SQL"
+     },
+     {
+      "calls": 2,
+      "tokens": 1615,
+      "peak": 901,
+      "verdict": "LOCK_WAIT"
+     },
+     {
+      "calls": 4,
+      "tokens": 2867,
+      "peak": 1010,
+      "verdict": "DISK_FULL"
+     }
+    ],
+    "total_calls": 14,
+    "total_tokens": 10576
+   }
+  ]
+ },
+ "noisy": {
+  "single": [
+   {
+    "pred": {
+     "order-mysql-01": "MAX_CONNECTIONS",
+     "report-mysql-02": "SLOW_SQL",
+     "pay-mysql-03": "LOCK_WAIT",
+     "user-mysql-04": "DISK_FULL"
+    },
+    "parent_peak": 79014,
+    "parent_calls": 4,
+    "total_calls": 4,
+    "total_tokens": 82416
+   },
+   {
+    "pred": {
+     "order-mysql-01": "MAX_CONNECTIONS",
+     "report-mysql-02": "SLOW_SQL",
+     "pay-mysql-03": "LOCK_WAIT",
+     "user-mysql-04": "DISK_FULL"
+    },
+    "parent_peak": 79014,
+    "parent_calls": 4,
+    "total_calls": 4,
+    "total_tokens": 82397
+   },
+   {
+    "pred": {
+     "order-mysql-01": "MAX_CONNECTIONS",
+     "report-mysql-02": "SLOW_SQL",
+     "pay-mysql-03": "LOCK_WAIT",
+     "user-mysql-04": "DISK_FULL"
+    },
+    "parent_peak": 79014,
+    "parent_calls": 4,
+    "total_calls": 4,
+    "total_tokens": 82401
+   }
+  ],
+  "subagent": [
+   {
+    "pred": {
+     "order-mysql-01": "MAX_CONNECTIONS",
+     "report-mysql-02": "SLOW_SQL",
+     "pay-mysql-03": "LOCK_WAIT",
+     "user-mysql-04": "DISK_FULL"
+    },
+    "parent_peak": 1495,
+    "parent_calls": 2,
+    "children": [
+     {
+      "calls": 2,
+      "tokens": 21379,
+      "peak": 20696,
+      "verdict": "MAX_CONNECTIONS"
+     },
+     {
+      "calls": 2,
+      "tokens": 20596,
+      "peak": 19762,
+      "verdict": "SLOW_SQL"
+     },
+     {
+      "calls": 2,
+      "tokens": 20584,
+      "peak": 19856,
+      "verdict": "LOCK_WAIT"
+     },
+     {
+      "calls": 2,
+      "tokens": 20820,
+      "peak": 19949,
+      "verdict": "DISK_FULL"
+     }
+    ],
+    "total_calls": 10,
+    "total_tokens": 85314
+   },
+   {
+    "pred": {
+     "order-mysql-01": "MAX_CONNECTIONS",
+     "report-mysql-02": "SLOW_SQL",
+     "pay-mysql-03": "LOCK_WAIT",
+     "user-mysql-04": "DISK_FULL"
+    },
+    "parent_peak": 1739,
+    "parent_calls": 2,
+    "children": [
+     {
+      "calls": 2,
+      "tokens": 21451,
+      "peak": 20696,
+      "verdict": "MAX_CONNECTIONS"
+     },
+     {
+      "calls": 2,
+      "tokens": 20650,
+      "peak": 19762,
+      "verdict": "SLOW_SQL"
+     },
+     {
+      "calls": 2,
+      "tokens": 20626,
+      "peak": 19856,
+      "verdict": "LOCK_WAIT"
+     },
+     {
+      "calls": 2,
+      "tokens": 20896,
+      "peak": 19949,
+      "verdict": "DISK_FULL"
+     }
+    ],
+    "total_calls": 10,
+    "total_tokens": 85802
+   },
+   {
+    "pred": {
+     "order-mysql-01": "MAX_CONNECTIONS",
+     "report-mysql-02": "SLOW_SQL",
+     "pay-mysql-03": "LOCK_WAIT",
+     "user-mysql-04": "DISK_FULL"
+    },
+    "parent_peak": 1555,
+    "parent_calls": 2,
+    "children": [
+     {
+      "calls": 2,
+      "tokens": 21488,
+      "peak": 20696,
+      "verdict": "MAX_CONNECTIONS"
+     },
+     {
+      "calls": 2,
+      "tokens": 20484,
+      "peak": 19762,
+      "verdict": "SLOW_SQL"
+     },
+     {
+      "calls": 2,
+      "tokens": 20567,
+      "peak": 19856,
+      "verdict": "LOCK_WAIT"
+     },
+     {
+      "calls": 2,
+      "tokens": 20900,
+      "peak": 19949,
+      "verdict": "DISK_FULL"
+     }
+    ],
+    "total_calls": 10,
+    "total_tokens": 85434
+   }
+  ]
+ },
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-24",
+  "base_url": "maas.aliyuncs.com"
+ }
+}
