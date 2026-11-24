@@ -1,0 +1,1127 @@
+{
+ "A": [
+  {
+   "msg": "M1",
+   "text": "{\"instance\":\"order-mysql-01\",\"severity\":\"P0\",\"symptoms\":[\"下单全挂\",\"Too many connections\"],\"started_at\":\"14:05\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\"instance\":\"order-mysql-01\",\"severity\":\"P0\",\"symptoms\":[\"下单全挂\",\"报 Too many connections\"],\"started_at\":\"14:05\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\"instance\":\"order-mysql-01\",\"severity\":\"P0\",\"symptoms\":[\"下单全挂\",\"报 Too many connections\"],\"started_at\":\"14:05\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\n  \"instance\": \"order-mysql-01\",\n  \"severity\": \"P0\",\n  \"symptoms\": [\"下单全挂\", \"Too many connections\"],\n  \"started_at\": \"14:05\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\n  \"instance\": \"order-mysql-01\",\n  \"severity\": \"P0\",\n  \"symptoms\": [\"下单全挂\", \"Too many connections\"],\n  \"started_at\": \"14:05\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"报表偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"报表偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"报表偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"多个接口响应变慢\"],\n  \"started_at\": \"09:30\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"多个接口响应变慢\"],\n  \"started_at\": \"09:30\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"多个接口响应变慢\"],\n  \"started_at\": \"09:30\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"多个接口响应变慢\"],\n  \"started_at\": \"09:30\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"多个接口响应变慢\"],\n  \"started_at\": \"09:30\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  }
+ ],
+ "A+": [
+  {
+   "msg": "M1",
+   "text": "{\"instance\":\"order-mysql-01\",\"severity\":\"P0\",\"symptoms\":[\"下单全挂\",\"Too many connections\"],\"started_at\":\"14:05\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\n  \"instance\": \"order-mysql-01\",\n  \"severity\": \"P0\",\n  \"symptoms\": [\"下单全挂\", \"Too many connections\"],\n  \"started_at\": \"14:05\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\"instance\":\"order-mysql-01\",\"severity\":\"P0\",\"symptoms\":[\"下单全挂\",\"报 Too many connections\"],\"started_at\":\"14:05\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\n  \"instance\": \"order-mysql-01\",\n  \"severity\": \"P0\",\n  \"symptoms\": [\"下单全挂\", \"Too many connections\"],\n  \"started_at\": \"14:05\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\"instance\":\"order-mysql-01\",\"severity\":\"P0\",\"symptoms\":[\"下单全挂\",\"报 Too many connections\"],\"started_at\":\"14:05\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"报表偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"报表偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"报表偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"多个接口响应变慢\"],\n  \"started_at\": \"09:30\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"多个接口响应变慢\"],\n  \"started_at\": \"09:30\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"多个接口响应变慢\"],\n  \"started_at\": \"09:30\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"多个接口响应变慢\"],\n  \"started_at\": \"09:30\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"接口变慢\"],\n  \"started_at\": \"09:30\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  }
+ ],
+ "B": [
+  {
+   "msg": "M1",
+   "text": "{\n  \"instance\": \"order-mysql-01\",\n  \"severity\": \"P0\",\n  \"symptoms\": [\"下单全挂\", \"Too many connections\"],\n  \"started_at\": \"14:05\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\"instance\":\"order-mysql-01\",\"severity\":\"P0\",\"symptoms\":[\"下单全挂\",\"报 Too many connections\"],\"started_at\":\"14:05\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\n  \"instance\": \"order-mysql-01\",\n  \"severity\": \"P0\",\n  \"symptoms\": [\"下单全挂\", \"Too many connections\"],\n  \"started_at\": \"14:05\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\"instance\":\"order-mysql-01\",\"severity\":\"P0\",\"symptoms\":[\"下单全挂\",\"Too many connections\"],\"started_at\":\"14:05\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\n  \"instance\": \"order-mysql-01\",\n  \"severity\": \"P0\",\n  \"symptoms\": [\"下单全挂\", \"Too many connections\"],\n  \"started_at\": \"14:05\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"报表偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"报表偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"报表偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"多个接口响应变慢\"],\n  \"started_at\": \"09:30\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"多个接口响应变慢\"],\n  \"started_at\": \"09:30\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"多个接口响应变慢\"],\n  \"started_at\": \"09:30\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"多个接口响应变慢\"],\n  \"started_at\": \"09:30\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"接口变慢\"],\n  \"started_at\": \"09:30\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  }
+ ],
+ "C": [
+  {
+   "msg": "M1",
+   "text": "{\n  \"instance\": \"order-mysql-01\",\n  \"severity\": \"P0\",\n  \"symptoms\": [\"下单全挂\", \"报 Too many connections\"],\n  \"started_at\": \"14:05\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\n  \"instance\": \"order-mysql-01\",\n  \"severity\": \"P0\",\n  \"symptoms\": [\"下单全挂\", \"报 Too many connections\"],\n  \"started_at\": \"14:05\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\n  \"instance\": \"order-mysql-01\",\n  \"severity\": \"P0\",\n  \"symptoms\": [\"下单全挂\", \"报 Too many connections\"],\n  \"started_at\": \"14:05\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\n  \"instance\": \"order-mysql-01\",\n  \"severity\": \"P0\",\n  \"symptoms\": [\"下单全挂\", \"报 Too many connections\"],\n  \"started_at\": \"14:05\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\n  \"instance\": \"order-mysql-01\",\n  \"severity\": \"P0\",\n  \"symptoms\": [\"下单全挂\", \"报 Too many connections\"],\n  \"started_at\": \"14:05\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"偶尔慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\n  \"instance\": \"report-mysql-02\",\n  \"severity\": \"P2\",\n  \"symptoms\": [\"偶尔变慢\"],\n  \"started_at\": null\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\n  \"instance\": \"pay-mysql-03\",\n  \"severity\": \"P1\",\n  \"symptoms\": [\"支付回调超时\", \"重试可恢复\"],\n  \"started_at\": \"10:12\"\n}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"多个接口响应变慢\"],\n  \"started_at\": \"9:30\"\n}",
+   "retried": false,
+   "problems": [
+    "started_at='9:30' 不是 HH:MM"
+   ],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": false
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"多个接口响应变慢\"],\n  \"started_at\": \"9:30\"\n}",
+   "retried": false,
+   "problems": [
+    "started_at='9:30' 不是 HH:MM"
+   ],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": false
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"多个接口响应变慢\"],\n  \"started_at\": \"9:30\"\n}",
+   "retried": false,
+   "problems": [
+    "started_at='9:30' 不是 HH:MM"
+   ],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": false
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"多个接口响应变慢\"],\n  \"started_at\": \"9:30\"\n}",
+   "retried": false,
+   "problems": [
+    "started_at='9:30' 不是 HH:MM"
+   ],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": false
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\n  \"instance\": null,\n  \"severity\": \"P1\",\n  \"symptoms\": [\"多个接口响应变慢\"],\n  \"started_at\": \"9:30\"\n}",
+   "retried": false,
+   "problems": [
+    "started_at='9:30' 不是 HH:MM"
+   ],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": false
+   }
+  }
+ ],
+ "D": [
+  {
+   "msg": "M1",
+   "text": "{\"instance\": \"order-mysql-01\", \"severity\": \"P0\", \"symptoms\": [\"下单失败\", \"Too many connections\"], \"started_at\": \"14:05\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\"instance\": \"order-mysql-01\", \"severity\": \"P0\", \"symptoms\": [\"下单失败\", \"Too many connections\"], \"started_at\": \"14:05\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\"instance\": \"order-mysql-01\", \"severity\": \"P0\", \"symptoms\": [\"下单失败\", \"Too many connections\"], \"started_at\": \"14:05\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\"instance\": \"order-mysql-01\", \"severity\": \"P0\", \"symptoms\": [\"下单失败\", \"Too many connections\"], \"started_at\": \"14:05\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M1",
+   "text": "{\"instance\": \"order-mysql-01\", \"severity\": \"P0\", \"symptoms\": [\"下单失败\", \"Too many connections\"], \"started_at\": \"14:05\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\"instance\": \"report-mysql-02\", \"severity\": \"P2\", \"symptoms\": [\"报表偶尔变慢\"], \"started_at\": null}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\"instance\": \"report-mysql-02\", \"severity\": \"P2\", \"symptoms\": [\"报表偶尔变慢\"], \"started_at\": null}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\"instance\": \"report-mysql-02\", \"severity\": \"P2\", \"symptoms\": [\"报表偶尔变慢\"], \"started_at\": null}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\"instance\": \"report-mysql-02\", \"severity\": \"P2\", \"symptoms\": [\"报表偶尔变慢\"], \"started_at\": null}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M2",
+   "text": "{\"instance\": \"report-mysql-02\", \"severity\": \"P2\", \"symptoms\": [\"偶尔变慢\"], \"started_at\": null}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\"instance\": \"pay-mysql-03\", \"severity\": \"P1\", \"symptoms\": [\"支付回调超时\"], \"started_at\": \"10:12\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\"instance\": \"pay-mysql-03\", \"severity\": \"P1\", \"symptoms\": [\"支付回调超时\"], \"started_at\": \"10:12\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\"instance\": \"pay-mysql-03\", \"severity\": \"P1\", \"symptoms\": [\"支付回调超时\"], \"started_at\": \"10:12\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\"instance\": \"pay-mysql-03\", \"severity\": \"P1\", \"symptoms\": [\"支付回调超时\"], \"started_at\": \"10:12\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M3",
+   "text": "{\"instance\": \"pay-mysql-03\", \"severity\": \"P1\", \"symptoms\": [\"支付回调超时\", \"重试可恢复\"], \"started_at\": \"10:12\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\"instance\": null, \"severity\": \"P1\", \"symptoms\": [\"多个接口响应变慢\"], \"started_at\": \"09:30\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\"instance\": null, \"severity\": \"P1\", \"symptoms\": [\"接口变慢\"], \"started_at\": \"09:30\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\"instance\": null, \"severity\": \"P1\", \"symptoms\": [\"多个接口响应变慢\"], \"started_at\": \"09:30\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\"instance\": null, \"severity\": \"P1\", \"symptoms\": [\"多个接口响应变慢\"], \"started_at\": \"09:30\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  },
+  {
+   "msg": "M4",
+   "text": "{\"instance\": null, \"severity\": \"P1\", \"symptoms\": [\"多个接口响应变慢\"], \"started_at\": \"09:30\"}",
+   "retried": false,
+   "problems": [],
+   "correct": {
+    "instance": true,
+    "severity": true,
+    "started_at": true
+   }
+  }
+ ],
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-24",
+  "base_url": "maas.aliyuncs.com"
+ }
+}

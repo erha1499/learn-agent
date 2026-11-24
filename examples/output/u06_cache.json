@@ -1,0 +1,205 @@
+{
+ "A": [
+  [
+   {
+    "prompt": 3069,
+    "cached": 0,
+    "created": 0
+   },
+   {
+    "prompt": 3115,
+    "cached": 0,
+    "created": 0
+   },
+   {
+    "prompt": 3151,
+    "cached": 0,
+    "created": 0
+   },
+   {
+    "prompt": 3196,
+    "cached": 2944,
+    "created": 0
+   },
+   {
+    "prompt": 3236,
+    "cached": 0,
+    "created": 0
+   },
+   {
+    "prompt": 3279,
+    "cached": 2944,
+    "created": 0
+   }
+  ],
+  [
+   {
+    "prompt": 3071,
+    "cached": 0,
+    "created": 0
+   },
+   {
+    "prompt": 3117,
+    "cached": 0,
+    "created": 0
+   },
+   {
+    "prompt": 3153,
+    "cached": 2944,
+    "created": 0
+   },
+   {
+    "prompt": 3198,
+    "cached": 0,
+    "created": 0
+   },
+   {
+    "prompt": 3238,
+    "cached": 2944,
+    "created": 0
+   },
+   {
+    "prompt": 3281,
+    "cached": 3072,
+    "created": 0
+   }
+  ]
+ ],
+ "B": [
+  [
+   {
+    "prompt": 3069,
+    "cached": 0,
+    "created": 0
+   },
+   {
+    "prompt": 3115,
+    "cached": 0,
+    "created": 0
+   },
+   {
+    "prompt": 3151,
+    "cached": 0,
+    "created": 0
+   },
+   {
+    "prompt": 3196,
+    "cached": 0,
+    "created": 0
+   },
+   {
+    "prompt": 3236,
+    "cached": 0,
+    "created": 0
+   },
+   {
+    "prompt": 3279,
+    "cached": 0,
+    "created": 0
+   }
+  ],
+  [
+   {
+    "prompt": 3071,
+    "cached": 0,
+    "created": 0
+   },
+   {
+    "prompt": 3117,
+    "cached": 0,
+    "created": 0
+   },
+   {
+    "prompt": 3153,
+    "cached": 0,
+    "created": 0
+   },
+   {
+    "prompt": 3198,
+    "cached": 0,
+    "created": 0
+   },
+   {
+    "prompt": 3238,
+    "cached": 0,
+    "created": 0
+   },
+   {
+    "prompt": 3281,
+    "cached": 0,
+    "created": 0
+   }
+  ]
+ ],
+ "C": [
+  [
+   {
+    "prompt": 3070,
+    "cached": 0,
+    "created": 2954
+   },
+   {
+    "prompt": 3116,
+    "cached": 2954,
+    "created": 0
+   },
+   {
+    "prompt": 3152,
+    "cached": 2954,
+    "created": 0
+   },
+   {
+    "prompt": 3197,
+    "cached": 2954,
+    "created": 0
+   },
+   {
+    "prompt": 3237,
+    "cached": 2954,
+    "created": 0
+   },
+   {
+    "prompt": 3280,
+    "cached": 2954,
+    "created": 0
+   }
+  ],
+  [
+   {
+    "prompt": 3070,
+    "cached": 0,
+    "created": 2954
+   },
+   {
+    "prompt": 3116,
+    "cached": 2954,
+    "created": 0
+   },
+   {
+    "prompt": 3152,
+    "cached": 2954,
+    "created": 0
+   },
+   {
+    "prompt": 3197,
+    "cached": 2954,
+    "created": 0
+   },
+   {
+    "prompt": 3237,
+    "cached": 2954,
+    "created": 0
+   },
+   {
+    "prompt": 3280,
+    "cached": 2954,
+    "created": 0
+   }
+  ]
+ ],
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-24",
+  "base_url": "maas.aliyuncs.com"
+ }
+}
