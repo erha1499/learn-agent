@@ -5,10 +5,10 @@
 **学完这个单元，你能：**
 
 - 把二十多篇代表性论文放进六条主线，每篇说出一句“它留下了什么”。
-- 按时间讲出 Agent 产品和框架的三次转折，以及每次转折背后的模型能力变化。
+- 按时间讲出 Agent 产品和框架的几次转折，以及每次转折背后的模型能力变化；知道怎么跟进厂商的工程文章。
 - 被问到“最近读了什么论文、用过什么产品”时，按“解决什么、怎么做、局限、我在哪用到”回答。
 
-前面的单元多次提到 ReAct、τ-bench、SWE-bench、《Building effective agents》这些名字，每次只讲用到的那一点。本单元把它们放到一张地图上。这一块变化最快，文中的日期和数字以原文为准；论文只写它的核心贡献，细节请读原文。先看一条时间线，然后按六条主线看论文，再看产品和框架的三次转折，最后讲面试里怎么用。
+前面的单元多次提到 ReAct、τ-bench、SWE-bench、《Building effective agents》这些名字，每次只讲用到的那一点。本单元把它们放到一张地图上。这一块变化最快，文中的日期和数字以原文为准；论文只写它的核心贡献，细节请读原文。先看一条时间线，然后按六条主线看论文，再看产品和框架的几次转折和怎么跟进厂商的工程文章，最后讲面试里怎么用。
 
 ## 26.1 一条时间线
 
@@ -19,7 +19,7 @@
 | 2023 | Toolformer、Reflexion、Generative Agents、Voyager、Tree of Thoughts、Gorilla、ToolLLM、CAMEL、AutoGen、MetaGPT、MemGPT、Lost in the Middle、WebArena、SWE-bench、GAIA | | ChatGPT 插件、AutoGPT、OpenAI Function Calling 接口 |
 | 2024 | SWE-agent、OSWorld、τ-bench、SWE-bench Verified | MCP（11 月）、《Building effective agents》（12 月） | Devin、LangGraph、Claude computer use |
 | 2025 | DeepSeek-R1、BrowseComp、Terminal-Bench | A2A（4 月）、多 Agent 调研系统与《Don't Build Multi-Agents》（6 月）、Agent Skills（10 月发布，12 月作为开放标准发布） | Operator、Deep Research、Claude Code、Manus、OpenAI Agents SDK、Codex CLI、Google ADK、Gemini CLI、Claude Agent SDK、pi |
-| 2026 | | 《Demystifying evals for AI agents》（1 月） | |
+| 2026 | | Anthropic 的一批工程文章：评测（1 月）、长任务 harness（3 月）、Managed Agents（4 月）、隔离（5 月）、Agent 记忆（11 月），见 26.9 | Claude Code 自动模式、Claude Managed Agents（带记忆）、Claude Cowork |
 
 读这张表抓住两点：
 
@@ -54,6 +54,7 @@
 | Voyager（Wang 等，2023） | 在《我的世界》里长期探索，学到的本事下次用不上 | 技能库：把成功的行为存成可执行的代码，按描述检索复用，是今天 Skills 的前身之一（单元五） |
 | Lost in the Middle（Liu 等，2023） | 长上下文里的信息都能被用上吗 | 不能：相关信息在开头或结尾时效果最好，在中间时明显变差。上下文不是越长越好 |
 | 《Effective context engineering for AI agents》（Anthropic，2025） | 长任务的上下文怎么管 | 把上下文当成有限资源，用压缩、结构化笔记、子 Agent 三种手段（单元五） |
+| 《The components of agent memory》（Anthropic，2026） | 跨会话的记忆怎么组织、怎么维护 | 分层：每次注入的一小段、wiki、笔记、原始记录；离线“做梦”整理；告诉模型记忆的用途，而不是规定死规则（单元九） |
 
 ## 26.5 主线四：多 Agent
 
@@ -88,20 +89,46 @@
 | InstructGPT（Ouyang 等，2022） | 监督微调 + 奖励模型 + 强化学习（RLHF） | 模型学会听指令；“对话模型”从这里开始 |
 | DeepSeek-R1（DeepSeek，2025） | 用规则能判对错的任务（数学、代码）做大规模强化学习 | 长推理能力可以靠强化学习练出来；“可验证的奖励”成为训练 Agent 能力的主流思路（单元二十四） |
 
-## 26.8 产品和框架：三次转折
+## 26.8 产品和框架：几次转折
 
 | 阶段 | 代表 | 发生了什么 | 背后的模型能力 |
 |---|---|---|---|
 | 2023：自主循环热潮 | AutoGPT、BabyAGI、LangChain | 让模型自己定目标、拆任务、无限循环；演示惊艳，实际很快跑偏、停不下来 | 模型不擅长长程规划，没有原生工具调用，格式靠正则解析 |
 | 2024：工程化 | Function Calling 接口、Devin、SWE-agent、LangGraph、《Building effective agents》 | 从“全自主”回到“可控”：图式编排、写死的 Workflow、为模型设计工具界面 | 原生工具调用稳定了，但长任务仍不可靠 |
 | 2025：harness 的时代 | Claude Code、Codex CLI、Gemini CLI、pi、Deep Research、Manus；MCP、A2A、Skills；Claude Agent SDK、OpenAI Agents SDK、Google ADK | 一个简单循环 + 好工具 + 上下文管理，就能完成几十上百步的任务；各家把自己的 harness 做成 SDK 开放出来 | 推理模型、长上下文、在 Agent 环境里专门训练过的工具调用 |
+| 2026：harness 变成平台 | Claude Managed Agents、Claude Code 自动模式、Claude Cowork | 会话、harness、沙箱拆成稳定接口，托管运行；权限从逐个审批走向沙箱加分类器；记忆成了平台能力 | 模型能连续工作数小时，harness 里的假设过时得更快 |
 
 读这张表抓住两点：
 
 - **harness 越来越薄，是因为模型越来越强。** 2023 年需要大量编排代码弥补模型的不足；2025 年的编程 Agent 回到了一个循环加几个工具（单元三、五），learn-claude-code 和 pi 的立场都来自这个变化。
-- **但薄不等于没有。** 第三阶段的产品都把工程花在了边界和上下文上：权限、沙箱、压缩、技能、hooks。单元四讲的正是这一部分。
+- **但薄不等于没有。** 2025 年以后的产品都把工程花在了边界和上下文上：权限、沙箱、压缩、技能、hooks。单元四讲的正是这一部分。
+- **也不是一直变薄。** Anthropic 2026 年 3 月的说法是：模型变强以后，有些部件成了多余，但模型又能做以前做不了的事，值得尝试的 harness 组合不是变少了，而是换了位置。
 
-## 26.9 面试里怎么用
+## 26.9 跟上前沿：读厂商的工程文章
+
+Agent 的很多问题还没有定论：记忆怎么组织、什么时候拆多 Agent、上下文满了是压缩还是重开、权限交给人还是交给分类器，各家每隔几个月就有新做法。比论文更新得快的是厂商的工程博客。Anthropic 这两年的文章，基本能串起本书的每个部分：
+
+| 时间 | 文章 | 核心观点 | 本书在哪用到 |
+|---|---|---|---|
+| 2024-12 | Building effective agents | 先用最简单的形态；分清 Workflow 和 Agent | 单元三 |
+| 2025-06 | How we built our multi-agent research system | 并行调研的 token 约是对话的 15 倍，适合可拆的高价值任务 | 单元八 |
+| 2025-09 | Effective context engineering for AI agents；Writing effective tools for agents | 找最小的一组高信号 token；工具为 Agent 设计，用评测和 Agent 自己改进工具 | 单元五、六、七、九 |
+| 2025-10 | Equipping agents with Agent Skills；Beyond permission prompts | 技能分三层加载；先划沙箱边界，减少审批 | 单元五、十一 |
+| 2025-11 | Code execution with MCP；Advanced tool use；Effective harnesses for long-running agents | 工具搜索、用代码调工具；跨会话的功能清单和进度文件 | 单元五、六、七 |
+| 2026-01 | Demystifying evals for AI agents；Designing AI-resistant technical evaluations | 任务、运行、打分器；从 20 到 50 条起步；评测会被模型做穿 | 单元十三、十四 |
+| 2026-02 | Building a C compiler with parallel Claudes；Infrastructure noise in agentic coding evals | 无主管的并行，测试当裁判；资源配置能让成绩差 6 个点 | 单元八、十三 |
+| 2026-03 | Harness design for long-running apps；Claude Code auto mode；Eval awareness on BrowseComp | 生成和评审分开，部件会过时；分类器代替逐个审批；联网评测会被找到答案 | 单元四、八、十一、十四 |
+| 2026-04 | Scaling Managed Agents；Claude Code quality postmortem | 会话、harness、沙箱解耦；harness 的改动也会让效果变差 | 单元四、六、九、十二 |
+| 2026-05 | How we contain Claude across products | 风险是可能性乘以波及范围；白名单就是授权 | 单元十一 |
+| 2026-11 | The components of agent memory；Building strong safety evaluations | 记忆分层和做梦；安全评测的构念、评委校准和样本量 | 单元九、十一、十四 |
+
+读这些文章时注意三点：
+
+- **看日期和模型。** 同一个问题，结论会随模型变：2025 年 11 月的文章说只靠压缩撑不起长任务；2026 年 3 月的文章说 Sonnet 4.5 需要定期清空上下文，Opus 4.5 只靠自动压缩就够了。引用时带上日期和模型版本。
+- **数字多是内部测的。** 很多结果来自厂商自己的评测集，样本不大、外人无法复现，比如自动模式“漏掉 17%”的那个测试集只有 52 条。它们说明方向，不是定论；放到自己的场景里，要用自己的评测再验证一遍。
+- **后来的文章会修正前面的。** 2025 年 10 月的沙箱文章认为，注入即使成功也会被关在沙箱里；2026 年 5 月的文章披露了一次从白名单域名把数据外发出去的事故，把白名单重新看成一种授权。读新文章时，留意它推翻了什么。
+
+## 26.10 面试里怎么用
 
 被问到“最近读了什么论文”“用过哪些 Agent 产品”时：
 
@@ -118,5 +145,6 @@
 3. Generative Agents、MemGPT、Voyager 分别用什么办法处理“记忆”？哪一个是今天 Skills 的前身？
 4. Lost in the Middle 发现了什么？对上下文工程意味着什么？
 5. 从 HumanEval 到 τ-bench，Agent 评测发生了哪两个变化？
-6. Agent 产品经历了哪三个阶段？为什么 2025 年的编程 Agent 反而回到了“一个简单循环”？
+6. Agent 产品经历了哪几个阶段？为什么 2025 年的编程 Agent 反而回到了“一个简单循环”？
 7. 面试时怎么讲一篇论文？用 τ-bench 举一个例子。
+8. 读厂商的工程文章时要注意哪三点？举一个后来的文章修正前面文章的例子。
