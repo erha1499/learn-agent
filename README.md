@@ -57,14 +57,14 @@
 content/            正文：README.md 是导读，NN-*.md 是各单元，answers.json 是自测答案（键是题目原文）
 examples/           例子，文件名前缀是单元号：
                       _llm.py          最小模型客户端（只用标准库）
-                      mini_world.py    迷你值班现场：4 个故障场景、3 个查询工具（单元二到四共用）
+                      mini_world.py    迷你值班现场：几台出问题的 MySQL、几个查询工具（全书的贯穿例子）
                       mini_agent.py    最小 Agent 循环（单元三），带四个挂钩子的位置（单元四）
                       mini_harness.py  挂在循环上的三个机制：参数守卫、结果压缩、证据账本和提交门（单元四）
                       mini_repo/       单元五改文件实验用的被改文件；mini_skills/ 是单元五的 5 份排查手册（SKILL.md）
                       mini_catalog.py  单元七的 40 个工具目录；mini_mcp_server.py 是只用标准库写的最小 MCP 服务器
                       mini_kb/         单元十的小知识库：18 篇虚构公司的内部文档
-                      uNN_*.py         调模型的例子把真实输出录在 output/，--replay 只看录好的；u13_* 读项目数据
-data/               从 oncall-agent-mvp 评测平台导出的真实运行数据（单元一、十三里的项目数字都从这里来）
+                      mini_eval.py     在迷你现场上造的评测集：20 条用例，5 种根因 × 4 种难度（单元十三起）
+                      uNN_*.py         调模型的例子把真实输出录在 output/，--replay 只看录好的
 scripts/build.py    把 content/ 生成网页 docs/index.html（只用标准库）
 ```
 
@@ -78,6 +78,6 @@ python examples/u03_workflow_vs_agent.py --replay
 python examples/u13_repeats.py
 ```
 
-第一条看录好的真实结果，不需要 key；第二条读项目数据，不调模型。
+第一条看录好的真实结果，不需要 key；第二条只读录好的评测运行做统计，不调模型。
 
 要自己调模型：在仓库根目录建 `.env`，写 `OPENAI_API_KEY=...`（默认走阿里云百炼的 OpenAI 兼容接口和 qwen-plus，可用 `OPENAI_BASE_URL`、`LLM_MODEL` 换）。单元一的例子全部跑一遍约 150 次很短的调用，单元二、三约 300 次，加起来花费不到一块钱。

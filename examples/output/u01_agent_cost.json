@@ -1,0 +1,51 @@
+{
+ "clean": [
+  {
+   "calls": 3,
+   "peak": 1596,
+   "input": 2914,
+   "output": 482,
+   "cached": 0,
+   "cost": 0.0033,
+   "seconds": 11.9,
+   "llm_seconds": 11.9
+  },
+  {
+   "calls": 3,
+   "peak": 1596,
+   "input": 2914,
+   "output": 456,
+   "cached": 256,
+   "cost": 0.00308,
+   "seconds": 11.8,
+   "llm_seconds": 11.8
+  }
+ ],
+ "noisy": [
+  {
+   "calls": 4,
+   "peak": 79000,
+   "input": 81690,
+   "output": 784,
+   "cached": 768,
+   "cost": 0.06643,
+   "seconds": 28.9,
+   "llm_seconds": 28.9
+  },
+  {
+   "calls": 4,
+   "peak": 79000,
+   "input": 81690,
+   "output": 796,
+   "cached": 79766,
+   "cost": 0.01589,
+   "seconds": 24.1,
+   "llm_seconds": 24.1
+  }
+ ],
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-25",
+  "base_url": "maas.aliyuncs.com"
+ }
+}

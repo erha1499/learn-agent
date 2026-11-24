@@ -29,7 +29,8 @@ def run_agent(question, system, tools, execute, max_turns=10,
         messages.append(assistant_message(r))                    # 2. 模型的回复追加进历史
         trace.append({"turn": turn, "prompt_tokens": r["usage"].get("prompt_tokens", 0),
                       "completion_tokens": r["usage"].get("completion_tokens", 0),
-                      "calls": [], "text": r["text"]})
+                      "cached_tokens": (r["usage"].get("prompt_tokens_details") or {}).get("cached_tokens", 0) or 0,
+                      "seconds": r["latency"], "calls": [], "text": r["text"]})
         if not r["tool_calls"]:                                  # 3. 没要调工具：想结束
             nudge = on_finish(r["text"]) if on_finish else None
             if nudge is None:
