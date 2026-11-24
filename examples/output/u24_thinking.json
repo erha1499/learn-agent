@@ -1,0 +1,277 @@
+{
+ "simple": {
+  "off": [
+   {
+    "answer": "9.11",
+    "latency": 0.649,
+    "completion_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   {
+    "answer": "9.11",
+    "latency": 0.635,
+    "completion_tokens": 4,
+    "reasoning_tokens": 0
+   },
+   {
+    "answer": "9.11",
+    "latency": 0.659,
+    "completion_tokens": 4,
+    "reasoning_tokens": 0
+   }
+  ],
+  "on": [
+   {
+    "answer": "9.9",
+    "latency": 19.969,
+    "completion_tokens": 1480,
+    "reasoning_tokens": 1472
+   },
+   {
+    "answer": "9.9",
+    "latency": 21.254,
+    "completion_tokens": 1938,
+    "reasoning_tokens": 1930
+   },
+   {
+    "answer": "9.9",
+    "latency": 12.544,
+    "completion_tokens": 1081,
+    "reasoning_tokens": 1073
+   }
+  ]
+ },
+ "diag": {
+  "off": {
+   "D1": [
+    {
+     "answer": "根因: MAX_CONNECTIONS",
+     "pred": "MAX_CONNECTIONS",
+     "latency": 0.667,
+     "completion_tokens": 6,
+     "reasoning_tokens": 0
+    },
+    {
+     "answer": "是当前最紧急、可观测的根因现象。虽然慢 SQL 是诱因（导致连接堆积、释放慢），但题干要求选择「根因」，且选项中 **MAX_CONNECTIONS 是唯一被直接触发并高频报错的机制性瓶颈**；其他选项（如 SLOW_SQL）是深层原因，但根据题目定义，需选最直接、可观测、符合错误现象的 ID。\n\n结论：根因是连接数打满（MAX_CONNECTIONS）。\n\n根因: MAX_CONNECTIONS",
+     "pred": "MAX_CONNECTIONS",
+     "latency": 8.495,
+     "completion_tokens": 358,
+     "reasoning_tokens": 0
+    },
+    {
+     "answer": "根因: MAX_CONNECTIONS",
+     "pred": "MAX_CONNECTIONS",
+     "latency": 0.748,
+     "completion_tokens": 6,
+     "reasoning_tokens": 0
+    },
+    {
+     "answer": "持。\n\n✅ 根据数据库故障归因惯例：当“慢 SQL 引发连接耗尽”时，**根因归为 SLOW_SQL**（因为 MAX_CONNECTIONS 是静态阈值，真正动态触发打满的是慢查询行为）；官方 MySQL 文档及主流运维实践（如阿里云RDS、腾讯云DBbrain）也将此类场景归类为“慢SQL导致连接数飙升”。\n\n因此，最准确、唯一可选的根因是：**SLOW_SQL**\n\n根因: SLOW_SQL",
+     "pred": "SLOW_SQL",
+     "latency": 16.12,
+     "completion_tokens": 704,
+     "reasoning_tokens": 0
+    },
+    {
+     "answer": "根因: MAX_CONNECTIONS",
+     "pred": "MAX_CONNECTIONS",
+     "latency": 0.642,
+     "completion_tokens": 6,
+     "reasoning_tokens": 0
+    }
+   ],
+   "D2": [
+    {
+     "answer": "LL 通常伴随错误日志如 \"No space left on device\" 或 InnoDB 写失败）、网络中断（NETWORK 一般表现为连接超时、丢包，而非单条 SQL 的高 Lock_time）。\n\n综上，核心特征是：**高 Lock_time + 低 Rows_examined + 正常连接/CPU/无磁盘/网络报错** → 典型 LOCK_WAIT 场景。\n\n根因: LOCK_WAIT",
+     "pred": "LOCK_WAIT",
+     "latency": 8.738,
+     "completion_tokens": 375,
+     "reasoning_tokens": 0
+    },
+    {
+     "answer": "Lock_time，说明锁争用是主导根因；\n- 不是 SLOW_SQL 的典型场景（如无索引全表扫描）：Rows_examined = 1，说明索引有效，性能瓶颈不在执行计划，而在锁；\n- DISK_FULL、NETWORK 无任何相关指标支持，排除。\n\n因此，根本原因是事务长时间持有行锁（如大事务、未提交事务、应用逻辑缺陷），导致后续扣款 UPDATE 频繁锁等待。\n\n根因: LOCK_WAIT",
+     "pred": "LOCK_WAIT",
+     "latency": 9.461,
+     "completion_tokens": 405,
+     "reasoning_tokens": 0
+    },
+    {
+     "answer": " 的单行更新，本应很快，但长期持锁 → 极可能被其他事务阻塞（如长事务未提交、或事务中执行了无关耗时操作）  \n- 错误日志无异常 → 排除崩溃、磁盘错误等底层问题  \n- 无磁盘使用率、网络延迟等指标 → 无法支持 DISK_FULL 或 NETWORK  \n\n综合：高 Lock_time + 高行锁等待 + 正常连接数/CPU → 典型 LOCK_WAIT 场景。\n\n根因: LOCK_WAIT",
+     "pred": "LOCK_WAIT",
+     "latency": 6.916,
+     "completion_tokens": 292,
+     "reasoning_tokens": 0
+    },
+    {
+     "answer": "DATE 操作（修改余额）是典型的行锁场景，高并发下易因热点账户（如 id=10001）引发锁争用；\n- 错误日志无异常 → 排除崩溃、连接中断等底层问题；\n- 无磁盘使用率、网络延迟等指标 → 无法支持 DISK_FULL 或 NETWORK；\n\n综上，**高 Lock_time + 高频行锁等待 + 简单 UPDATE 慢 → 典型 LOCK_WAIT 场景**。\n\n根因: LOCK_WAIT",
+     "pred": "LOCK_WAIT",
+     "latency": 6.791,
+     "completion_tokens": 285,
+     "reasoning_tokens": 0
+    },
+    {
+     "answer": "ERE id = 10001;`，本应毫秒级，却耗时 41s，主因是持锁者未释放（如长事务、未提交事务、或应用逻辑阻塞）；\n- 错误日志无异常 → 排除崩溃、宕机类问题；\n- 无磁盘使用率、网络延迟等指标 → 无法支持 DISK_FULL 或 NETWORK。\n\n综上，高 Lock_time + 高行锁等待 + 简单语句长时间阻塞 → 典型 LOCK_WAIT 场景。\n\n根因: LOCK_WAIT",
+     "pred": "LOCK_WAIT",
+     "latency": 7.157,
+     "completion_tokens": 300,
+     "reasoning_tokens": 0
+    }
+   ],
+   "D3": [
+    {
+     "answer": "）。其他选项均可排除：\n- MAX_CONNECTIONS：连接数远未打满；\n- SLOW_SQL：慢查询仅1条/分钟，且慢日志为空，不构成偶发性连接中断；\n- LOCK_WAIT：行锁等待为0；\n- DISK_FULL：错误日志无磁盘满相关关键字，且该错误通常伴随写入失败、OOM 或 server crash，而非通信包读取错误。\n\n因此，最可能根因为 NETWORK。\n\n根因: NETWORK",
+     "pred": "NETWORK",
+     "latency": 6.995,
+     "completion_tokens": 295,
+     "reasoning_tokens": 0
+    },
+    {
+     "answer": " LOCK_WAIT：行锁等待为 0，排除事务阻塞；\n- DISK_FULL：无相关错误日志（如 “No space left on device”），且该错误不导致此报错；\n- NETWORK：虽无监控数据，但错误类型强相关，且是唯一与“communication packets”语义直接匹配的选项。\n\n因此，基于错误日志的明确语义和排他性分析，根因为 NETWORK。\n\n根因: NETWORK",
+     "pred": "NETWORK",
+     "latency": 9.182,
+     "completion_tokens": 387,
+     "reasoning_tokens": 0
+    },
+    {
+     "answer": "网络监控“未接入”，但错误日志中的通信包读取失败（\"Got an error reading communication packets\"）是 MySQL 官方文档明确归因于网络问题（如网络不稳、客户端崩溃、TCP 连接重置等）的标志性错误。310 次/小时（约每 12 秒 1 次）属显著异常频次，符合 NETWORK 类故障特征。\n\n因此，根因可确定为 NETWORK。\n\n根因: NETWORK",
+     "pred": "NETWORK",
+     "latency": 5.881,
+     "completion_tokens": 245,
+     "reasoning_tokens": 0
+    },
+    {
+     "answer": "连接数仅260/1000、CPU低、无慢SQL积压、无锁等待、无磁盘告警。\n\n虽然网络监控“未接入”，缺乏直接网络指标（如丢包、延迟、TCP重传），但错误日志中高频（310次/小时）的通信包读取错误是网络问题的强指示性信号，且其他维度均正常，可排除 MAX_CONNECTIONS、SLOW_SQL、LOCK_WAIT、DISK_FULL。\n\n因此，根因为 NETWORK。\n\n根因: NETWORK",
+     "pred": "NETWORK",
+     "latency": 4.909,
+     "completion_tokens": 200,
+     "reasoning_tokens": 0
+    },
+    {
+     "answer": " → 排除 LOCK_WAIT；\n- 无磁盘使用率数据，但错误类型与 DISK_FULL 无关（磁盘满通常报错如 “No space left on device”、“Failed to write to binary log” 等）；\n- 网络监控“没有接入”，虽缺乏直接指标，但错误日志已提供强证据，且该错误在无网络监控时仍可独立定性。\n\n因此，根因为 NETWORK。\n\n根因: NETWORK",
+     "pred": "NETWORK",
+     "latency": 6.701,
+     "completion_tokens": 275,
+     "reasoning_tokens": 0
+    }
+   ]
+  },
+  "on": {
+   "D1": [
+    {
+     "answer": "1000（接近最大值1000），且错误日志中频繁出现 \"Too many connections\"（最近10分钟126次），这直接表明数据库连接池已耗尽。虽然存在慢SQL（每分钟170条，示例查询扫描3100万行）和高CPU（91%），但慢SQL和锁等待（每分钟仅2次）是潜在诱因，而非直接根因；错误日志明确指向连接数上限问题。磁盘和网络问题无相关数据支持。\n\n根因: MAX_CONNECTIONS",
+     "pred": "MAX_CONNECTIONS",
+     "latency": 101.67,
+     "completion_tokens": 1226,
+     "reasoning_tokens": 1087
+    },
+    {
+     "answer": "诱因，而非直接报错原因；错误日志明确指向连接数问题。\n- 行锁等待仅每分钟2次，频率很低，不足以成为主因；磁盘和网络相关数据未提供，可排除DISK_FULL和NETWORK；CPU 91%高负载可能与慢SQL相关，但非直接根因。\n\n数据充足，且“Too many connections”错误直接对应MAX_CONNECTIONS场景，因此根因为连接数打满。\n\n根因: MAX_CONNECTIONS",
+     "pred": "MAX_CONNECTIONS",
+     "latency": 78.22,
+     "completion_tokens": 2829,
+     "reasoning_tokens": 2598
+    },
+    {
+     "answer": "行数3100万，原因是未使用索引的全表扫描（`WHERE DATE(created_at) = ...`）。高CPU（91%）也与慢查询一致。行锁等待仅每分钟2次，频率极低，可排除锁等待问题。无磁盘或网络问题相关数据。\n\n慢查询导致连接被长时间占用，无法及时释放，从而耗尽连接池，引发“Too many connections”错误。因此，慢SQL是连接数打满的根本原因。\n\n根因: SLOW_SQL",
+     "pred": "SLOW_SQL",
+     "latency": 67.952,
+     "completion_tokens": 2924,
+     "reasoning_tokens": 2722
+    },
+    {
+     "answer": "条，慢日志中查询扫描 3100 万行）和较高 CPU（91%），但这些可能是导致连接被长时间占用的促成因素，而非直接根因。错误日志中未提及其他类型错误（如锁等待、磁盘或网络问题）。\n- 行锁等待仅每分钟 2 次，频率较低，不足以作为主因；磁盘和网络问题无相关监控或日志支持。\n\n数据充分表明连接数打满是直接根因，符合 MAX_CONNECTIONS 的定义。\n\n根因: MAX_CONNECTIONS",
+     "pred": "MAX_CONNECTIONS",
+     "latency": 31.884,
+     "completion_tokens": 1439,
+     "reasoning_tokens": 1214
+    },
+    {
+     "answer": "”错误（最近10分钟126次），这直接表明数据库连接池已耗尽。  \n虽然每分钟慢查询170条（包括一个扫描3100万行的慢查询），但慢查询是导致连接数打满的潜在原因，而非直接根因；每分钟行锁等待仅2次，频率很低，可排除锁等待问题；无磁盘或网络相关监控数据，无法支持DISK_FULL或NETWORK。  \n根据错误日志和连接数监控，根因明确为连接数打满。  \n\n根因: MAX_CONNECTIONS",
+     "pred": "MAX_CONNECTIONS",
+     "latency": 72.298,
+     "completion_tokens": 3305,
+     "reasoning_tokens": 3148
+    }
+   ],
+   "D2": [
+    {
+     "answer": "）构成，Rows_examined仅1，表明查询本身简单高效，但长时间等待锁释放。行锁等待指标和慢日志的锁等待时间高度一致，直接指向锁争用问题。其他选项排除：连接数未达上限（MAX_CONNECTIONS不成立）、CPU和磁盘无异常（DISK_FULL无依据）、无网络问题迹象（NETWORK不成立）、慢SQL是现象而非根因（SLOW_SQL不成立，实际由锁等待导致）。\n\n根因: LOCK_WAIT",
+     "pred": "LOCK_WAIT",
+     "latency": 12.904,
+     "completion_tokens": 949,
+     "reasoning_tokens": 766
+    },
+    {
+     "answer": "K_WAIT）。虽然监控中“每分钟行锁等待 9 次”与慢查询数量（60 条）存在数值差异，但慢日志明确揭示锁等待是慢查询的共性原因，数据足以确定根因。\n\n其他选项排除：\n- SLOW_SQL：SQL 语句本身简单（Rows_examined=1），非效率问题，慢因实为锁等待。\n- MAX_CONNECTIONS、DISK_FULL、NETWORK：监控数据无支持证据。\n\n根因: LOCK_WAIT",
+     "pred": "LOCK_WAIT",
+     "latency": 62.888,
+     "completion_tokens": 3727,
+     "reasoning_tokens": 3263
+    },
+    {
+     "answer": "time（41.70 秒）构成，且 Rows_examined 仅为 1，表明查询本身高效（基于主键更新），但长时间等待锁。同时，监控中每分钟行锁等待 9 次，与慢查询的高 Lock_time 高度一致，说明慢查询的主要原因是锁等待。\n- SLOW_SQL（慢 SQL）是现象而非根因，实际根因是锁等待导致的慢查询。\n\n数据充分支持 LOCK_WAIT（锁等待）为根因。\n\n根因: LOCK_WAIT",
+     "pred": "LOCK_WAIT",
+     "latency": 55.433,
+     "completion_tokens": 2849,
+     "reasoning_tokens": 2593
+    },
+    {
+     "answer": "9.76%），表明查询主要时间消耗在锁等待上。\n- 监控数据中每分钟行锁等待 9 次，与慢查询频率（每分钟 60 条）相关联，说明锁等待是导致慢查询的直接原因。\n- 该 UPDATE 语句基于主键 id 操作（Rows_examined: 1），SQL 本身高效，排除 SLOW_SQL（慢 SQL 通常指语句执行效率低，而非锁问题）。\n\n综上，数据充足，根因为锁等待。\n\n根因: LOCK_WAIT",
+     "pred": "LOCK_WAIT",
+     "latency": 23.396,
+     "completion_tokens": 1347,
+     "reasoning_tokens": 1095
+    },
+    {
+     "answer": "慢查询60条，但慢日志显示Query_time 41.80秒中Lock_time占41.70秒（占比99.76%），且Rows_examined仅1，表明查询本身简单高效，慢速主要由锁等待导致。\n- 每分钟行锁等待9次，直接印证锁等待问题，且与扣款接口（UPDATE操作）的慢速现象一致。\n\n数据充分指向锁等待是根因，而非慢SQL本身（因SQL执行效率高，但被锁阻塞）。\n\n根因: LOCK_WAIT",
+     "pred": "LOCK_WAIT",
+     "latency": 11.781,
+     "completion_tokens": 1086,
+     "reasoning_tokens": 886
+    }
+   ],
+   "D3": [
+    {
+     "answer": "IT。\n- 无磁盘使用数据，但错误日志与磁盘无关，排除DISK_FULL。\n- 错误日志显示“Aborted connection ... (Got an error reading communication packets)”一小时310次，该错误直接指示客户端与服务器间通信问题，通常由网络不稳定、超时或中断引起；网络监控虽未接入，但错误日志提供足够证据指向网络问题。\n\n根因: NETWORK",
+     "pred": "NETWORK",
+     "latency": 16.457,
+     "completion_tokens": 1480,
+     "reasoning_tokens": 1310
+    },
+    {
+     "answer": ". (Got an error reading communication packets)\" 一小时发生 310 次，该错误在 MySQL 中通常由网络问题引起（如通信中断、丢包或客户端异常断开），而网络监控虽未接入，但错误日志直接指向网络层问题。其他指标（如连接数、CPU、慢查询）均正常，进一步支持网络问题是根因。\n\n综上，数据充足指向网络问题，无需 UNKNOWN。\n\n根因: NETWORK",
+     "pred": "NETWORK",
+     "latency": 14.842,
+     "completion_tokens": 1222,
+     "reasoning_tokens": 960
+    },
+    {
+     "answer": " reading communication packets)\"，最近一小时发生 310 次。该错误明确表示通信数据包读取失败，通常由网络中断、客户端异常断开或网络不稳定引起。\n- **网络监控**：虽未接入，但错误日志直接指向网络通信问题，且其他选项均被排除。\n\n数据充足，错误日志高频出现（平均每分钟约 5 次）且与 NETWORK 问题高度一致，其他监控指标均无异常。\n\n根因: NETWORK",
+     "pred": "NETWORK",
+     "latency": 15.571,
+     "completion_tokens": 1187,
+     "reasoning_tokens": 920
+    },
+    {
+     "answer": "误明确指向通信层问题，通常由网络不稳定、数据包丢失或客户端-服务器间网络中断引起。尽管网络监控未接入，但错误日志内容直接指示网络相关故障。\n- 其他监控数据（如连接数、CPU、慢查询、锁等待）均正常，无其他异常线索。\n\n综上，错误日志中的\"Got an error reading communication packets\"是典型网络问题表现，数据足够指向NETWORK。\n\n根因: NETWORK",
+     "pred": "NETWORK",
+     "latency": 20.9,
+     "completion_tokens": 1444,
+     "reasoning_tokens": 1181
+    },
+    {
+     "answer": "题，通常由网络不稳定、丢包或客户端异常断开引起。尽管网络监控未接入，但错误日志的直接描述提供了充分证据指向网络问题。\n- 其他监控数据（如连接数、CPU、慢查询、锁等待）均正常，无其他明显异常。\n\n综上，错误日志中的\"Got an error reading communication packets\"是典型网络问题特征，且数据足以支持NETWORK（网络问题）作为根因。\n\n根因: NETWORK",
+     "pred": "NETWORK",
+     "latency": 16.438,
+     "completion_tokens": 1390,
+     "reasoning_tokens": 1087
+    }
+   ]
+  }
+ },
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-24",
+  "base_url": "maas.aliyuncs.com"
+ }
+}
