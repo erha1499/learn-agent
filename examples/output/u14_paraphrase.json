@@ -1,0 +1,211 @@
+{
+ "S1": [
+  {
+   "style": "原始问法",
+   "text": "order-mysql-01 下单接口从 14:00 开始大量报错，帮忙看看",
+   "problems": [],
+   "pred": "MAX_CONNECTIONS",
+   "calls": 2
+  },
+  {
+   "style": "口语化",
+   "text": "兄弟们，order-mysql-01 下单接口从14:00起疯狂报错，帮忙瞅一眼？",
+   "problems": [],
+   "pred": "MAX_CONNECTIONS",
+   "calls": 4
+  },
+  {
+   "style": "信息更少",
+   "text": "order-mysql-01 下单接口从14:00开始大面积不可用。",
+   "problems": [],
+   "pred": "MAX_CONNECTIONS",
+   "calls": 2
+  },
+  {
+   "style": "夹带无关信息",
+   "text": "对了，下周站会我想提下灰度发布流程优化～顺便问下，order-mysql-01 下单接口从14:00起一直报错，有空帮忙看看吗？哦还有，咖啡机又坏了……",
+   "problems": [],
+   "pred": "MAX_CONNECTIONS",
+   "calls": 4
+  },
+  {
+   "style": "错误猜测",
+   "text": "order-mysql-01 下单接口从14:00开始大量报错，是不是网络抖动或者SLB转发异常了？帮忙排查下？",
+   "problems": [],
+   "pred": "MAX_CONNECTIONS",
+   "calls": 3
+  },
+  {
+   "style": "中英混杂",
+   "text": "order-mysql-01 下单接口 from 14:00 开始 error rate 爆表，5xx 涨得飞快，log里全是 connection timeout？麻烦 quick look 一下？",
+   "problems": [],
+   "pred": "MAX_CONNECTIONS",
+   "calls": 2
+  },
+  {
+   "style": "长篇抱怨",
+   "text": "救命啊！！order-mysql-01 下单接口从今天14:00开始就疯了一样报错，用户投诉电话都打爆了，运营说转化率断崖式下跌，客服在群里狂@我，老板刚发消息问‘是不是大促前的系统性风险’，我连晚饭都没吃上，求各位大佬火速支援！！！",
+   "problems": [],
+   "pred": "MAX_CONNECTIONS",
+   "calls": 3
+  }
+ ],
+ "S2": [
+  {
+   "style": "原始问法",
+   "text": "报表页面打开要一分钟，report-mysql-02 是不是有问题",
+   "problems": [],
+   "pred": "SLOW_SQL",
+   "calls": 2
+  },
+  {
+   "style": "口语化",
+   "text": "report-mysql-02 打开报表咋这么慢？卡一分钟了…",
+   "problems": [],
+   "pred": "SLOW_SQL",
+   "calls": 3
+  },
+  {
+   "style": "信息更少",
+   "text": "报表页面打开要一分钟，report-mysql-02 好像不太对劲",
+   "problems": [],
+   "pred": "SLOW_SQL",
+   "calls": 3
+  },
+  {
+   "style": "夹带无关信息",
+   "text": "对了，下周的权限迁移需求文档我发群里了哈～顺便问下，报表页面打开要一分钟，report-mysql-02 是不是有问题？还有咖啡机又不出热水了……",
+   "problems": [],
+   "pred": "SLOW_SQL",
+   "calls": 3
+  },
+  {
+   "style": "错误猜测",
+   "text": "报表页面打开要一分钟，report-mysql-02 是不是磁盘满了？或者IO打满了？",
+   "problems": [],
+   "pred": "SLOW_SQL",
+   "calls": 3
+  },
+  {
+   "style": "中英混杂",
+   "text": "报表页面 load time 直接飙到 60s，report-mysql-02 的 latency 是不是 spike 了？查了下监控好像没告警啊…",
+   "problems": [],
+   "pred": "SLOW_SQL",
+   "calls": 3
+  },
+  {
+   "style": "长篇抱怨",
+   "text": "救命！报表页面打开要整整一分钟！！！测试同学等结果等得都去吃第三顿午饭了，运营催数据催到在钉钉上连发5个感叹号，老板刚在周会问‘为什么BI看板响应这么慢’，我现在盯着 report-mysql-02 的页面转圈圈转了快十次了，再这样下去我今晚又要通宵调参了！！！",
+   "problems": [],
+   "pred": "SLOW_SQL",
+   "calls": 3
+  }
+ ],
+ "S3": [
+  {
+   "style": "原始问法",
+   "text": "支付回调一直超时，pay-mysql-03 帮忙查一下",
+   "problems": [],
+   "pred": "LOCK_WAIT",
+   "calls": 2
+  },
+  {
+   "style": "口语化",
+   "text": "pay-mysql-03 这边能帮忙看下支付回调老超时不？",
+   "problems": [],
+   "pred": "LOCK_WAIT",
+   "calls": 4
+  },
+  {
+   "style": "信息更少",
+   "text": "支付回调一直失败，pay-mysql-03 帮忙看看",
+   "problems": [],
+   "pred": "LOCK_WAIT",
+   "calls": 2
+  },
+  {
+   "style": "夹带无关信息",
+   "text": "对了下周要上线的优惠券配置文档我发你邮箱了哈～另外支付回调一直超时，pay-mysql-03 帮忙查一下？",
+   "problems": [],
+   "pred": "LOCK_WAIT",
+   "calls": 2
+  },
+  {
+   "style": "错误猜测",
+   "text": "支付回调一直超时，是不是网络抖动或者 proxy 转发慢了？pay-mysql-03 帮忙确认下？",
+   "problems": [],
+   "pred": "LOCK_WAIT",
+   "calls": 4
+  },
+  {
+   "style": "中英混杂",
+   "text": "payment callback consistently timeouting… pay-mysql-03 能帮忙 check 一下吗？是不是 connection pool 满了 or query latency 突然升高？",
+   "problems": [],
+   "pred": "LOCK_WAIT",
+   "calls": 4
+  },
+  {
+   "style": "长篇抱怨",
+   "text": "天啊这都第7次告警了！用户投诉电话快被打爆了，订单状态卡在‘支付中’根本刷不出来，客服那边已经没法解释了，APP端一直在转圈圈，运营说今天GMV直接掉了15%，求求了pay-mysql-03赶紧帮忙看看支付回调为啥一直超时啊！！！",
+   "problems": [],
+   "pred": "LOCK_WAIT",
+   "calls": 2
+  }
+ ],
+ "S4": [
+  {
+   "style": "原始问法",
+   "text": "user-mysql-04 写入全部失败，读好像还正常",
+   "problems": [],
+   "pred": "DISK_FULL",
+   "calls": 4
+  },
+  {
+   "style": "口语化",
+   "text": "user-mysql-04 写不进去了，读还能用，谁看下？",
+   "problems": [],
+   "pred": "DISK_FULL",
+   "calls": 4
+  },
+  {
+   "style": "信息更少",
+   "text": "user-mysql-04 数据写入失败了",
+   "problems": [],
+   "pred": "DISK_FULL",
+   "calls": 4
+  },
+  {
+   "style": "夹带无关信息",
+   "text": "对了，新报表需求下周初能给个排期吗？——哦差点忘了，user-mysql-04 写入全挂了，读还行，顺手帮忙瞄一眼哈～",
+   "problems": [],
+   "pred": "DISK_FULL",
+   "calls": 2
+  },
+  {
+   "style": "错误猜测",
+   "text": "user-mysql-04 写入全部失败，读好像还正常……是不是主从同步断了或者 binlog 被关了？",
+   "problems": [],
+   "pred": "DISK_FULL",
+   "calls": 4
+  },
+  {
+   "style": "中英混杂",
+   "text": "user-mysql-04 write totally failed — all INSERT/UPDATE returning errors, but SELECT is still working fine… anyone check the connection pool or innodb status?",
+   "problems": [],
+   "pred": "DISK_FULL",
+   "calls": 4
+  },
+  {
+   "style": "长篇抱怨",
+   "text": "救命啊！！user-mysql-04 写入全部失败已经快20分钟了！！订单根本落不了库，下游实时看板全变灰色，客服那边催了三轮说用户投诉下单没反应，连个日志都打不进去，运维大佬们快救救孩子吧！！！",
+   "problems": [],
+   "pred": "DISK_FULL",
+   "calls": 4
+  }
+ ],
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-25",
+  "base_url": "maas.aliyuncs.com"
+ }
+}
