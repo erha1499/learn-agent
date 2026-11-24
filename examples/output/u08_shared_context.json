@@ -1,0 +1,128 @@
+{
+ "A": [
+  {
+   "pred": "DISK_FULL",
+   "tokens": 3380,
+   "suggestions": "1. 立即检查 user-mysql-04 的磁盘空间使用率，若超过95%，清理 binlog 或临时文件释放空间。  \n2. 查看 MySQL 错误日志（/var/log/mysql/error.log）中最近的 ERROR 级别记录，重点关注 “The table is full”、“Can’t write to table” 或权限/只读相关报错。  \n3. 执行 `mysql -e \"SHOW VARIABLES LIKE 'read_only';\"` 确认实例是否被意外设为只读，如为 ON，联系DBA核实后执行 `SET GLOBAL read_only=OFF;`（需 SUPER 权限）。",
+   "targeted": true
+  },
+  {
+   "pred": "DISK_FULL",
+   "tokens": 2996,
+   "suggestions": "1. 立即检查 user-mysql-04 的磁盘剩余空间及 inode 使用率，清理临时文件或归档日志释放空间。  \n2. 查看 MySQL 错误日志（/var/log/mysql/error.log 或 SHOW ENGINE INNODB STATUS）确认是否因只读模式、max_connections 耗尽或事务日志写满导致写入拒绝。  \n3. 执行 `mysql -e \"SHOW VARIABLES LIKE 'read_only';\"` 确认实例是否被意外置为 read_only=ON，若是则执行 `SET GLOBAL read_only=OFF;`（需 SUPER 权限并同步检查主从状态）。",
+   "targeted": false
+  },
+  {
+   "pred": "DISK_FULL",
+   "tokens": 3602,
+   "suggestions": "1. 立即检查 user-mysql-04 的磁盘空间及 InnoDB 日志文件（ib_logfile*）是否写满或损坏。  \n2. 执行 `SHOW ENGINE INNODB STATUS\\G` 查看是否有事务死锁、锁等待超时或写入线程阻塞。  \n3. 临时将写流量切至备用实例（如 user-mysql-05），同时排查主从复制状态及 binlog 是否异常中断。",
+   "targeted": false
+  },
+  {
+   "pred": "DISK_FULL",
+   "tokens": 3452,
+   "suggestions": "1. 立即检查 user-mysql-04 的磁盘空间使用率，若根分区或数据目录所在分区使用率 ≥95%，清理临时文件或归档日志释放空间。  \n2. 执行 `mysql -e \"SHOW VARIABLES LIKE 'read_only';\"` 确认是否被意外设为只读模式，如返回 `ON`，立即执行 `SET GLOBAL read_only=OFF;`（需 SUPER 权限）。  \n3. 检查 MySQL 错误日志（通常位于 `/var/log/mysql/error.log` 或 `datadir/hostname.err`）中最近 10 分钟的 ERROR 级别条目，重点关注 “The table is full”、“Too many connections” 或存储引擎写入失败相关报错，并按具体错误类型处置。",
+   "targeted": true
+  },
+  {
+   "pred": "DISK_FULL",
+   "tokens": 2354,
+   "suggestions": "1. 立即检查 user-mysql-04 的磁盘空间使用率，若根分区或数据目录所在分区使用率 ≥95%，清理临时文件或归档日志释放空间。  \n2. 执行 `mysql -e \"SHOW GLOBAL VARIABLES LIKE 'read_only';\"` 确认是否误设为只读模式，如为 ON，通过 `SET GLOBAL read_only=OFF;`（需 SUPER 权限）临时恢复写入。  \n3. 检查 MySQL 错误日志（/var/log/mysql/error.log 或 mysqld 的 error-log 配置路径）中最近 1 小时的 ERROR 级别条目，重点排查 “The table is full”、“Cannot write to log” 或权限拒绝类错误。",
+   "targeted": true
+  }
+ ],
+ "B": [
+  {
+   "pred": "DISK_FULL",
+   "tokens": 3380,
+   "suggestions": "1. 立即清理 /var/lib/mysql/user/ 目录下过期的 binlog 文件和历史备份文件。  \n2. 扩容 user-mysql-04 节点挂载的数据盘，或迁移部分大表到其他实例以释放空间。  \n3. 临时启用 innodb_file_per_table=ON 并执行 OPTIMIZE TABLE user_login_log 释放已删除记录占用的空间（需确保有足够临时空间）。",
+   "targeted": true
+  },
+  {
+   "pred": "DISK_FULL",
+   "tokens": 2996,
+   "suggestions": "1. 立即清理 /var/lib/mysql 目录下的无用 binlog 文件或旧备份文件，释放磁盘空间。  \n2. 临时调整 MySQL 的 max_binlog_size 和 expire_logs_days 参数，限制 binlog 增长并自动清理过期日志。  \n3. 扩容 user-mysql-04 节点的磁盘容量，并配置磁盘使用率告警（阈值设为85%）。",
+   "targeted": true
+  },
+  {
+   "pred": "DISK_FULL",
+   "tokens": 3602,
+   "suggestions": "1. 立即清理 /var/lib/mysql 或对应数据目录下的无用文件（如旧 binlog、临时表、错误日志），释放至少 20% 磁盘空间。  \n2. 执行 `PURGE BINARY LOGS BEFORE DATE_SUB(NOW(), INTERVAL 7 DAY);` 清理过期二进制日志。  \n3. 检查并删除 /tmp 和 /var/log 下大于 100MB 的临时或归档日志文件，避免影响 MySQL 临时表和日志写入。",
+   "targeted": true
+  },
+  {
+   "pred": "DISK_FULL",
+   "tokens": 3452,
+   "suggestions": "1. 立即清理 /var/lib/mysql 所在分区的无用文件（如旧 binlog、临时表、错误日志）以释放空间。  \n2. 执行 `PURGE BINARY LOGS BEFORE DATE_SUB(NOW(), INTERVAL 3 DAY);` 清理过期二进制日志。  \n3. 检查并删除 /var/lib/mysql/user/ 目录下已废弃的 .ibd 文件或归档表，确认无业务依赖后再执行 `DROP TABLE` 或 `TRUNCATE TABLE`。",
+   "targeted": true
+  },
+  {
+   "pred": "DISK_FULL",
+   "tokens": 2354,
+   "suggestions": "1. 立即清理 `/var/lib/mysql` 目录下无用的 binlog、slow log、临时文件或旧备份，释放至少 10% 磁盘空间。  \n2. 执行 `PURGE BINARY LOGS BEFORE 'YYYY-MM-DD HH:MM:SS'` 清理过期二进制日志（需先确认主从同步状态）。  \n3. 临时限制写入流量：在应用层对 `user_login_log` 表相关接口启用降级开关，避免持续写入加剧磁盘压力。",
+   "targeted": true
+  }
+ ],
+ "C": [
+  {
+   "pred": "DISK_FULL",
+   "tokens": 3380,
+   "review": {
+    "consistent": false,
+    "reason": "处置建议第2、3条分别针对表空间满、实例只读等无关根因，偏离了磁盘空间已满（DISK_FULL）这一唯一根因。"
+   },
+   "suggestions": "1. 立即清理 /var/lib/mysql 所在磁盘分区的无用文件（如旧备份、binlog、slow log、临时文件）。  \n2. 检查并清空 MySQL 的 slow_query_log、general_log 和 error_log 文件（若启用且占用过大）。  \n3. 临时扩容磁盘空间或迁移部分数据目录到其他挂载点，确保剩余空间 ≥20%。",
+   "targeted": true,
+   "first_targeted": true
+  },
+  {
+   "pred": "DISK_FULL",
+   "tokens": 2996,
+   "review": {
+    "consistent": false,
+    "reason": "处置建议2和3针对的是只读模式、连接数耗尽、事务日志写满等非根因问题，偏离了根因'DISK_FULL'，引入无关排查项。"
+   },
+   "suggestions": "1. 立即清理 user-mysql-04 所在磁盘的无用文件（如旧备份、慢查询日志、临时文件）以释放空间。  \n2. 检查并清理 MySQL 的 binlog 文件（通过 PURGE BINARY LOGS 或调整 expire_logs_days 参数）。  \n3. 扩容磁盘或迁移部分数据目录（如 /var/lib/mysql）到有剩余空间的挂载点，并同步更新 my.cnf 配置。",
+   "targeted": false,
+   "first_targeted": false
+  },
+  {
+   "pred": "DISK_FULL",
+   "tokens": 3602,
+   "review": {
+    "consistent": false,
+    "reason": "处置建议未聚焦于释放磁盘空间这一根因，而是偏离至日志文件检查、死锁排查和流量切换等无关或次要动作。"
+   },
+   "suggestions": "1. 立即清理 /var/lib/mysql 所在分区的无用文件（如旧备份、临时日志、core dump 文件），优先删除超过7天的 binlog 文件（使用 PURGE BINARY LOGS BEFORE 'YYYY-MM-DD HH:MM:SS'）。  \n2. 检查并清空 MySQL 错误日志和慢查询日志中已归档的旧文件（路径通常为 /var/log/mysql/），保留最近3天的日志。  \n3. 若磁盘使用率仍高于95%，临时禁用 MySQL 的 general_log 和 slow_query_log（SET GLOBAL general_log = 'OFF'; SET GLOBAL slow_query_log = 'OFF';），并重启 mysqld 释放被日志文件占用的 inode 和空间。",
+   "targeted": false,
+   "first_targeted": false
+  },
+  {
+   "pred": "DISK_FULL",
+   "tokens": 3452,
+   "review": {
+    "consistent": false,
+    "reason": "处置建议第2条（检查并关闭read_only）和第3条（泛化检查其他错误）均未针对磁盘空间满（DISK_FULL）这一根因，属于无关或过度扩展的排查动作。"
+   },
+   "suggestions": "1. 立即清理 /var/lib/mysql 所在分区的无用文件（如旧 binlog、临时 dump、错误日志），释放至少 20% 磁盘空间。  \n2. 检查并删除 user-mysql-04 上过期的备份文件（路径通常为 /backup/mysql/user-mysql-04/ 或 /data/backup/）及归档日志。  \n3. 临时调整 MySQL 的 innodb_file_per_table=ON 并执行 OPTIMIZE TABLE user_login_log，回收表碎片空间（需确保有足够临时空间）。",
+   "targeted": true,
+   "first_targeted": true
+  },
+  {
+   "pred": "DISK_FULL",
+   "tokens": 2354,
+   "review": {
+    "consistent": false,
+    "reason": "处置建议第2条（检查并关闭read_only）与根因DISK_FULL无关，磁盘满时设为只读无法解决空间问题；第3条排查其他错误类型也偏离了已确认的磁盘满根因。"
+   },
+   "suggestions": "1. 立即清理 /var/lib/mysql 所在磁盘分区的无用文件（如旧binlog、临时表、错误日志），释放至少20%可用空间。  \n2. 检查并删除过期或冗余的备份文件（如 /backup/mysql/ 下30天前的全量备份）。  \n3. 临时调整 innodb_log_file_size 至较小值（如128M）并重启MySQL，减少redo日志占用空间。",
+   "targeted": true,
+   "first_targeted": true
+  }
+ ],
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-24",
+  "base_url": "maas.aliyuncs.com"
+ }
+}

@@ -1,0 +1,209 @@
+{
+ "sequential": [
+  {
+   "wall": 29.4,
+   "children": [
+    {
+     "instance": "order-mysql-01",
+     "right": true,
+     "seconds": 5.2,
+     "tokens": 1851,
+     "calls": 2
+    },
+    {
+     "instance": "report-mysql-02",
+     "right": true,
+     "seconds": 9.9,
+     "tokens": 2429,
+     "calls": 3
+    },
+    {
+     "instance": "pay-mysql-03",
+     "right": true,
+     "seconds": 6.1,
+     "tokens": 1591,
+     "calls": 2
+    },
+    {
+     "instance": "user-mysql-04",
+     "right": true,
+     "seconds": 8.2,
+     "tokens": 3240,
+     "calls": 4
+    }
+   ]
+  },
+  {
+   "wall": 31.7,
+   "children": [
+    {
+     "instance": "order-mysql-01",
+     "right": true,
+     "seconds": 9.8,
+     "tokens": 3893,
+     "calls": 4
+    },
+    {
+     "instance": "report-mysql-02",
+     "right": true,
+     "seconds": 5.8,
+     "tokens": 1912,
+     "calls": 3
+    },
+    {
+     "instance": "pay-mysql-03",
+     "right": true,
+     "seconds": 8.1,
+     "tokens": 2911,
+     "calls": 4
+    },
+    {
+     "instance": "user-mysql-04",
+     "right": true,
+     "seconds": 8.0,
+     "tokens": 3205,
+     "calls": 4
+    }
+   ]
+  },
+  {
+   "wall": 24.6,
+   "children": [
+    {
+     "instance": "order-mysql-01",
+     "right": true,
+     "seconds": 5.5,
+     "tokens": 1863,
+     "calls": 2
+    },
+    {
+     "instance": "report-mysql-02",
+     "right": true,
+     "seconds": 6.3,
+     "tokens": 1486,
+     "calls": 2
+    },
+    {
+     "instance": "pay-mysql-03",
+     "right": true,
+     "seconds": 5.7,
+     "tokens": 1567,
+     "calls": 2
+    },
+    {
+     "instance": "user-mysql-04",
+     "right": true,
+     "seconds": 7.1,
+     "tokens": 3091,
+     "calls": 4
+    }
+   ]
+  }
+ ],
+ "parallel": [
+  {
+   "wall": 8.5,
+   "children": [
+    {
+     "instance": "order-mysql-01",
+     "right": true,
+     "seconds": 5.7,
+     "tokens": 1869,
+     "calls": 2
+    },
+    {
+     "instance": "report-mysql-02",
+     "right": true,
+     "seconds": 8.5,
+     "tokens": 2221,
+     "calls": 3
+    },
+    {
+     "instance": "pay-mysql-03",
+     "right": true,
+     "seconds": 5.9,
+     "tokens": 1576,
+     "calls": 2
+    },
+    {
+     "instance": "user-mysql-04",
+     "right": true,
+     "seconds": 8.5,
+     "tokens": 3259,
+     "calls": 4
+    }
+   ]
+  },
+  {
+   "wall": 7.1,
+   "children": [
+    {
+     "instance": "order-mysql-01",
+     "right": true,
+     "seconds": 6.0,
+     "tokens": 1881,
+     "calls": 2
+    },
+    {
+     "instance": "report-mysql-02",
+     "right": true,
+     "seconds": 6.4,
+     "tokens": 1497,
+     "calls": 2
+    },
+    {
+     "instance": "pay-mysql-03",
+     "right": true,
+     "seconds": 6.3,
+     "tokens": 2825,
+     "calls": 4
+    },
+    {
+     "instance": "user-mysql-04",
+     "right": true,
+     "seconds": 7.1,
+     "tokens": 3036,
+     "calls": 4
+    }
+   ]
+  },
+  {
+   "wall": 10.0,
+   "children": [
+    {
+     "instance": "order-mysql-01",
+     "right": true,
+     "seconds": 4.9,
+     "tokens": 1819,
+     "calls": 2
+    },
+    {
+     "instance": "report-mysql-02",
+     "right": true,
+     "seconds": 6.7,
+     "tokens": 1510,
+     "calls": 2
+    },
+    {
+     "instance": "pay-mysql-03",
+     "right": true,
+     "seconds": 5.6,
+     "tokens": 1562,
+     "calls": 2
+    },
+    {
+     "instance": "user-mysql-04",
+     "right": true,
+     "seconds": 10.0,
+     "tokens": 3441,
+     "calls": 4
+    }
+   ]
+  }
+ ],
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-24",
+  "base_url": "maas.aliyuncs.com"
+ }
+}

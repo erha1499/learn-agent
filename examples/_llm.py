@@ -53,14 +53,14 @@ def chat(messages, model=None, stream=False, **params):
         body.update(stream=True, stream_options={"include_usage": True})
     req = urllib.request.Request(BASE + "/chat/completions", data=json.dumps(body).encode(),
                                  headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}"})
-    for attempt in range(4):                       # 网络抖动、限流、5xx：等一会儿重试，最多 4 次
+    for attempt in range(6):                       # 网络抖动、限流、5xx：等一会儿重试，最多 6 次
         try:
             return _send(req, stream)
         except (urllib.error.URLError, ConnectionError, TimeoutError) as e:
             code = getattr(e, "code", None)
-            if attempt == 3 or (code is not None and code != 429 and code < 500):
+            if attempt == 5 or (code is not None and code != 429 and code < 500):
                 raise
-            time.sleep(2 ** attempt)
+            time.sleep(min(2 ** attempt, 16))
 
 
 def _send(req, stream):
