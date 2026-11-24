@@ -1,0 +1,443 @@
+{
+ "all": [
+  {
+   "picked": "mysql__get_metrics",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3256,
+   "max_prompt": 3256,
+   "q": 0
+  },
+  {
+   "picked": "mysql__get_metrics",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3256,
+   "max_prompt": 3256,
+   "q": 0
+  },
+  {
+   "picked": "mysql__get_metrics",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3256,
+   "max_prompt": 3256,
+   "q": 0
+  },
+  {
+   "picked": "mysql__query_slow_log",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3253,
+   "max_prompt": 3253,
+   "q": 1
+  },
+  {
+   "picked": "mysql__query_slow_log",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3253,
+   "max_prompt": 3253,
+   "q": 1
+  },
+  {
+   "picked": "mysql__query_slow_log",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3253,
+   "max_prompt": 3253,
+   "q": 1
+  },
+  {
+   "picked": "mysql__query_error_log",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3253,
+   "max_prompt": 3253,
+   "q": 2
+  },
+  {
+   "picked": "mysql__query_error_log",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3253,
+   "max_prompt": 3253,
+   "q": 2
+  },
+  {
+   "picked": "mysql__query_error_log",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3253,
+   "max_prompt": 3253,
+   "q": 2
+  },
+  {
+   "picked": "redis__big_keys",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3249,
+   "max_prompt": 3249,
+   "q": 3
+  },
+  {
+   "picked": "redis__big_keys",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3249,
+   "max_prompt": 3249,
+   "q": 3
+  },
+  {
+   "picked": "redis__big_keys",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3249,
+   "max_prompt": 3249,
+   "q": 3
+  },
+  {
+   "picked": "k8s__get_pods",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3250,
+   "max_prompt": 3250,
+   "q": 4
+  },
+  {
+   "picked": "k8s__get_pods",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3250,
+   "max_prompt": 3250,
+   "q": 4
+  },
+  {
+   "picked": "k8s__get_pods",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3250,
+   "max_prompt": 3250,
+   "q": 4
+  },
+  {
+   "picked": "jira__create_issue",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3264,
+   "max_prompt": 3264,
+   "q": 5
+  },
+  {
+   "picked": "jira__create_issue",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3264,
+   "max_prompt": 3264,
+   "q": 5
+  },
+  {
+   "picked": "jira__create_issue",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3264,
+   "max_prompt": 3264,
+   "q": 5
+  },
+  {
+   "picked": "mysql__list_instances",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3248,
+   "max_prompt": 3248,
+   "q": 6
+  },
+  {
+   "picked": "mysql__list_instances",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3248,
+   "max_prompt": 3248,
+   "q": 6
+  },
+  {
+   "picked": "mysql__list_instances",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3248,
+   "max_prompt": 3248,
+   "q": 6
+  },
+  {
+   "picked": "mysql__show_processlist",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3253,
+   "max_prompt": 3253,
+   "q": 7
+  },
+  {
+   "picked": "mysql__show_processlist",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3253,
+   "max_prompt": 3253,
+   "q": 7
+  },
+  {
+   "picked": "mysql__show_processlist",
+   "searches": [],
+   "llm_calls": 1,
+   "prompt_tokens": 3253,
+   "max_prompt": 3253,
+   "q": 7
+  }
+ ],
+ "search": [
+  {
+   "picked": "mysql__get_metrics",
+   "searches": [
+    "查 MySQL 实例的连接数和 CPU 使用率"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 1047,
+   "max_prompt": 820,
+   "q": 0
+  },
+  {
+   "picked": "mysql__get_metrics",
+   "searches": [
+    "查 MySQL 实例的连接数和 CPU 使用率"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 1047,
+   "max_prompt": 820,
+   "q": 0
+  },
+  {
+   "picked": "mysql__get_metrics",
+   "searches": [
+    "查 MySQL 连接数和 CPU 使用率"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 1065,
+   "max_prompt": 838,
+   "q": 0
+  },
+  {
+   "picked": "mysql__query_slow_log",
+   "searches": [
+    "查 MySQL 慢查询"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 1089,
+   "max_prompt": 865,
+   "q": 1
+  },
+  {
+   "picked": "mysql__query_slow_log",
+   "searches": [
+    "查 MySQL 慢查询"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 1089,
+   "max_prompt": 865,
+   "q": 1
+  },
+  {
+   "picked": "mysql__query_slow_log",
+   "searches": [
+    "查 MySQL 慢查询"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 1089,
+   "max_prompt": 865,
+   "q": 1
+  },
+  {
+   "picked": "mysql__query_error_log",
+   "searches": [
+    "查 MySQL 错误日志"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 1078,
+   "max_prompt": 854,
+   "q": 2
+  },
+  {
+   "picked": "mysql__query_error_log",
+   "searches": [
+    "查 MySQL 错误日志"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 1078,
+   "max_prompt": 854,
+   "q": 2
+  },
+  {
+   "picked": "mysql__query_error_log",
+   "searches": [
+    "查 MySQL 错误日志"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 1078,
+   "max_prompt": 854,
+   "q": 2
+  },
+  {
+   "picked": "redis__big_keys",
+   "searches": [
+    "查 Redis 大 key"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 977,
+   "max_prompt": 757,
+   "q": 3
+  },
+  {
+   "picked": "redis__big_keys",
+   "searches": [
+    "查 Redis 大 key"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 977,
+   "max_prompt": 757,
+   "q": 3
+  },
+  {
+   "picked": "redis__big_keys",
+   "searches": [
+    "查 Redis 大 key"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 977,
+   "max_prompt": 757,
+   "q": 3
+  },
+  {
+   "picked": "k8s__get_pods",
+   "searches": [
+    "查 Kubernetes 中某个服务的 Pod 状态"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 958,
+   "max_prompt": 737,
+   "q": 4
+  },
+  {
+   "picked": "k8s__get_pods",
+   "searches": [
+    "查 k8s 中 order-service 的 pod 状态"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 981,
+   "max_prompt": 760,
+   "q": 4
+  },
+  {
+   "picked": "k8s__get_pods",
+   "searches": [
+    "查 k8s 中 order-service 的 pod 状态"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 981,
+   "max_prompt": 760,
+   "q": 4
+  },
+  {
+   "picked": "jira__create_issue",
+   "searches": [
+    "在 Jira 创建工单"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 1044,
+   "max_prompt": 809,
+   "q": 5
+  },
+  {
+   "picked": "jira__create_issue",
+   "searches": [
+    "在 Jira 创建工单"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 1044,
+   "max_prompt": 809,
+   "q": 5
+  },
+  {
+   "picked": "jira__create_issue",
+   "searches": [
+    "在 Jira 创建工单"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 1044,
+   "max_prompt": 809,
+   "q": 5
+  },
+  {
+   "picked": "cmdb__search_assets",
+   "searches": [
+    "查 order 服务关联的数据库实例"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 1062,
+   "max_prompt": 843,
+   "q": 6
+  },
+  {
+   "picked": "mysql__list_instances",
+   "searches": [
+    "查服务关联的数据库实例"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 1049,
+   "max_prompt": 830,
+   "q": 6
+  },
+  {
+   "picked": "cmdb__search_assets",
+   "searches": [
+    "查 order 服务关联的数据库实例"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 1062,
+   "max_prompt": 843,
+   "q": 6
+  },
+  {
+   "picked": "mysql__show_processlist",
+   "searches": [
+    "查 MySQL 正在执行的 SQL"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 1055,
+   "max_prompt": 831,
+   "q": 7
+  },
+  {
+   "picked": "mysql__show_processlist",
+   "searches": [
+    "查 MySQL 正在执行的 SQL"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 1055,
+   "max_prompt": 831,
+   "q": 7
+  },
+  {
+   "picked": "mysql__show_processlist",
+   "searches": [
+    "查 MySQL 正在执行的 SQL"
+   ],
+   "llm_calls": 2,
+   "prompt_tokens": 1055,
+   "max_prompt": 831,
+   "q": 7
+  }
+ ],
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-24",
+  "base_url": "maas.aliyuncs.com"
+ }
+}

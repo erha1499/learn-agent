@@ -1,0 +1,96 @@
+{
+ "bare": [
+  {
+   "instances": [
+    "order_db"
+   ],
+   "found": false,
+   "tool_calls": 1,
+   "answer": "无法获取订单库的监控指标，可能是实例名错误或服务不可用。请确认实例名是否为 \"order_db\"，或检查系统是否正常运行。\n\n根因: NETWORK"
+  },
+  {
+   "instances": [
+    "订单库"
+   ],
+   "found": false,
+   "tool_calls": 1,
+   "answer": "无法获取订单库的监控指标，可能实例名不正确或服务不可用。请确认实例名是否为“订单库”或提供正确的实例标识。\n\n根因: UNKNOWN"
+  },
+  {
+   "instances": [
+    "订单库"
+   ],
+   "found": false,
+   "tool_calls": 1,
+   "answer": "无法查询到订单库的监控指标，可能该实例不存在或无法访问。请确认实例名是否正确，或检查数据库服务状态。\n\n根因: NETWORK"
+  },
+  {
+   "instances": [
+    "订单库"
+   ],
+   "found": false,
+   "tool_calls": 1,
+   "answer": "无法查询到订单库的监控指标，可能该实例不存在或名称有误。请确认实例名是否正确，或提供其他可查的实例名。\n\n根因: MAX_CONNECTIONS"
+  },
+  {
+   "instances": [
+    "订单库"
+   ],
+   "found": false,
+   "tool_calls": 1,
+   "answer": "无法查询到订单库的监控指标，可能实例名不正确或服务异常。请确认实例名是否为“订单库”，或检查系统是否正常运行。\n\n根因: NETWORK"
+  }
+ ],
+ "helpful": [
+  {
+   "instances": [
+    "订单库",
+    "order-mysql-01"
+   ],
+   "found": true,
+   "tool_calls": 2,
+   "answer": "订单库（order-mysql-01）当前连接数为 1000，等于最大连接数 1000，说明连接数已打满。\n\n根因: MAX_CONNECTIONS"
+  },
+  {
+   "instances": [
+    "订单库",
+    "order-mysql-01"
+   ],
+   "found": true,
+   "tool_calls": 2,
+   "answer": "订单库（order-mysql-01）当前连接数为 1000，等于最大连接数 1000，说明连接数已打满。\n\n根因: MAX_CONNECTIONS"
+  },
+  {
+   "instances": [
+    "订单库",
+    "order-mysql-01"
+   ],
+   "found": true,
+   "tool_calls": 2,
+   "answer": "订单库（order-mysql-01）当前连接数为 1000，最大连接数也为 1000，连接数已打满。\n\n根因: MAX_CONNECTIONS"
+  },
+  {
+   "instances": [
+    "订单库",
+    "order-mysql-01"
+   ],
+   "found": true,
+   "tool_calls": 2,
+   "answer": "订单库（order-mysql-01）当前连接数为 1000，等于最大连接数 1000，说明连接数已打满。\n\n根因: MAX_CONNECTIONS"
+  },
+  {
+   "instances": [
+    "订单库",
+    "order-mysql-01"
+   ],
+   "found": true,
+   "tool_calls": 2,
+   "answer": "订单库（order-mysql-01）当前连接数为 1000，最大连接数也为 1000，连接数已打满。\n\n根因: MAX_CONNECTIONS"
+  }
+ ],
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-24",
+  "base_url": "maas.aliyuncs.com"
+ }
+}
