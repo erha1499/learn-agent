@@ -173,18 +173,19 @@ details.qz summary{cursor:pointer}details.qz .ans{margin:.6em 0 1em;padding:10px
 def parts(guide):
     """导读里「### 第X部分 名字」下面的表格链到哪些单元，就归哪个部分。
     返回 ({文件名: 部分名}, {部分名: 标题和表格之间的说明})。"""
-    of, intro, cur = {}, {}, None
+    of, intro, cur, in_table = {}, {}, None, False
     for line in guide.split("\n"):
         h = re.match(r"^### (第.+?部分.*)$", line)
         if h:
-            cur = h.group(1).strip()
+            cur, in_table = h.group(1).strip(), False
             intro[cur] = []
         elif line.startswith("#"):
             cur = None
         elif cur:
             for href in re.findall(r"\]\((\d\d-[\w-]+\.md)\)", line):
                 of[href] = cur
-            if line.strip() and not line.startswith("|"):
+            in_table = in_table or line.startswith("|")
+            if line.strip() and not in_table:          # 只收标题和表格之间的说明
                 intro[cur].append(line)
     return of, {k: "\n".join(v) for k, v in intro.items()}
 
