@@ -2,6 +2,10 @@
 
 恢复时，最后一条模型回复里还没有结果的工具调用要补执行。这里的工具都是只读查询，补执行是安全的；
 有副作用的工具，要按“任务 ID + 动作”做幂等（单元十二）。
+
+配置里可以打开两条 harness 规则（单元二十三），不打开时行为不变：
+    harness.tool_retry      工具返回超时（504），程序自动再调一次，不靠模型想起来重试
+    harness.key_evidence    交卷时检查：结论对应的关键数据源一次都没成功返回过，就把结论改成 UNKNOWN、转人工
 """
 import json
 
@@ -30,8 +34,23 @@ def rebuild(cfg, question, events):
     return messages, pending, turns, tokens
 
 
+def is_timeout(result):
+    return result.startswith('{"error"') and "504" in result
+
+
+def check_evidence(cfg, pred, events):
+    keys = (cfg.get("harness") or {}).get("key_evidence")
+    if not keys or pred in (None, "UNKNOWN"):
+        return pred, None
+    ok = {e["payload"]["name"] for e in events if e["type"] == "tool" and e["payload"]["ok"]}
+    if set(keys.get(pred, [])) & ok:
+        return pred, None
+    return "UNKNOWN", f"结论 {pred} 的关键数据（{'、'.join(keys.get(pred, []))}）没有成功拿到，转人工"
+
+
 def run_job(job, cfg, cid, gateway, store, execute, lease_s, fault=None):
     jid = job["job_id"]
+    retry = (cfg.get("harness") or {}).get("tool_retry")
     old = store.events(jid)
     if old:
         store.append(jid, "resume", {"attempt": job["attempts"], "worker": job["worker"], "after_seq": old[-1]["seq"]})
@@ -48,8 +67,11 @@ def run_job(job, cfg, cid, gateway, store, execute, lease_s, fault=None):
             except json.JSONDecodeError:
                 args = None
             result = execute(name, args) if isinstance(args, dict) else '{"error": "参数不是合法的 JSON"}'
+            retried = False
+            if retry and is_timeout(result):
+                result, retried = execute(name, args), True
             store.append(jid, "tool", {"id": call["id"], "name": name, "args": args, "result": result,
-                                       "ok": not result.startswith('{"error"')})
+                                       "ok": not result.startswith('{"error"'), "retried": retried})
             messages.append({"role": "tool", "tool_call_id": call["id"], "content": result})
             if fault:
                 fault(job, store.events(jid))
@@ -65,6 +87,8 @@ def run_job(job, cfg, cid, gateway, store, execute, lease_s, fault=None):
         tokens += r["usage"].get("prompt_tokens", 0) + r["usage"].get("completion_tokens", 0)
         pending = msg.get("tool_calls") or []
         if not pending:
-            result = {"answer": r["text"], "pred": verdict(r["text"]), "stop": "done", "turns": turns, "tokens": tokens}
+            pred, blocked = check_evidence(cfg, verdict(r["text"]), store.events(jid))
+            result = {"answer": r["text"] + (f"\n\n（程序检查：{blocked}）" if blocked else ""), "pred": pred,
+                      "model_pred": verdict(r["text"]), "stop": "done", "turns": turns, "tokens": tokens}
             store.append(jid, "final", result)
             return result
