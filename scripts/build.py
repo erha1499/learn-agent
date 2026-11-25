@@ -2,172 +2,237 @@
 
     python scripts/build.py
 
-支持正文用到的 Markdown 子集：标题、段落、粗体、行内代码、链接、无序 / 有序列表、表格、代码块、引用。
+页面骨架、样式、脚本在 scripts/site/（page.html、style.css、app.js），构建时内联进一个文件。
+
+支持正文用到的 Markdown 子集：标题、段落、粗体、行内代码、链接、反斜杠转义、无序 / 有序列表、表格、代码块、引用。
 - 「深入一层（可跳过）：标题」渲染成默认收起的折叠块，范围到下一个同级或更高级的标题为止；
 - 「自测」里的每道题配上 answers.json 里的答案（键是题目原文），缺答案时一次列出所有缺的题再报错；
-- 指向 NN-*.md 的链接变成页内跳转；
+- 指向 NN-*.md 的链接变成页内跳转；「见 N.M」「N.M 节」链到那一节，找不到就报错；
 - 导航按导读里的「### 第X部分」分组：每个部分下面表格里链到的单元归这个部分；
-  部分标题和表格之间的说明（写给谁、先要会什么），在网页里挪到这个部分第一个单元的前面，导读里不再重复。
+  部分标题和表格之间的说明（写给谁、先要会什么），在网页里挪到这个部分第一个单元的开头，导读里不再重复。
 """
 import html
 import json
 import re
 import sys
+from dataclasses import dataclass, field
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-CONTENT, OUT = ROOT / "content", ROOT / "docs" / "index.html"
-INLINE = [(re.compile(r"`([^`]+)`"), lambda m: f"<code>{m.group(1)}</code>"),
-          (re.compile(r"\*\*(.+?)\*\*"), lambda m: f"<b>{m.group(1)}</b>")]
-LINK = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
+CONTENT, SITE, OUT = ROOT / "content", ROOT / "scripts" / "site", ROOT / "docs" / "index.html"
+NAV_SKIP = ("做项目时", "面试常问", "自测", "延伸阅读", "导读")   # 这些二级标题不进导航
+
+BLOCK_START = re.compile(r"^(#{1,4} |```|\||>|\s*(-|\d+\.) )")
+LIST_ITEM = re.compile(r"^\s*(-|\d+\.) (.+)$")
+CODE = re.compile(r"`([^`]+)`")
+ESCAPE = re.compile(r"\\([\\`*_\[\]()#|>-])")
+LINK = re.compile(r"\[([^\]]+)\]\(([^)\s]+)\)")
+BOLD = re.compile(r"\*\*(.+?)\*\*")
+XREF = re.compile(r"(见 ?)(\d{1,2}\.\d{1,2})(?![\d.])|(?<![\d.])(\d{1,2}\.\d{1,2})( ?节)(?!点)")
+SECNUM = re.compile(r"^(\d{1,2}\.\d{1,2}) ")
+STASH = re.compile(r"\x00(\d+)\x00")
+CJK = re.compile(r"[　-〿一-鿿＀-￯]")
+
+esc = html.escape
 
 
 def slug(text):
     return re.sub(r"[^\w一-鿿]+", "-", text).strip("-").lower()
 
 
-def inline(text, units):
-    out, last = [], 0
-    for m in LINK.finditer(text):   # 链接先拆出来，文字部分再做转义和行内格式
-        out.append(_fmt(text[last:m.start()]))
+def plain(md):
+    """标题里的 Markdown 去掉标记，给 title 属性和网页标题用。"""
+    return BOLD.sub(r"\1", CODE.sub(r"\1", ESCAPE.sub(r"\1", md)))
+
+
+def join_lines(lines):
+    """段落里的折行：中文和中文之间直接接上，其余补一个空格。"""
+    out = lines[0]
+    for nxt in lines[1:]:
+        out += nxt if CJK.match(out[-1:]) and CJK.match(nxt[:1]) else " " + nxt
+    return out
+
+
+@dataclass
+class Unit:
+    file: str
+    uid: str
+    md: str
+    num: int = 0
+    name: str = ""            # 「单元三」后面的完整标题
+    short: str = ""           # 冒号前的部分，用在导航和翻页
+    part: str | None = None
+    sections: list = field(default_factory=list)   # 导航里的二级标题 [(id, html)]
+    body: str = ""
+
+
+class Book:
+    """跨单元共享的东西：单元表、已用的 id、小节编号、答案。"""
+
+    def __init__(self, units, answers):
+        self.files = {u.file: u.uid for u in units}
+        self.answers = answers
+        self.missing = []         # 没有答案的自测题
+        self.ids = set()
+        self.secnum = {}          # "21.6" -> 那一节的 id
+        self.xrefs = set()        # 正文里引用过的小节编号
+
+    def new_id(self, base):
+        hid, n = base, 2
+        while hid in self.ids:
+            hid, n = f"{base}-{n}", n + 1
+        self.ids.add(hid)
+        return hid
+
+    def inline(self, text):
+        """行内格式。代码和转义先存起来，剩下的文字转义后再处理链接、粗体、小节引用。"""
+        stash = []
+
+        def keep(s):
+            stash.append(s)
+            return f"\x00{len(stash) - 1}\x00"
+
+        text = CODE.sub(lambda m: keep(f"<code>{esc(m.group(1))}</code>"), text)
+        text = ESCAPE.sub(lambda m: keep(esc(m.group(1))), text)
+        text = esc(text, quote=False)
+        text = LINK.sub(self._link, text)
+        text = BOLD.sub(r"<b>\1</b>", text)
+        text = XREF.sub(self._xref, text)
+        while STASH.search(text):
+            text = STASH.sub(lambda m: stash[int(m.group(1))], text)
+        return text
+
+    def _link(self, m):
         label, href = m.group(1), m.group(2)
-        if re.match(r"\d\d-[\w-]+\.md$", href) and href in units:
-            href = "#" + units[href]
-        out.append(f'<a href="{html.escape(href)}">{_fmt(label)}</a>')
-        last = m.end()
-    out.append(_fmt(text[last:]))
-    return "".join(out)
+        if href in self.files:
+            return f'<a href="#{self.files[href]}">{label}</a>'
+        if href.startswith("http"):
+            return f'<a href="{href}" target="_blank" rel="noopener">{label}</a>'
+        return f'<a href="{href}">{label}</a>'
+
+    def _xref(self, m):
+        num = m.group(2) or m.group(3)
+        self.xrefs.add(num)
+        link = f'<a href="#\x01{num}\x01">{num}</a>'      # 全书渲染完再换成真实 id
+        return f"{m.group(1)}{link}" if m.group(1) else f"{link}{m.group(4)}"
+
+    def resolve_xrefs(self, page):
+        lost = sorted(self.xrefs - self.secnum.keys())
+        if lost:
+            sys.exit("这些小节引用找不到对应的小节：" + "、".join(lost))
+        return re.sub(r"\x01([\d.]+)\x01", lambda m: self.secnum[m.group(1)], page)
 
 
-def _fmt(s):
-    s = html.escape(s, quote=False)
-    for pat, fn in INLINE:
-        s = pat.sub(fn, s)
-    return s
+class Renderer:
+    """把一个单元的 Markdown 渲染成 HTML，顺带收集导航用的二级标题。"""
 
+    def __init__(self, book, uid):
+        self.book, self.uid = book, uid
+        self.sections = []
+        self.out = []
+        self.deep = None          # 当前折叠块所在的标题级别
+        self.quiz = False
 
-def render(md, units, answers, missing, unit_id):
-    lines, out, i = md.split("\n"), [], 0
-    open_details = None          # 当前折叠块所在的标题级别
-    in_quiz = False
-    while i < len(lines):
-        line = lines[i]
-        h = re.match(r"^(#{1,4}) (.+)$", line)
-        if h:
-            level, title = len(h.group(1)), h.group(2).strip()
-            if open_details is not None and level <= open_details:
-                out.append("</div></details>")
-                open_details = None
-            in_quiz = title == "自测"
-            deep = re.match(r"深入一层（可跳过）[:：]\s*(.+)", title)
-            if deep:
-                out.append(f'<details class="deep"><summary><span class="tag">深入一层</span>{inline(deep.group(1), units)}</summary><div>')
-                open_details = level
+    def render(self, md):
+        self.lines, self.i = md.split("\n"), 0
+        while self.i < len(self.lines):
+            line = self.lines[self.i]
+            if re.match(r"^#{1,4} ", line):
+                self.heading(line)
+            elif line.startswith("```"):
+                self.code()
+            elif line.startswith("|"):
+                self.table()
+            elif line.startswith(">"):
+                self.quote()
+            elif LIST_ITEM.match(line):
+                self.list()
+            elif not line.strip():
+                self.i += 1
             else:
-                hid = unit_id if level == 1 else f"{unit_id}-{slug(title)}"
-                out.append(f'<h{level} id="{hid}">{inline(title, units)}</h{level}>')
-            i += 1
-            continue
-        if line.startswith("```"):
-            j = i + 1
-            while j < len(lines) and not lines[j].startswith("```"):
-                j += 1
-            code = html.escape("\n".join(lines[i + 1:j]))
-            out.append(f"<pre><code>{code}</code></pre>")
-            i = j + 1
-            continue
-        if line.startswith("|"):
-            rows = []
-            while i < len(lines) and lines[i].startswith("|"):
-                cells = [c.strip() for c in lines[i].strip().strip("|").split("|")]
-                if not all(re.fullmatch(r":?-{3,}:?", c) for c in cells):
-                    rows.append(cells)
-                i += 1
-            head, body = rows[0], rows[1:]
-            t = "<thead><tr>" + "".join(f"<th>{inline(c, units)}</th>" for c in head) + "</tr></thead><tbody>"
-            t += "".join("<tr>" + "".join(f"<td>{inline(c, units)}</td>" for c in r) + "</tr>" for r in body)
-            out.append(f'<div class="tbl"><table>{t}</tbody></table></div>')
-            continue
-        if line.startswith(">"):
-            buf = []
-            while i < len(lines) and lines[i].startswith(">"):
-                buf.append(lines[i][1:].strip())
-                i += 1
-            out.append(f"<blockquote>{inline(' '.join(buf), units)}</blockquote>")
-            continue
-        m = re.match(r"^(\s*)(-|\d+\.) (.+)$", line)
-        if m:
-            ordered = m.group(2) != "-"
-            items = []
-            while i < len(lines):
-                mm = re.match(r"^(\s*)(-|\d+\.) (.+)$", lines[i])
-                if not mm or (mm.group(2) != "-") != ordered:
-                    break
-                text = mm.group(3)
-                i += 1
-                while i < len(lines) and lines[i].startswith("  ") and not re.match(r"^\s*(-|\d+\.) ", lines[i]):
-                    text += " " + lines[i].strip()
-                    i += 1
-                items.append(text)
-            if in_quiz and ordered:
-                qs = []
-                for q in items:
-                    a = answers.get(q)
-                    if a is None:
-                        missing.append(q)
-                    qs.append(f'<li><details class="qz"><summary>{inline(q, units)}</summary><div class="ans">{a or ""}</div></details></li>')
-                out.append('<ol class="quiz">' + "".join(qs) + "</ol>")
-            else:
-                tag = "ol" if ordered else "ul"
-                out.append(f"<{tag}>" + "".join(f"<li>{inline(x, units)}</li>" for x in items) + f"</{tag}>")
-            continue
-        if not line.strip():
-            i += 1
-            continue
-        buf = [line]
-        i += 1
-        while i < len(lines) and lines[i].strip() and not re.match(r"^(#|```|\||>|\s*(-|\d+\.) )", lines[i]):
-            buf.append(lines[i])
-            i += 1
-        out.append(f"<p>{inline(' '.join(buf), units)}</p>")
-    if open_details is not None:
-        out.append("</div></details>")
-    return "\n".join(out)
+                self.para()
+        self.close_deep()
+        return "\n".join(self.out)
 
+    def take_while(self, cond):
+        start = self.i
+        while self.i < len(self.lines) and cond(self.lines[self.i]):
+            self.i += 1
+        return self.lines[start:self.i]
 
-CSS = """
-:root{--bg:#fff;--fg:#1d2129;--mut:#6b7280;--line:#e5e8ef;--soft:#f5f7fa;--acc:#2f6bff;--code:#f2f4f7;--deep:#f7f8fb}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1115;--fg:#e6e8eb;--mut:#9aa1ad;--line:#2a2f37;--soft:#161920;--acc:#5b8cff;--code:#1a1d23;--deep:#13161b}}
-:root[data-theme=dark]{--bg:#0f1115;--fg:#e6e8eb;--mut:#9aa1ad;--line:#2a2f37;--soft:#161920;--acc:#5b8cff;--code:#1a1d23;--deep:#13161b}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.75 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
-.wrap{display:flex;max-width:1240px;margin:0 auto}
-nav{position:sticky;top:0;height:100vh;overflow:auto;width:260px;flex:none;padding:28px 18px;border-right:1px solid var(--line);font-size:14px}
-nav .brand{font-weight:700;font-size:16px;margin-bottom:18px}
-nav a{display:block;color:var(--fg);text-decoration:none;padding:5px 8px;border-radius:6px;opacity:.85}
-nav a:hover{background:var(--soft);opacity:1}nav .sub{padding-left:20px;font-size:13px;opacity:.7}
-nav a.part{margin:18px 0 4px;font-size:12px;font-weight:600;color:var(--mut)}
-.part-intro{margin:3.2em 0 0;padding:16px 20px;background:var(--soft);border-radius:10px}
-.part-intro .part-name{font-weight:700;font-size:1.2rem;margin-bottom:.3em}.part-intro p{margin:.4em 0}
-.part-intro+section h1{border-top:none;margin-top:1.4em}
-main{min-width:0;flex:1;padding:36px 56px 120px}
-h1{font-size:1.75rem;line-height:1.35;margin:2.4em 0 .8em;padding-top:.4em;border-top:1px solid var(--line)}
-section:first-of-type h1{border-top:none;margin-top:0}
-h2{font-size:1.3rem;margin:2em 0 .6em}h3{font-size:1.08rem;margin:1.6em 0 .5em}
-p,li{max-width:46em}a{color:var(--acc)}
-code{font:.88em "SF Mono",Menlo,monospace;background:var(--code);padding:.1em .35em;border-radius:4px}
-pre{background:var(--code);padding:14px 16px;border-radius:8px;overflow:auto;font-size:13.5px;line-height:1.6}pre code{background:none;padding:0}
-.tbl{overflow-x:auto;margin:1em 0}table{border-collapse:collapse;font-size:14.5px;min-width:60%}
-th,td{border:1px solid var(--line);padding:7px 11px;text-align:left;vertical-align:top}th{background:var(--soft);font-weight:600}
-blockquote{margin:1em 0;padding:10px 16px;border-left:3px solid var(--acc);background:var(--soft);border-radius:0 8px 8px 0}
-details.deep{border:1px solid var(--line);background:var(--deep);border-radius:10px;padding:2px 16px;margin:1.2em 0}
-details.deep summary{cursor:pointer;padding:10px 0;font-weight:600}
-.tag{font-size:12px;font-weight:600;color:var(--acc);border:1px solid var(--acc);border-radius:999px;padding:1px 8px;margin-right:8px}
-ol.quiz{padding-left:1.4em}ol.quiz li{margin:.5em 0}
-details.qz summary{cursor:pointer}details.qz .ans{margin:.6em 0 1em;padding:10px 14px;background:var(--soft);border-radius:8px}
-.toggle{position:fixed;right:18px;top:14px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:13px}
-@media (max-width:860px){nav{display:none}main{padding:24px 16px 80px}.toggle{top:10px;right:10px}}
-"""
+    def close_deep(self, level=0):
+        if self.deep is not None and level <= self.deep:
+            self.out.append("</div></details>")
+            self.deep = None
+
+    def heading(self, line):
+        hashes, title = line.split(" ", 1)
+        level, title = len(hashes), title.strip()
+        self.i += 1
+        self.close_deep(level)
+        self.quiz = title == "自测"
+        deep = re.match(r"深入一层（可跳过）[:：]\s*(.+)", title)
+        if deep:
+            self.out.append(f'<details class="deep"><summary><span class="tag">深入一层</span>'
+                            f'{self.book.inline(deep.group(1))}</summary><div>')
+            self.deep = level
+            return
+        hid = self.book.new_id(self.uid if level == 1 else f"{self.uid}-{slug(title)}")
+        body = self.book.inline(title)
+        self.out.append(f'<h{level} id="{hid}">{body}</h{level}>')
+        if level == 2:
+            num = SECNUM.match(title)
+            if num:
+                self.book.secnum[num.group(1)] = hid
+            if not title.startswith(NAV_SKIP):
+                self.sections.append((hid, body))
+
+    def code(self):
+        self.i += 1
+        body = self.take_while(lambda s: not s.startswith("```"))
+        self.i += 1
+        self.out.append(f'<div class="code"><pre><code>{esc(chr(10).join(body))}</code></pre></div>')
+
+    def table(self):
+        rows = [[c.strip() for c in line.strip().strip("|").split("|")]
+                for line in self.take_while(lambda s: s.startswith("|"))]
+        rows = [r for r in rows if not all(re.fullmatch(r":?-{3,}:?", c) for c in r)]
+        cells = lambda r, tag: "".join(f"<{tag}>{self.book.inline(c)}</{tag}>" for c in r)
+        body = "".join(f"<tr>{cells(r, 'td')}</tr>" for r in rows[1:])
+        self.out.append(f'<div class="tbl"><table><thead><tr>{cells(rows[0], "th")}</tr></thead>'
+                        f"<tbody>{body}</tbody></table></div>")
+
+    def quote(self):
+        text = " ".join(s[1:].strip() for s in self.take_while(lambda s: s.startswith(">")))
+        self.out.append(f"<blockquote>{self.book.inline(text)}</blockquote>")
+
+    def list(self):
+        ordered = LIST_ITEM.match(self.lines[self.i]).group(1) != "-"
+        items = []
+        while self.i < len(self.lines):
+            m = LIST_ITEM.match(self.lines[self.i])
+            if not m or (m.group(1) != "-") != ordered:
+                break
+            self.i += 1
+            more = self.take_while(lambda s: s.startswith("  ") and not LIST_ITEM.match(s))
+            items.append(" ".join([m.group(2)] + [s.strip() for s in more]))
+        if self.quiz and ordered:
+            self.out.append('<ol class="quiz">' + "".join(map(self.question, items)) + "</ol>")
+        else:
+            tag = "ol" if ordered else "ul"
+            self.out.append(f"<{tag}>" + "".join(f"<li>{self.book.inline(x)}</li>" for x in items) + f"</{tag}>")
+
+    def question(self, q):
+        a = self.book.answers.get(q)
+        if a is None:
+            self.book.missing.append(q)
+        return f'<li><details class="qz"><summary>{self.book.inline(q)}</summary><div class="ans">{a or ""}</div></details></li>'
+
+    def para(self):
+        buf = [self.lines[self.i]]
+        self.i += 1
+        buf += self.take_while(lambda s: s.strip() and not BLOCK_START.match(s))
+        self.out.append(f"<p>{self.book.inline(join_lines(buf))}</p>")
 
 
 def parts(guide):
@@ -190,41 +255,85 @@ def parts(guide):
     return of, {k: "\n".join(v) for k, v in intro.items()}
 
 
-def main():
-    answers = json.loads((CONTENT / "answers.json").read_text(encoding="utf-8"))
-    files = sorted(CONTENT.glob("[0-9][0-9]-*.md"))
-    units = {f.name: f"u{f.name[:2]}" for f in files}
+def load():
     guide = (CONTENT / "README.md").read_text(encoding="utf-8")
     part_of, intro = parts(guide)
-    page_guide = guide
     for part in set(part_of.values()):         # 有单元的部分：说明挪到部分开头，导读里删掉
         if intro[part]:
-            assert page_guide.count(intro[part]) == 1, part
-            page_guide = page_guide.replace(intro[part] + "\n", "", 1)
-    missing, sections, nav, last_part = [], [], [], None
-    for name, md in [("README.md", page_guide)] + [(f.name, f.read_text(encoding="utf-8")) for f in files]:
-        uid = units.get(name, "guide")
-        part = part_of.get(name)
-        if name in units and part != last_part:
-            last_part, pid = part, f"part-{uid}"
-            sections.append(f'<section class="part-intro" id="{pid}"><div class="part-name">{html.escape(part or "")}</div>'
-                            f'{render(intro.get(part, ""), units, answers, missing, pid)}</section>')
-            nav.append(f'<a class="part" href="#{pid}">{html.escape(part or "")}</a>')
-        sections.append(f'<section>{render(md, units, answers, missing, uid)}</section>')
-        title = re.search(r"^# (.+)$", md, re.M).group(1)
-        nav.append(f'<a href="#{uid}">{html.escape(title)}</a>')
-        for sub in re.findall(r"^## (.+)$", md, re.M):
-            if not sub.startswith(("做项目时", "面试常问", "自测", "延伸阅读", "导读")):
-                nav.append(f'<a class="sub" href="#{uid}-{slug(sub)}">{html.escape(sub)}</a>')
-    if missing:
-        sys.exit("这些自测题没有答案（answers.json 的键要和题目原文一样）：\n- " + "\n- ".join(missing))
-    page = f"""<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>learn-agent</title><style>{CSS}</style></head>
-<body><button class="toggle" onclick="var r=document.documentElement;r.dataset.theme=(r.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'))==='dark'?'light':'dark'" aria-label="切换深浅色">◐</button>
-<div class="wrap"><nav><div class="brand">learn-agent</div>{''.join(nav)}</nav><main>{''.join(sections)}</main></div></body></html>"""
+            assert guide.count(intro[part]) == 1, part
+            guide = guide.replace(intro[part] + "\n", "", 1)
+    units = [Unit("README.md", "guide", guide, name="导读", short="导读")]
+    for f in sorted(CONTENT.glob("[0-9][0-9]-*.md")):
+        md = f.read_text(encoding="utf-8")
+        h1 = re.search(r"^# 单元\S+ (.+)$", md, re.M)
+        assert h1, f"{f.name} 的一级标题要写成「# 单元X 标题」"
+        name = plain(h1.group(1).strip())
+        units.append(Unit(f.name, f"u{f.name[:2]}", md, num=int(f.name[:2]), name=name,
+                          short=name.split("：")[0], part=part_of.get(f.name)))
+    return units, intro
+
+
+def render_units(units, intro, book):
+    articles = []
+    for k, u in enumerate(units):
+        head = ""
+        if u.part and u.part != units[k - 1].part:
+            pid = book.new_id(f"part-{u.uid}")
+            text = Renderer(book, pid).render(intro.get(u.part, ""))
+            head = f'<div class="part-intro" id="{pid}"><div class="part-name">{esc(u.part)}</div>{text}</div>'
+        r = Renderer(book, u.uid)
+        body = r.render(u.md)
+        u.sections = r.sections
+        prev, nxt = units[k - 1] if k else None, units[k + 1] if k + 1 < len(units) else None
+        pager = "".join([
+            f'<a class="prev" href="#{prev.uid}" title="{esc(prev.name)}">← {esc(prev.short)}</a>' if prev else "",
+            f'<a class="next" href="#{nxt.uid}" title="{esc(nxt.name)}">{esc(nxt.short)} →</a>' if nxt else "",
+        ])
+        label = f"{u.num} {u.short}" if u.num else u.short
+        articles.append(f'<article class="unit" data-unit="{u.uid}" data-label="{esc(label)}">'
+                        f'{head}{body}<div class="pager">{pager}</div></article>')
+    return "\n".join(articles)
+
+
+def render_nav(units):
+    out, last = [], None
+    for u in units:
+        if u.part != last:
+            last = u.part
+            if u.part:
+                out.append(f'<div class="group">{esc(u.part)}</div>')
+        num = u.num or ""
+        out.append(f'<a class="u" href="#{u.uid}" data-unit="{u.uid}" title="{esc(u.name)}">'
+                   f'<span class="n">{num}</span><span>{esc(u.short)}</span></a>')
+        if u.sections:
+            links = "".join(f'<li><a href="#{hid}">{title}</a></li>' for hid, title in u.sections)
+            out.append(f'<ol class="secs" data-unit="{u.uid}">{links}</ol>')
+    return "".join(out)
+
+
+def fill(template, **parts):
+    for key, value in parts.items():
+        mark = "{{" + key + "}}"
+        assert template.count(mark) == 1, f"page.html 里要有且只有一个 {mark}"
+        template = template.replace(mark, value)
+    return template
+
+
+def main():
+    answers = json.loads((CONTENT / "answers.json").read_text(encoding="utf-8"))
+    units, intro = load()
+    book = Book(units, answers)
+    main_html = render_units(units, intro, book)
+    if book.missing:
+        sys.exit("这些自测题没有答案（answers.json 的键要和题目原文一样）：\n- " + "\n- ".join(book.missing))
+    page = fill((SITE / "page.html").read_text(encoding="utf-8"),
+                css=(SITE / "style.css").read_text(encoding="utf-8"),
+                js=(SITE / "app.js").read_text(encoding="utf-8"),
+                nav=render_nav(units), main=main_html)
+    page = book.resolve_xrefs(page)
     OUT.parent.mkdir(exist_ok=True)
     OUT.write_text(page, encoding="utf-8")
-    print(f"{OUT.relative_to(ROOT)}：{len(files)} 个单元，{len(answers)} 道自测题，{len(page) // 1024} KB")
+    print(f"{OUT.relative_to(ROOT)}：{len(units) - 1} 个单元，{len(answers)} 道自测题，{len(page.encode()) // 1024} KB")
 
 
 if __name__ == "__main__":

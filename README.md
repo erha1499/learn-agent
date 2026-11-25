@@ -9,7 +9,7 @@
 | 入口 | 内容 |
 | --- | --- |
 | [完整文字版](content/)（`content/`） | 导读和各单元，每个单元一个文件 |
-| 网页版（`docs/index.html`） | `python scripts/build.py` 生成，正文 + 可展开的「深入一层」+ 带答案的自测题 |
+| 网页版（`docs/index.html`） | `python scripts/build.py` 生成，一次看一个单元，全文搜索，可展开的「深入一层」，带答案的自测题 |
 
 | 目标 | 读 |
 | --- | --- |
@@ -76,7 +76,7 @@ examples/           例子，文件名前缀是单元号：
                       mini_eval.py     在迷你现场上造的评测集：20 条用例，5 种根因 × 4 种难度（单元十三起）
                       skeleton/        值班 Agent 的最小骨架：配置指纹、SQLite 事件日志和任务队列、网关、轨迹、导出、发布门禁、灰度和回滚（单元二十一到二十三）
                       uNN_*.py         调模型的例子把真实输出录在 output/，--replay 只看录好的
-scripts/build.py    把 content/ 生成网页 docs/index.html（只用标准库）
+scripts/build.py    把 content/ 生成网页 docs/index.html（只用标准库）；页面骨架、样式、脚本在 scripts/site/
 ```
 
 ## 跑例子
