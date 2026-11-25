@@ -98,7 +98,7 @@
 | 2025：harness 的时代 | Claude Code、Codex CLI、Gemini CLI、pi、Deep Research、Manus；MCP、A2A、Skills；Claude Agent SDK、OpenAI Agents SDK、Google ADK | 一个简单循环 + 好工具 + 上下文管理，就能完成几十上百步的任务；各家把自己的 harness 做成 SDK 开放出来 | 推理模型、长上下文、在 Agent 环境里专门训练过的工具调用 |
 | 2026：harness 变成平台 | Claude Managed Agents、Claude Code 自动模式、Claude Cowork | 会话、harness、沙箱拆成稳定接口，托管运行；权限从逐个审批走向沙箱加分类器；记忆成了平台能力 | 模型能连续工作数小时，harness 里的假设过时得更快 |
 
-读这张表抓住两点：
+读这张表抓住三点：
 
 - **harness 越来越薄，是因为模型越来越强。** 2023 年需要大量编排代码弥补模型的不足；2025 年的编程 Agent 回到了一个循环加几个工具（单元三、五），learn-claude-code 和 pi 的立场都来自这个变化。
 - **但薄不等于没有。** 2025 年以后的产品都把工程花在了边界和上下文上：权限、沙箱、压缩、技能、hooks。单元四讲的正是这一部分。
