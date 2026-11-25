@@ -110,17 +110,20 @@ Agent 的很多问题还没有定论：记忆怎么组织、什么时候拆多 A
 
 | 时间 | 文章 | 核心观点 | 本书在哪用到 |
 |---|---|---|---|
-| 2024-12 | Building effective agents | 先用最简单的形态；分清 Workflow 和 Agent | 单元三 |
+| 2024-11 | A statistical approach to model evaluations | 每个分数带标准误；同一题多次采样要聚类；配对比较是“免费”的降噪 | 单元十七 |
+| 2024-12 | Building effective agents；Clio | 先用最简单的形态，可能根本不需要 Agent；先汇总、后细看的隐私分析 | 单元三、十九、二十 |
 | 2025-06 | How we built our multi-agent research system | 并行调研的 token 约是对话的 15 倍，适合可拆的高价值任务 | 单元八 |
 | 2025-09 | Effective context engineering for AI agents；Writing effective tools for agents | 找最小的一组高信号 token；工具为 Agent 设计，用评测和 Agent 自己改进工具 | 单元五、六、七、九 |
 | 2025-10 | Equipping agents with Agent Skills；Beyond permission prompts | 技能分三层加载；先划沙箱边界，减少审批 | 单元五、十一 |
-| 2025-11 | Code execution with MCP；Advanced tool use；Effective harnesses for long-running agents | 工具搜索、用代码调工具；跨会话的功能清单和进度文件 | 单元五、六、七 |
-| 2026-01 | Demystifying evals for AI agents；Designing AI-resistant technical evaluations | 任务、运行、打分器；从 20 到 50 条起步；评测会被模型做穿 | 单元十三、十四 |
-| 2026-02 | Building a C compiler with parallel Claudes；Infrastructure noise in agentic coding evals | 无主管的并行，测试当裁判；资源配置能让成绩差 6 个点 | 单元八、十三 |
+| 2025-11 | Code execution with MCP；Advanced tool use；Effective harnesses for long-running agents；Mitigating prompt injections in browser use | 工具搜索、用代码调工具；跨会话的功能清单和进度文件；自适应攻击者下的注入成功率 | 单元五、六、七、十八、二十 |
+| 2026-01 | Demystifying evals for AI agents；Designing AI-resistant technical evaluations | 任务、运行、打分器；从 20 到 50 条起步；上线后几层方法叠用；评测会被模型做穿 | 单元十三到十六、十九、二十 |
+| 2026-02 | Building a C compiler with parallel Claudes；Infrastructure noise in agentic coding evals；Measuring AI agent autonomy in practice | 无主管的并行，测试当裁判；资源配置能让成绩差 6 个点；约 50 万个会话里用户怎样放宽自动批准 | 单元八、十三、十七、十九、二十 |
 | 2026-03 | Harness design for long-running apps；Claude Code auto mode；Eval awareness on BrowseComp | 生成和评审分开，部件会过时；分类器代替逐个审批；联网评测会被找到答案 | 单元四、八、十一、十四 |
-| 2026-04 | Scaling Managed Agents；Claude Code quality postmortem | 会话、harness、沙箱解耦；harness 的改动也会让效果变差 | 单元四、六、九、十二 |
+| 2026-04 | Scaling Managed Agents；Claude Code quality postmortem | 会话、harness、沙箱解耦；harness 的改动也会让效果变差 | 单元四、六、九、十二、二十一、二十二 |
 | 2026-05 | How we contain Claude across products | 风险是可能性乘以波及范围；白名单就是授权 | 单元十一 |
-| 2026-11 | The components of agent memory；Building strong safety evaluations | 记忆分层和做梦；安全评测的构念、评委校准和样本量 | 单元九、十一、十四 |
+| 2026-07 | Agentic Misalignment in Summer 2026 | 评委知道标签的用途时会为了结果改判 | 单元十六 |
+| 2026-09 | Introducing Claude Opus 5.5 | 榜单的脚注：推理强度、谁跑的、标准误、安全拦截怎么算 | 单元十八 |
+| 2026-11 | The components of agent memory；Building strong safety evaluations；Frontier automated red-teaming | 记忆分层和做梦；安全评测的构念、评委校准、样本量和配对比较；自动红队比人找得快，用“攻破要多少次调用”衡量防护 | 单元九、十一、十四、十六到十八 |
 
 读这些文章时注意三点：
 
