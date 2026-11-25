@@ -1,6 +1,7 @@
 """存储：一个 SQLite 文件，三张表。
 
     configs  每个指纹对应的完整配置，事后能查到“这个版本到底是什么”
+    deploys  线上当前用哪个指纹（一个指针）；deploy_log 记下每次切换，发布和回滚都只是改这个指针
     jobs     任务的状态（queued / running / done / failed）、尝试次数、租约到期时间
     events   只追加的事件日志，按 (job_id, seq) 排序；恢复、轨迹、导出评测题都从这里读
 """
@@ -12,6 +13,8 @@ from contextlib import contextmanager
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS configs (config_id TEXT PRIMARY KEY, body TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS deploys (name TEXT PRIMARY KEY, config_id TEXT, updated REAL);
+CREATE TABLE IF NOT EXISTS deploy_log (ts REAL, name TEXT, config_id TEXT, note TEXT);
 CREATE TABLE IF NOT EXISTS jobs (
   job_id TEXT PRIMARY KEY, session_id TEXT, case_id TEXT, question TEXT, config_id TEXT,
   status TEXT, attempts INTEGER DEFAULT 0, lease_until REAL, worker TEXT,
@@ -40,6 +43,24 @@ class Store:
     def save_config(self, cid, cfg):
         with self.db() as db:
             db.execute("INSERT OR IGNORE INTO configs VALUES (?, ?)", (cid, json.dumps(cfg, ensure_ascii=False)))
+
+    def config(self, cid):
+        with self.db() as db:
+            row = db.execute("SELECT body FROM configs WHERE config_id = ?", (cid,)).fetchone()
+        return json.loads(row["body"]) if row else None
+
+    def deploy(self, name, cid, note=""):
+        """发布或回滚：把线上指针指向另一个指纹。已经在跑的任务不受影响，它们钉在提交时的指纹上。"""
+        now = time.time()
+        with self.db() as db:
+            db.execute("INSERT INTO deploys VALUES (?, ?, ?) ON CONFLICT(name) DO UPDATE SET config_id = excluded.config_id, "
+                       "updated = excluded.updated", (name, cid, now))
+            db.execute("INSERT INTO deploy_log VALUES (?, ?, ?, ?)", (now, name, cid, note))
+
+    def active(self, name):
+        with self.db() as db:
+            row = db.execute("SELECT config_id FROM deploys WHERE name = ?", (name,)).fetchone()
+        return row["config_id"] if row else None
 
     def submit(self, question, session_id, config_id, case_id=None):
         jid = uuid.uuid4().hex[:8]

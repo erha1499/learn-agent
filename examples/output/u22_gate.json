@@ -1,0 +1,3283 @@
+{
+ "baseline": {
+  "config_id": "f2a339b8fe0b",
+  "model": "qwen-plus",
+  "runs": [
+   {
+    "case": "C01",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1602,
+    "seconds": 5.75,
+    "calls": 3
+   },
+   {
+    "case": "C02",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1841,
+    "seconds": 8.54,
+    "calls": 4
+   },
+   {
+    "case": "C03",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 2096,
+    "seconds": 8.13,
+    "calls": 2
+   },
+   {
+    "case": "C04",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1627,
+    "seconds": 5.61,
+    "calls": 4
+   },
+   {
+    "case": "C05",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 5045,
+    "seconds": 15.24,
+    "calls": 4
+   },
+   {
+    "case": "C06",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2199,
+    "seconds": 9.04,
+    "calls": 2
+   },
+   {
+    "case": "C07",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 1752,
+    "seconds": 7.9,
+    "calls": 4
+   },
+   {
+    "case": "C08",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 4765,
+    "seconds": 15.33,
+    "calls": 4
+   },
+   {
+    "case": "C09",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 3619,
+    "seconds": 14.72,
+    "calls": 3
+   },
+   {
+    "case": "C10",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 3522,
+    "seconds": 11.27,
+    "calls": 3
+   },
+   {
+    "case": "C11",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4408,
+    "seconds": 13.22,
+    "calls": 4
+   },
+   {
+    "case": "C12",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4137,
+    "seconds": 11.62,
+    "calls": 4
+   },
+   {
+    "case": "C13",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 3513,
+    "seconds": 10.89,
+    "calls": 3
+   },
+   {
+    "case": "C14",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 4595,
+    "seconds": 10.72,
+    "calls": 4
+   },
+   {
+    "case": "C15",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "wrong",
+    "tokens": 486,
+    "seconds": 0.58,
+    "calls": 0
+   },
+   {
+    "case": "C16",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 4491,
+    "seconds": 16.53,
+    "calls": 4
+   },
+   {
+    "case": "C17",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5789,
+    "seconds": 14.55,
+    "calls": 4
+   },
+   {
+    "case": "C18",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "wrong",
+    "tokens": 5826,
+    "seconds": 14.72,
+    "calls": 4
+   },
+   {
+    "case": "C19",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5213,
+    "seconds": 10.27,
+    "calls": 4
+   },
+   {
+    "case": "C20",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 3100,
+    "seconds": 10.75,
+    "calls": 4
+   },
+   {
+    "case": "C01",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1644,
+    "seconds": 4.85,
+    "calls": 4
+   },
+   {
+    "case": "C02",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1738,
+    "seconds": 5.85,
+    "calls": 4
+   },
+   {
+    "case": "C03",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 4078,
+    "seconds": 8.99,
+    "calls": 4
+   },
+   {
+    "case": "C04",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1646,
+    "seconds": 5.88,
+    "calls": 4
+   },
+   {
+    "case": "C05",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 5318,
+    "seconds": 16.89,
+    "calls": 4
+   },
+   {
+    "case": "C06",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "wrong",
+    "tokens": 5756,
+    "seconds": 17.62,
+    "calls": 4
+   },
+   {
+    "case": "C07",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 1833,
+    "seconds": 9.37,
+    "calls": 4
+   },
+   {
+    "case": "C08",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 4708,
+    "seconds": 14.6,
+    "calls": 4
+   },
+   {
+    "case": "C09",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 5242,
+    "seconds": 15.67,
+    "calls": 4
+   },
+   {
+    "case": "C10",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2181,
+    "seconds": 8.56,
+    "calls": 2
+   },
+   {
+    "case": "C11",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2316,
+    "seconds": 8.47,
+    "calls": 3
+   },
+   {
+    "case": "C12",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4231,
+    "seconds": 12.71,
+    "calls": 4
+   },
+   {
+    "case": "C13",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2369,
+    "seconds": 7.08,
+    "calls": 2
+   },
+   {
+    "case": "C14",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 3178,
+    "seconds": 6.58,
+    "calls": 3
+   },
+   {
+    "case": "C15",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "wrong",
+    "tokens": 486,
+    "seconds": 0.57,
+    "calls": 0
+   },
+   {
+    "case": "C16",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "wrong",
+    "tokens": 3928,
+    "seconds": 14.77,
+    "calls": 4
+   },
+   {
+    "case": "C17",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5752,
+    "seconds": 13.45,
+    "calls": 4
+   },
+   {
+    "case": "C18",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5423,
+    "seconds": 13.13,
+    "calls": 4
+   },
+   {
+    "case": "C19",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 6038,
+    "seconds": 15.45,
+    "calls": 4
+   },
+   {
+    "case": "C20",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 7199,
+    "seconds": 16.38,
+    "calls": 5
+   },
+   {
+    "case": "C01",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 4239,
+    "seconds": 9.73,
+    "calls": 4
+   },
+   {
+    "case": "C02",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1841,
+    "seconds": 8.3,
+    "calls": 4
+   },
+   {
+    "case": "C03",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 4165,
+    "seconds": 9.62,
+    "calls": 4
+   },
+   {
+    "case": "C04",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1774,
+    "seconds": 8.55,
+    "calls": 4
+   },
+   {
+    "case": "C05",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 5370,
+    "seconds": 17.87,
+    "calls": 4
+   },
+   {
+    "case": "C06",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2549,
+    "seconds": 11.26,
+    "calls": 2
+   },
+   {
+    "case": "C07",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 1800,
+    "seconds": 8.56,
+    "calls": 4
+   },
+   {
+    "case": "C08",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 4070,
+    "seconds": 10.38,
+    "calls": 4
+   },
+   {
+    "case": "C09",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4763,
+    "seconds": 12.86,
+    "calls": 4
+   },
+   {
+    "case": "C10",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4447,
+    "seconds": 10.09,
+    "calls": 4
+   },
+   {
+    "case": "C11",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4360,
+    "seconds": 12.85,
+    "calls": 4
+   },
+   {
+    "case": "C12",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4250,
+    "seconds": 13.7,
+    "calls": 4
+   },
+   {
+    "case": "C13",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2366,
+    "seconds": 6.98,
+    "calls": 2
+   },
+   {
+    "case": "C14",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 3559,
+    "seconds": 9.94,
+    "calls": 3
+   },
+   {
+    "case": "C15",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "wrong",
+    "tokens": 486,
+    "seconds": 0.64,
+    "calls": 0
+   },
+   {
+    "case": "C16",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 4548,
+    "seconds": 20.01,
+    "calls": 4
+   },
+   {
+    "case": "C17",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5774,
+    "seconds": 14.66,
+    "calls": 4
+   },
+   {
+    "case": "C18",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5425,
+    "seconds": 12.9,
+    "calls": 4
+   },
+   {
+    "case": "C19",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "wrong",
+    "tokens": 6073,
+    "seconds": 17.37,
+    "calls": 4
+   },
+   {
+    "case": "C20",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 7088,
+    "seconds": 15.05,
+    "calls": 5
+   }
+  ]
+ },
+ "提示词：证据不足说不知道": {
+  "config_id": "3f9b97592f05",
+  "model": "qwen-plus",
+  "runs": [
+   {
+    "case": "C01",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 3739,
+    "seconds": 9.59,
+    "calls": 3
+   },
+   {
+    "case": "C02",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 4661,
+    "seconds": 11.08,
+    "calls": 4
+   },
+   {
+    "case": "C03",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 2656,
+    "seconds": 9.01,
+    "calls": 4
+   },
+   {
+    "case": "C04",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 6290,
+    "seconds": 15.2,
+    "calls": 5
+   },
+   {
+    "case": "C05",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 5461,
+    "seconds": 15.91,
+    "calls": 4
+   },
+   {
+    "case": "C06",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "wrong",
+    "tokens": 4839,
+    "seconds": 12.96,
+    "calls": 4
+   },
+   {
+    "case": "C07",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 4657,
+    "seconds": 12.2,
+    "calls": 4
+   },
+   {
+    "case": "C08",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 6469,
+    "seconds": 17.27,
+    "calls": 5
+   },
+   {
+    "case": "C09",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 5199,
+    "seconds": 14.63,
+    "calls": 4
+   },
+   {
+    "case": "C10",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 5136,
+    "seconds": 13.36,
+    "calls": 4
+   },
+   {
+    "case": "C11",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 1951,
+    "seconds": 8.72,
+    "calls": 4
+   },
+   {
+    "case": "C12",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4827,
+    "seconds": 15.52,
+    "calls": 4
+   },
+   {
+    "case": "C13",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 4911,
+    "seconds": 12.32,
+    "calls": 4
+   },
+   {
+    "case": "C14",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 5095,
+    "seconds": 11.84,
+    "calls": 4
+   },
+   {
+    "case": "C15",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "wrong",
+    "tokens": 533,
+    "seconds": 0.56,
+    "calls": 0
+   },
+   {
+    "case": "C16",
+    "status": "done",
+    "pred": "UNKNOWN",
+    "outcome": "unknown",
+    "tokens": 3864,
+    "seconds": 11.71,
+    "calls": 4
+   },
+   {
+    "case": "C17",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5630,
+    "seconds": 12.79,
+    "calls": 4
+   },
+   {
+    "case": "C18",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 3409,
+    "seconds": 13.49,
+    "calls": 4
+   },
+   {
+    "case": "C19",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5606,
+    "seconds": 12.13,
+    "calls": 4
+   },
+   {
+    "case": "C20",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 7035,
+    "seconds": 12.57,
+    "calls": 5
+   },
+   {
+    "case": "C01",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1914,
+    "seconds": 7.94,
+    "calls": 4
+   },
+   {
+    "case": "C02",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 4709,
+    "seconds": 12.14,
+    "calls": 4
+   },
+   {
+    "case": "C03",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1913,
+    "seconds": 7.85,
+    "calls": 4
+   },
+   {
+    "case": "C04",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 6011,
+    "seconds": 14.42,
+    "calls": 5
+   },
+   {
+    "case": "C05",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 5306,
+    "seconds": 15.22,
+    "calls": 4
+   },
+   {
+    "case": "C06",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "wrong",
+    "tokens": 5508,
+    "seconds": 14.84,
+    "calls": 4
+   },
+   {
+    "case": "C07",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 4811,
+    "seconds": 11.53,
+    "calls": 4
+   },
+   {
+    "case": "C08",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 4773,
+    "seconds": 12.83,
+    "calls": 4
+   },
+   {
+    "case": "C09",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4855,
+    "seconds": 12.42,
+    "calls": 4
+   },
+   {
+    "case": "C10",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4783,
+    "seconds": 11.42,
+    "calls": 4
+   },
+   {
+    "case": "C11",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 1989,
+    "seconds": 9.71,
+    "calls": 4
+   },
+   {
+    "case": "C12",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4698,
+    "seconds": 14.91,
+    "calls": 4
+   },
+   {
+    "case": "C13",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 4856,
+    "seconds": 12.31,
+    "calls": 4
+   },
+   {
+    "case": "C14",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2107,
+    "seconds": 9.48,
+    "calls": 4
+   },
+   {
+    "case": "C15",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "wrong",
+    "tokens": 533,
+    "seconds": 0.56,
+    "calls": 0
+   },
+   {
+    "case": "C16",
+    "status": "done",
+    "pred": "UNKNOWN",
+    "outcome": "unknown",
+    "tokens": 3856,
+    "seconds": 11.75,
+    "calls": 4
+   },
+   {
+    "case": "C17",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5425,
+    "seconds": 11.15,
+    "calls": 4
+   },
+   {
+    "case": "C18",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 2579,
+    "seconds": 11.87,
+    "calls": 4
+   },
+   {
+    "case": "C19",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5604,
+    "seconds": 11.83,
+    "calls": 4
+   },
+   {
+    "case": "C20",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 2490,
+    "seconds": 11.0,
+    "calls": 4
+   },
+   {
+    "case": "C01",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 5048,
+    "seconds": 12.76,
+    "calls": 4
+   },
+   {
+    "case": "C02",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 5891,
+    "seconds": 17.37,
+    "calls": 4
+   },
+   {
+    "case": "C03",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 4548,
+    "seconds": 10.67,
+    "calls": 4
+   },
+   {
+    "case": "C04",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1908,
+    "seconds": 9.56,
+    "calls": 4
+   },
+   {
+    "case": "C05",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 5533,
+    "seconds": 16.45,
+    "calls": 4
+   },
+   {
+    "case": "C06",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "wrong",
+    "tokens": 6174,
+    "seconds": 19.0,
+    "calls": 4
+   },
+   {
+    "case": "C07",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 4672,
+    "seconds": 11.08,
+    "calls": 4
+   },
+   {
+    "case": "C08",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 6572,
+    "seconds": 16.57,
+    "calls": 5
+   },
+   {
+    "case": "C09",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 5324,
+    "seconds": 14.57,
+    "calls": 4
+   },
+   {
+    "case": "C10",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 5192,
+    "seconds": 14.08,
+    "calls": 4
+   },
+   {
+    "case": "C11",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 1950,
+    "seconds": 8.74,
+    "calls": 4
+   },
+   {
+    "case": "C12",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4514,
+    "seconds": 13.2,
+    "calls": 4
+   },
+   {
+    "case": "C13",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2039,
+    "seconds": 10.0,
+    "calls": 4
+   },
+   {
+    "case": "C14",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2063,
+    "seconds": 8.6,
+    "calls": 4
+   },
+   {
+    "case": "C15",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "wrong",
+    "tokens": 533,
+    "seconds": 0.54,
+    "calls": 0
+   },
+   {
+    "case": "C16",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 3809,
+    "seconds": 10.59,
+    "calls": 4
+   },
+   {
+    "case": "C17",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5241,
+    "seconds": 9.4,
+    "calls": 4
+   },
+   {
+    "case": "C18",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 2586,
+    "seconds": 12.04,
+    "calls": 4
+   },
+   {
+    "case": "C19",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "wrong",
+    "tokens": 6100,
+    "seconds": 20.55,
+    "calls": 4
+   },
+   {
+    "case": "C20",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 7276,
+    "seconds": 12.95,
+    "calls": 5
+   }
+  ]
+ },
+ "提示词：最多查两个数据源": {
+  "config_id": "7e0608a2b593",
+  "model": "qwen-plus",
+  "runs": [
+   {
+    "case": "C01",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1103,
+    "seconds": 2.73,
+    "calls": 1
+   },
+   {
+    "case": "C02",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1103,
+    "seconds": 2.56,
+    "calls": 1
+   },
+   {
+    "case": "C03",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1225,
+    "seconds": 3.63,
+    "calls": 2
+   },
+   {
+    "case": "C04",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1951,
+    "seconds": 3.57,
+    "calls": 2
+   },
+   {
+    "case": "C05",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2201,
+    "seconds": 7.49,
+    "calls": 2
+   },
+   {
+    "case": "C06",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "wrong",
+    "tokens": 2334,
+    "seconds": 9.59,
+    "calls": 2
+   },
+   {
+    "case": "C07",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2157,
+    "seconds": 6.92,
+    "calls": 2
+   },
+   {
+    "case": "C08",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 1965,
+    "seconds": 5.87,
+    "calls": 2
+   },
+   {
+    "case": "C09",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2383,
+    "seconds": 9.38,
+    "calls": 2
+   },
+   {
+    "case": "C10",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2150,
+    "seconds": 7.45,
+    "calls": 2
+   },
+   {
+    "case": "C11",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2339,
+    "seconds": 9.47,
+    "calls": 2
+   },
+   {
+    "case": "C12",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2239,
+    "seconds": 8.64,
+    "calls": 2
+   },
+   {
+    "case": "C13",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2195,
+    "seconds": 8.79,
+    "calls": 2
+   },
+   {
+    "case": "C14",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2443,
+    "seconds": 7.78,
+    "calls": 2
+   },
+   {
+    "case": "C15",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "wrong",
+    "tokens": 501,
+    "seconds": 0.59,
+    "calls": 0
+   },
+   {
+    "case": "C16",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 3166,
+    "seconds": 10.96,
+    "calls": 3
+   },
+   {
+    "case": "C17",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 2242,
+    "seconds": 9.14,
+    "calls": 2
+   },
+   {
+    "case": "C18",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 2267,
+    "seconds": 9.88,
+    "calls": 2
+   },
+   {
+    "case": "C19",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 2095,
+    "seconds": 7.19,
+    "calls": 2
+   },
+   {
+    "case": "C20",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 2151,
+    "seconds": 7.98,
+    "calls": 2
+   },
+   {
+    "case": "C01",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1064,
+    "seconds": 1.62,
+    "calls": 1
+   },
+   {
+    "case": "C02",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1098,
+    "seconds": 2.22,
+    "calls": 1
+   },
+   {
+    "case": "C03",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 2376,
+    "seconds": 6.82,
+    "calls": 2
+   },
+   {
+    "case": "C04",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1950,
+    "seconds": 3.29,
+    "calls": 2
+   },
+   {
+    "case": "C05",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2308,
+    "seconds": 8.47,
+    "calls": 2
+   },
+   {
+    "case": "C06",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2295,
+    "seconds": 8.69,
+    "calls": 2
+   },
+   {
+    "case": "C07",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2290,
+    "seconds": 7.6,
+    "calls": 2
+   },
+   {
+    "case": "C08",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2342,
+    "seconds": 10.79,
+    "calls": 2
+   },
+   {
+    "case": "C09",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2271,
+    "seconds": 8.64,
+    "calls": 2
+   },
+   {
+    "case": "C10",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2114,
+    "seconds": 6.28,
+    "calls": 2
+   },
+   {
+    "case": "C11",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2227,
+    "seconds": 10.14,
+    "calls": 2
+   },
+   {
+    "case": "C12",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2276,
+    "seconds": 8.59,
+    "calls": 2
+   },
+   {
+    "case": "C13",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2465,
+    "seconds": 8.14,
+    "calls": 2
+   },
+   {
+    "case": "C14",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "wrong",
+    "tokens": 2234,
+    "seconds": 8.2,
+    "calls": 2
+   },
+   {
+    "case": "C15",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "wrong",
+    "tokens": 501,
+    "seconds": 0.55,
+    "calls": 0
+   },
+   {
+    "case": "C16",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 3080,
+    "seconds": 10.36,
+    "calls": 3
+   },
+   {
+    "case": "C17",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 2325,
+    "seconds": 10.03,
+    "calls": 2
+   },
+   {
+    "case": "C18",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 2171,
+    "seconds": 8.18,
+    "calls": 2
+   },
+   {
+    "case": "C19",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 2307,
+    "seconds": 9.45,
+    "calls": 2
+   },
+   {
+    "case": "C20",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 2182,
+    "seconds": 8.8,
+    "calls": 2
+   },
+   {
+    "case": "C01",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1103,
+    "seconds": 2.26,
+    "calls": 1
+   },
+   {
+    "case": "C02",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1095,
+    "seconds": 2.17,
+    "calls": 1
+   },
+   {
+    "case": "C03",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 2048,
+    "seconds": 6.39,
+    "calls": 2
+   },
+   {
+    "case": "C04",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1950,
+    "seconds": 3.27,
+    "calls": 2
+   },
+   {
+    "case": "C05",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2347,
+    "seconds": 9.08,
+    "calls": 2
+   },
+   {
+    "case": "C06",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2302,
+    "seconds": 8.71,
+    "calls": 2
+   },
+   {
+    "case": "C07",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2274,
+    "seconds": 7.21,
+    "calls": 2
+   },
+   {
+    "case": "C08",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2322,
+    "seconds": 10.35,
+    "calls": 2
+   },
+   {
+    "case": "C09",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2051,
+    "seconds": 5.99,
+    "calls": 2
+   },
+   {
+    "case": "C10",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2118,
+    "seconds": 6.09,
+    "calls": 2
+   },
+   {
+    "case": "C11",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2178,
+    "seconds": 9.82,
+    "calls": 2
+   },
+   {
+    "case": "C12",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2411,
+    "seconds": 10.06,
+    "calls": 2
+   },
+   {
+    "case": "C13",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2441,
+    "seconds": 7.84,
+    "calls": 2
+   },
+   {
+    "case": "C14",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 2202,
+    "seconds": 7.3,
+    "calls": 2
+   },
+   {
+    "case": "C15",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "wrong",
+    "tokens": 501,
+    "seconds": 0.83,
+    "calls": 0
+   },
+   {
+    "case": "C16",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 3334,
+    "seconds": 12.75,
+    "calls": 3
+   },
+   {
+    "case": "C17",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 2202,
+    "seconds": 8.5,
+    "calls": 2
+   },
+   {
+    "case": "C18",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 2122,
+    "seconds": 7.44,
+    "calls": 2
+   },
+   {
+    "case": "C19",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 2530,
+    "seconds": 13.6,
+    "calls": 2
+   },
+   {
+    "case": "C20",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 3842,
+    "seconds": 9.62,
+    "calls": 3
+   }
+  ]
+ },
+ "模型：钉到 qwen-plus-2025-12-01": {
+  "config_id": "afe7f77661c7",
+  "model": "qwen-plus-2025-12-01",
+  "runs": [
+   {
+    "case": "C01",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1655,
+    "seconds": 5.27,
+    "calls": 4
+   },
+   {
+    "case": "C02",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1731,
+    "seconds": 6.06,
+    "calls": 4
+   },
+   {
+    "case": "C03",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 4134,
+    "seconds": 9.36,
+    "calls": 4
+   },
+   {
+    "case": "C04",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1670,
+    "seconds": 6.55,
+    "calls": 4
+   },
+   {
+    "case": "C05",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2217,
+    "seconds": 8.97,
+    "calls": 2
+   },
+   {
+    "case": "C06",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2572,
+    "seconds": 12.36,
+    "calls": 2
+   },
+   {
+    "case": "C07",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 1804,
+    "seconds": 9.19,
+    "calls": 4
+   },
+   {
+    "case": "C08",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 4788,
+    "seconds": 15.69,
+    "calls": 4
+   },
+   {
+    "case": "C09",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4525,
+    "seconds": 11.85,
+    "calls": 4
+   },
+   {
+    "case": "C10",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4428,
+    "seconds": 10.12,
+    "calls": 4
+   },
+   {
+    "case": "C11",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4323,
+    "seconds": 12.11,
+    "calls": 4
+   },
+   {
+    "case": "C12",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4170,
+    "seconds": 12.39,
+    "calls": 4
+   },
+   {
+    "case": "C13",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 3865,
+    "seconds": 11.49,
+    "calls": 3
+   },
+   {
+    "case": "C14",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 3307,
+    "seconds": 7.73,
+    "calls": 3
+   },
+   {
+    "case": "C15",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "wrong",
+    "tokens": 486,
+    "seconds": 0.56,
+    "calls": 0
+   },
+   {
+    "case": "C16",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "wrong",
+    "tokens": 3773,
+    "seconds": 12.0,
+    "calls": 4
+   },
+   {
+    "case": "C17",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5666,
+    "seconds": 13.6,
+    "calls": 4
+   },
+   {
+    "case": "C18",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "wrong",
+    "tokens": 5887,
+    "seconds": 15.38,
+    "calls": 4
+   },
+   {
+    "case": "C19",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "wrong",
+    "tokens": 5356,
+    "seconds": 12.51,
+    "calls": 4
+   },
+   {
+    "case": "C20",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5988,
+    "seconds": 14.76,
+    "calls": 4
+   },
+   {
+    "case": "C01",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1632,
+    "seconds": 4.61,
+    "calls": 4
+   },
+   {
+    "case": "C02",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1731,
+    "seconds": 5.69,
+    "calls": 4
+   },
+   {
+    "case": "C03",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 4089,
+    "seconds": 9.19,
+    "calls": 4
+   },
+   {
+    "case": "C04",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1621,
+    "seconds": 5.33,
+    "calls": 4
+   },
+   {
+    "case": "C05",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 5331,
+    "seconds": 16.64,
+    "calls": 4
+   },
+   {
+    "case": "C06",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2574,
+    "seconds": 12.6,
+    "calls": 2
+   },
+   {
+    "case": "C07",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 1824,
+    "seconds": 9.22,
+    "calls": 4
+   },
+   {
+    "case": "C08",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 4790,
+    "seconds": 15.4,
+    "calls": 4
+   },
+   {
+    "case": "C09",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 3105,
+    "seconds": 7.67,
+    "calls": 3
+   },
+   {
+    "case": "C10",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4612,
+    "seconds": 10.74,
+    "calls": 4
+   },
+   {
+    "case": "C11",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4341,
+    "seconds": 12.22,
+    "calls": 4
+   },
+   {
+    "case": "C12",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4318,
+    "seconds": 13.73,
+    "calls": 4
+   },
+   {
+    "case": "C13",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2308,
+    "seconds": 6.33,
+    "calls": 2
+   },
+   {
+    "case": "C14",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2346,
+    "seconds": 7.02,
+    "calls": 2
+   },
+   {
+    "case": "C15",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "wrong",
+    "tokens": 486,
+    "seconds": 0.6,
+    "calls": 0
+   },
+   {
+    "case": "C16",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 3830,
+    "seconds": 47.15,
+    "calls": 4
+   },
+   {
+    "case": "C17",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5400,
+    "seconds": 39.68,
+    "calls": 4
+   },
+   {
+    "case": "C18",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "wrong",
+    "tokens": 4070,
+    "seconds": 37.9,
+    "calls": 3
+   },
+   {
+    "case": "C19",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5437,
+    "seconds": 35.27,
+    "calls": 4
+   },
+   {
+    "case": "C20",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 7036,
+    "seconds": 37.04,
+    "calls": 5
+   },
+   {
+    "case": "C01",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1706,
+    "seconds": 46.15,
+    "calls": 4
+   },
+   {
+    "case": "C02",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1735,
+    "seconds": 27.39,
+    "calls": 4
+   },
+   {
+    "case": "C03",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 4152,
+    "seconds": 32.26,
+    "calls": 4
+   },
+   {
+    "case": "C04",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1618,
+    "seconds": 5.14,
+    "calls": 4
+   },
+   {
+    "case": "C05",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 5078,
+    "seconds": 14.74,
+    "calls": 4
+   },
+   {
+    "case": "C06",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2200,
+    "seconds": 8.46,
+    "calls": 2
+   },
+   {
+    "case": "C07",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 1774,
+    "seconds": 8.14,
+    "calls": 4
+   },
+   {
+    "case": "C08",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 3480,
+    "seconds": 12.23,
+    "calls": 3
+   },
+   {
+    "case": "C09",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 3101,
+    "seconds": 9.28,
+    "calls": 3
+   },
+   {
+    "case": "C10",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4715,
+    "seconds": 12.4,
+    "calls": 4
+   },
+   {
+    "case": "C11",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4587,
+    "seconds": 14.29,
+    "calls": 4
+   },
+   {
+    "case": "C12",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4126,
+    "seconds": 12.62,
+    "calls": 4
+   },
+   {
+    "case": "C13",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2278,
+    "seconds": 6.11,
+    "calls": 2
+   },
+   {
+    "case": "C14",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 3240,
+    "seconds": 7.3,
+    "calls": 3
+   },
+   {
+    "case": "C15",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "wrong",
+    "tokens": 486,
+    "seconds": 0.54,
+    "calls": 0
+   },
+   {
+    "case": "C16",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 3686,
+    "seconds": 11.37,
+    "calls": 4
+   },
+   {
+    "case": "C17",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5647,
+    "seconds": 13.83,
+    "calls": 4
+   },
+   {
+    "case": "C18",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5423,
+    "seconds": 12.76,
+    "calls": 4
+   },
+   {
+    "case": "C19",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5507,
+    "seconds": 12.45,
+    "calls": 4
+   },
+   {
+    "case": "C20",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 5337,
+    "seconds": 9.5,
+    "calls": 4
+   }
+  ]
+ },
+ "模型：qwen-plus-2025-01-25": {
+  "config_id": "0310a2912704",
+  "model": "qwen-plus-2025-01-25",
+  "runs": [
+   {
+    "case": "C01",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 3752,
+    "seconds": 28.77,
+    "calls": 4
+   },
+   {
+    "case": "C02",
+    "status": "failed",
+    "pred": null,
+    "outcome": "unknown",
+    "tokens": 486,
+    "seconds": 39.91,
+    "calls": 1
+   },
+   {
+    "case": "C03",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 1110,
+    "seconds": 13.84,
+    "calls": 1
+   },
+   {
+    "case": "C04",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 2879,
+    "seconds": 35.0,
+    "calls": 3
+   },
+   {
+    "case": "C05",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 1927,
+    "seconds": 13.19,
+    "calls": 2
+   },
+   {
+    "case": "C06",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "wrong",
+    "tokens": 1091,
+    "seconds": 3.23,
+    "calls": 1
+   },
+   {
+    "case": "C07",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2204,
+    "seconds": 19.2,
+    "calls": 2
+   },
+   {
+    "case": "C08",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2492,
+    "seconds": 16.58,
+    "calls": 3
+   },
+   {
+    "case": "C09",
+    "status": "failed",
+    "pred": null,
+    "outcome": "unknown",
+    "tokens": 1067,
+    "seconds": 52.63,
+    "calls": 2
+   },
+   {
+    "case": "C10",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2713,
+    "seconds": 19.39,
+    "calls": 3
+   },
+   {
+    "case": "C11",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2919,
+    "seconds": 40.81,
+    "calls": 3
+   },
+   {
+    "case": "C12",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2626,
+    "seconds": 10.12,
+    "calls": 3
+   },
+   {
+    "case": "C13",
+    "status": "failed",
+    "pred": null,
+    "outcome": "unknown",
+    "tokens": 1700,
+    "seconds": 74.43,
+    "calls": 3
+   },
+   {
+    "case": "C14",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 4213,
+    "seconds": 36.99,
+    "calls": 4
+   },
+   {
+    "case": "C15",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 3629,
+    "seconds": 29.93,
+    "calls": 4
+   },
+   {
+    "case": "C16",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "wrong",
+    "tokens": 3369,
+    "seconds": 28.1,
+    "calls": 4
+   },
+   {
+    "case": "C17",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 2792,
+    "seconds": 19.73,
+    "calls": 3
+   },
+   {
+    "case": "C18",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 2031,
+    "seconds": 15.76,
+    "calls": 2
+   },
+   {
+    "case": "C19",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 3828,
+    "seconds": 40.47,
+    "calls": 4
+   },
+   {
+    "case": "C20",
+    "status": "failed",
+    "pred": null,
+    "outcome": "unknown",
+    "tokens": 488,
+    "seconds": 25.94,
+    "calls": 1
+   },
+   {
+    "case": "C01",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 2550,
+    "seconds": 28.42,
+    "calls": 3
+   },
+   {
+    "case": "C02",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1084,
+    "seconds": 12.01,
+    "calls": 1
+   },
+   {
+    "case": "C03",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 1095,
+    "seconds": 5.69,
+    "calls": 1
+   },
+   {
+    "case": "C04",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 2579,
+    "seconds": 18.42,
+    "calls": 3
+   },
+   {
+    "case": "C05",
+    "status": "failed",
+    "pred": null,
+    "outcome": "unknown",
+    "tokens": 0,
+    "seconds": 46.78,
+    "calls": 0
+   },
+   {
+    "case": "C06",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 1989,
+    "seconds": 9.69,
+    "calls": 2
+   },
+   {
+    "case": "C07",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2061,
+    "seconds": 10.8,
+    "calls": 2
+   },
+   {
+    "case": "C08",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2918,
+    "seconds": 41.82,
+    "calls": 3
+   },
+   {
+    "case": "C09",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2718,
+    "seconds": 26.76,
+    "calls": 3
+   },
+   {
+    "case": "C10",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4021,
+    "seconds": 28.82,
+    "calls": 4
+   },
+   {
+    "case": "C11",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2982,
+    "seconds": 14.22,
+    "calls": 3
+   },
+   {
+    "case": "C12",
+    "status": "failed",
+    "pred": null,
+    "outcome": "unknown",
+    "tokens": 1758,
+    "seconds": 60.17,
+    "calls": 3
+   },
+   {
+    "case": "C13",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 3207,
+    "seconds": 21.54,
+    "calls": 3
+   },
+   {
+    "case": "C14",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 4221,
+    "seconds": 37.69,
+    "calls": 4
+   },
+   {
+    "case": "C15",
+    "status": "failed",
+    "pred": null,
+    "outcome": "unknown",
+    "tokens": 2813,
+    "seconds": 63.44,
+    "calls": 4
+   },
+   {
+    "case": "C16",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 3355,
+    "seconds": 58.66,
+    "calls": 4
+   },
+   {
+    "case": "C17",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 2945,
+    "seconds": 27.1,
+    "calls": 3
+   },
+   {
+    "case": "C18",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 2613,
+    "seconds": 32.71,
+    "calls": 3
+   },
+   {
+    "case": "C19",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 1833,
+    "seconds": 18.97,
+    "calls": 2
+   },
+   {
+    "case": "C20",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 4027,
+    "seconds": 24.21,
+    "calls": 4
+   },
+   {
+    "case": "C01",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1080,
+    "seconds": 4.57,
+    "calls": 1
+   },
+   {
+    "case": "C02",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 1077,
+    "seconds": 8.82,
+    "calls": 1
+   },
+   {
+    "case": "C03",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 1105,
+    "seconds": 4.59,
+    "calls": 1
+   },
+   {
+    "case": "C04",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 2872,
+    "seconds": 47.63,
+    "calls": 3
+   },
+   {
+    "case": "C05",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2700,
+    "seconds": 16.21,
+    "calls": 3
+   },
+   {
+    "case": "C06",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "wrong",
+    "tokens": 1119,
+    "seconds": 5.8,
+    "calls": 1
+   },
+   {
+    "case": "C07",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2128,
+    "seconds": 12.09,
+    "calls": 2
+   },
+   {
+    "case": "C08",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 1848,
+    "seconds": 40.47,
+    "calls": 2
+   },
+   {
+    "case": "C09",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2700,
+    "seconds": 55.08,
+    "calls": 3
+   },
+   {
+    "case": "C10",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 4092,
+    "seconds": 20.09,
+    "calls": 4
+   },
+   {
+    "case": "C11",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2910,
+    "seconds": 56.88,
+    "calls": 3
+   },
+   {
+    "case": "C12",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 3459,
+    "seconds": 16.36,
+    "calls": 4
+   },
+   {
+    "case": "C13",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 3143,
+    "seconds": 12.95,
+    "calls": 3
+   },
+   {
+    "case": "C14",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 3138,
+    "seconds": 53.36,
+    "calls": 3
+   },
+   {
+    "case": "C15",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 1447,
+    "seconds": 3.34,
+    "calls": 1
+   },
+   {
+    "case": "C16",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "wrong",
+    "tokens": 3315,
+    "seconds": 24.72,
+    "calls": 4
+   },
+   {
+    "case": "C17",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 2595,
+    "seconds": 32.24,
+    "calls": 3
+   },
+   {
+    "case": "C18",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 2572,
+    "seconds": 30.65,
+    "calls": 3
+   },
+   {
+    "case": "C19",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "wrong",
+    "tokens": 1893,
+    "seconds": 11.21,
+    "calls": 2
+   },
+   {
+    "case": "C20",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 4114,
+    "seconds": 22.87,
+    "calls": 4
+   }
+  ]
+ },
+ "模型：qwen3.7-plus": {
+  "config_id": "e8d01544a0a2",
+  "model": "qwen3.7-plus",
+  "runs": [
+   {
+    "case": "C01",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 2632,
+    "seconds": 16.57,
+    "calls": 4
+   },
+   {
+    "case": "C02",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 3205,
+    "seconds": 27.14,
+    "calls": 4
+   },
+   {
+    "case": "C03",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 2942,
+    "seconds": 20.98,
+    "calls": 4
+   },
+   {
+    "case": "C04",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 2650,
+    "seconds": 17.32,
+    "calls": 4
+   },
+   {
+    "case": "C05",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 3265,
+    "seconds": 17.87,
+    "calls": 4
+   },
+   {
+    "case": "C06",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 3342,
+    "seconds": 27.3,
+    "calls": 4
+   },
+   {
+    "case": "C07",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 4716,
+    "seconds": 28.15,
+    "calls": 3
+   },
+   {
+    "case": "C08",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2513,
+    "seconds": 17.32,
+    "calls": 4
+   },
+   {
+    "case": "C09",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2684,
+    "seconds": 17.94,
+    "calls": 4
+   },
+   {
+    "case": "C10",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2977,
+    "seconds": 21.89,
+    "calls": 4
+   },
+   {
+    "case": "C11",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2966,
+    "seconds": 21.78,
+    "calls": 4
+   },
+   {
+    "case": "C12",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2881,
+    "seconds": 16.55,
+    "calls": 2
+   },
+   {
+    "case": "C13",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2721,
+    "seconds": 17.06,
+    "calls": 4
+   },
+   {
+    "case": "C14",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2727,
+    "seconds": 16.13,
+    "calls": 4
+   },
+   {
+    "case": "C15",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2807,
+    "seconds": 18.56,
+    "calls": 4
+   },
+   {
+    "case": "C16",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2951,
+    "seconds": 26.05,
+    "calls": 4
+   },
+   {
+    "case": "C17",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 3357,
+    "seconds": 20.82,
+    "calls": 4
+   },
+   {
+    "case": "C18",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 3744,
+    "seconds": 26.42,
+    "calls": 4
+   },
+   {
+    "case": "C19",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 3479,
+    "seconds": 22.04,
+    "calls": 4
+   },
+   {
+    "case": "C20",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 3311,
+    "seconds": 21.84,
+    "calls": 4
+   },
+   {
+    "case": "C01",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 2579,
+    "seconds": 15.67,
+    "calls": 4
+   },
+   {
+    "case": "C02",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 3475,
+    "seconds": 26.36,
+    "calls": 3
+   },
+   {
+    "case": "C03",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 2803,
+    "seconds": 19.14,
+    "calls": 4
+   },
+   {
+    "case": "C04",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 2732,
+    "seconds": 18.34,
+    "calls": 4
+   },
+   {
+    "case": "C05",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2959,
+    "seconds": 17.2,
+    "calls": 2
+   },
+   {
+    "case": "C06",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 3197,
+    "seconds": 24.41,
+    "calls": 4
+   },
+   {
+    "case": "C07",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 5036,
+    "seconds": 28.64,
+    "calls": 4
+   },
+   {
+    "case": "C08",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2576,
+    "seconds": 18.31,
+    "calls": 4
+   },
+   {
+    "case": "C09",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2618,
+    "seconds": 16.67,
+    "calls": 4
+   },
+   {
+    "case": "C10",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2880,
+    "seconds": 20.55,
+    "calls": 4
+   },
+   {
+    "case": "C11",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2577,
+    "seconds": 15.57,
+    "calls": 4
+   },
+   {
+    "case": "C12",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2657,
+    "seconds": 20.94,
+    "calls": 4
+   },
+   {
+    "case": "C13",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2533,
+    "seconds": 14.26,
+    "calls": 4
+   },
+   {
+    "case": "C14",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2878,
+    "seconds": 18.82,
+    "calls": 4
+   },
+   {
+    "case": "C15",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2937,
+    "seconds": 21.08,
+    "calls": 3
+   },
+   {
+    "case": "C16",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2657,
+    "seconds": 21.84,
+    "calls": 4
+   },
+   {
+    "case": "C17",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 3368,
+    "seconds": 20.97,
+    "calls": 4
+   },
+   {
+    "case": "C18",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 3315,
+    "seconds": 20.24,
+    "calls": 4
+   },
+   {
+    "case": "C19",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 3451,
+    "seconds": 21.98,
+    "calls": 4
+   },
+   {
+    "case": "C20",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 3136,
+    "seconds": 17.55,
+    "calls": 4
+   },
+   {
+    "case": "C01",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 2589,
+    "seconds": 15.74,
+    "calls": 4
+   },
+   {
+    "case": "C02",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 3308,
+    "seconds": 26.24,
+    "calls": 4
+   },
+   {
+    "case": "C03",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 2687,
+    "seconds": 17.14,
+    "calls": 4
+   },
+   {
+    "case": "C04",
+    "status": "done",
+    "pred": "MAX_CONNECTIONS",
+    "outcome": "right",
+    "tokens": 2546,
+    "seconds": 16.28,
+    "calls": 4
+   },
+   {
+    "case": "C05",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2817,
+    "seconds": 20.49,
+    "calls": 4
+   },
+   {
+    "case": "C06",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 3374,
+    "seconds": 27.39,
+    "calls": 4
+   },
+   {
+    "case": "C07",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 4480,
+    "seconds": 26.82,
+    "calls": 3
+   },
+   {
+    "case": "C08",
+    "status": "done",
+    "pred": "SLOW_SQL",
+    "outcome": "right",
+    "tokens": 2515,
+    "seconds": 17.19,
+    "calls": 4
+   },
+   {
+    "case": "C09",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 3003,
+    "seconds": 22.54,
+    "calls": 4
+   },
+   {
+    "case": "C10",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 3039,
+    "seconds": 22.93,
+    "calls": 4
+   },
+   {
+    "case": "C11",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2957,
+    "seconds": 20.87,
+    "calls": 4
+   },
+   {
+    "case": "C12",
+    "status": "done",
+    "pred": "LOCK_WAIT",
+    "outcome": "right",
+    "tokens": 2509,
+    "seconds": 18.71,
+    "calls": 4
+   },
+   {
+    "case": "C13",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2601,
+    "seconds": 15.5,
+    "calls": 4
+   },
+   {
+    "case": "C14",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2884,
+    "seconds": 18.4,
+    "calls": 4
+   },
+   {
+    "case": "C15",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 3773,
+    "seconds": 23.77,
+    "calls": 4
+   },
+   {
+    "case": "C16",
+    "status": "done",
+    "pred": "DISK_FULL",
+    "outcome": "right",
+    "tokens": 2709,
+    "seconds": 22.31,
+    "calls": 4
+   },
+   {
+    "case": "C17",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 3382,
+    "seconds": 21.76,
+    "calls": 4
+   },
+   {
+    "case": "C18",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 3416,
+    "seconds": 21.08,
+    "calls": 4
+   },
+   {
+    "case": "C19",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 4485,
+    "seconds": 28.2,
+    "calls": 4
+   },
+   {
+    "case": "C20",
+    "status": "done",
+    "pred": "NETWORK",
+    "outcome": "right",
+    "tokens": 3362,
+    "seconds": 20.9,
+    "calls": 4
+   }
+  ]
+ },
+ "_meta": {
+  "model": "qwen-plus",
+  "date": "2026-11-25",
+  "base_url": "maas.aliyuncs.com"
+ }
+}
